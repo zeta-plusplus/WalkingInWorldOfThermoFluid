@@ -16,7 +16,7 @@ model pumpingSystem_ex01
     Placement(visible = true, transformation(origin = {80, 30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp ramp1(duration = 10, height = 1000, offset = 1000, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-70, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Machines.PrescribedPump pump(redeclare package Medium = fluid1, redeclare function flowCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.quadraticFlow(V_flow_nominal = {0, 0.25, 0.5}, head_nominal = {100, 60, 0}), redeclare function efficiencyCharacteristic=Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal=0.9), N_nominal = 1000, V(displayUnit = "l") = 0.001, checkValve = true, energyDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, m_flow_start = 10, massDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, nParallel = 1, p_b_start = 10 * system.p_start, use_N_in = true) annotation(
+  Modelica.Fluid.Machines.PrescribedPump pump(redeclare package Medium = fluid1, redeclare function flowCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.quadraticFlow(V_flow_nominal = {0, 0.25, 0.5}, head_nominal = {100, 60, 0}), redeclare function efficiencyCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal = 0.9), N_nominal = 1000, V(displayUnit = "l") = 0.001, checkValve = true, energyDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, m_flow_start = 10, massDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, nParallel = 1, p_b_start = 10 * system.p_start, use_N_in = true) annotation(
     Placement(visible = true, transformation(origin = {-40, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.RelativePressure relativePressure1(redeclare package Medium = fluid1) annotation(
     Placement(visible = true, transformation(origin = {-40, -20}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
@@ -26,7 +26,7 @@ model pumpingSystem_ex01
     Placement(visible = true, transformation(origin = {20, 30}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   Modelica.Blocks.Math.Product d_flowPwr annotation(
     Placement(visible = true, transformation(origin = {-30, -50}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  Modelica.Blocks.Math.Gain gain_effPump(k = 1 /0.9)  annotation(
+  Modelica.Blocks.Math.Gain gain_effPump(k = 1 / 0.9) annotation(
     Placement(visible = true, transformation(origin = {-30, -80}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
 equation
   connect(pump.port_b, relativePressure1.port_a) annotation(
@@ -52,6 +52,8 @@ equation
   connect(gain_effPump.u, d_flowPwr.y) annotation(
     Line(points = {{-30, -68}, {-30, -68}, {-30, -60}, {-30, -60}}, color = {0, 0, 127}));
   annotation(
-    experiment(StartTime = 0, StopTime = 40, Tolerance = 1e-6, Interval = 0.08),
-    __OpenModelica_simulationFlags(lv = "LOG_STATS", outputFormat = "mat", s = "dassl"));
+    experiment(StartTime = 0, StopTime = 40, Tolerance = 1e-06, Interval = 0.08),
+    __OpenModelica_simulationFlags(lv = "LOG_STATS", outputFormat = "mat", s = "dassl"),
+    Diagram,
+    __OpenModelica_commandLineOptions = "");
 end pumpingSystem_ex01;
