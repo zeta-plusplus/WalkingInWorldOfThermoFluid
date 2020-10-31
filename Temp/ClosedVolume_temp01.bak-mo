@@ -1,0 +1,20 @@
+within WalkingInWorldOfThermoFluid.Temp;
+
+model ClosedVolume_temp01
+  extends Modelica.Icons.Example;
+  //----------
+  replaceable package fluid1 = Modelica.Media.Water.StandardWaterOnePhase;
+  //redeclare package Medium = fluid1
+  //----------
+  inner Modelica.Fluid.System system annotation(
+    Placement(visible = true, transformation(origin = {-50, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Vessels.ClosedVolume volume(redeclare package Medium = fluid1, V = 1, nPorts = 0, use_HeatTransfer = false, use_portsData = false)  annotation(
+    Placement(visible = true, transformation(origin = {-30, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Thermal.HeatTransfer.Sources.FixedHeatFlow fixedHeatFlow1(Q_flow = 1 * 1000)  annotation(
+    Placement(visible = true, transformation(origin = {-60, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+equation
+  connect(fixedHeatFlow1.port, volume.heatPort) annotation(
+    Line(points = {{-50, 40}, {-40, 40}, {-40, 20}, {-40, 20}}, color = {191, 0, 0}));
+annotation(
+    experiment(StartTime = 0, StopTime = 10, Tolerance = 1e-6, Interval = 0.02),
+    __OpenModelica_simulationFlags(lv = "LOG_STATS", outputFormat = "mat", s = "dassl"));end ClosedVolume_temp01;
