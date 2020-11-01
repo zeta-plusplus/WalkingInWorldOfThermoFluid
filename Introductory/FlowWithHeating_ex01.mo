@@ -20,7 +20,7 @@ model FlowWithHeating_ex01
     Placement(visible = true, transformation(origin = {-10, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Pipes.StaticPipe pipe(redeclare package Medium = liquid1, diameter = 0.01, length = 0.5)  annotation(
     Placement(visible = true, transformation(origin = {-40, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Pipes.StaticPipe pipe1(redeclare package Medium = liquid1, diameter = 0.01, length = 0.5)  annotation(
+  Modelica.Fluid.Pipes.StaticPipe pipe1(redeclare package Medium = liquid1, diameter = 0.01, flowModel(show_Res = true), length = 0.5)  annotation(
     Placement(visible = true, transformation(origin = {20, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Vessels.ClosedVolume volume1(redeclare package Medium = liquid1, V = Modelica.Constants.pi / 4 * pipe1.diameter ^ 2.0 * pipe1.length, nPorts = 2, use_HeatTransfer = false, use_portsData = false) annotation(
     Placement(visible = true, transformation(origin = {50, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
