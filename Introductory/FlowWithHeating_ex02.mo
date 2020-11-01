@@ -12,15 +12,15 @@ model FlowWithHeating_ex02
     Placement(visible = true, transformation(origin = {-50, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sources.Boundary_pT boundary1(redeclare package Medium = liquid1, T = 15 + 273.15, nPorts = 1, p = 101.325 * 1000) annotation(
     Placement(visible = true, transformation(origin = {30, 10}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp ramp_heat(duration = 10, height = 100 * 1000, offset = 0, startTime = 10) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_heat[pipe.nNodes](duration = 10, height = 1 / pipe.nNodes *100 * 1000, offset = 0, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-70, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow1 annotation(
+  Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow1[pipe.nNodes] annotation(
     Placement(visible = true, transformation(origin = {-40, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Pipes.DynamicPipe pipe(redeclare package Medium = liquid1, diameter = 0.01, length = 0.5, nNodes = 5, use_HeatTransfer = true) annotation(
     Placement(visible = true, transformation(origin = {-10, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
-  connect(prescribedHeatFlow1.port, pipe.heatPorts[3]) annotation(
-    Line(points = {{-30, 50}, {-10, 50}, {-10, 14}, {-10, 14}}, color = {191, 0, 0}));
+  connect(prescribedHeatFlow1.port, pipe.heatPorts) annotation(
+    Line(points = {{-30, 50}, {-10, 50}, {-10, 14}, {-10, 14}}, color = {191, 0, 0}, thickness = 0.5));
   connect(boundary.ports[1], pipe.port_a) annotation(
     Line(points = {{-40, 10}, {-20, 10}}, color = {0, 127, 255}));
   connect(pipe.port_b, boundary1.ports[1]) annotation(
