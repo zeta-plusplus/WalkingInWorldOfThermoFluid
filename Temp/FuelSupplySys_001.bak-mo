@@ -1,0 +1,80 @@
+within WalkingInWorldOfThermoFluid.Temp;
+
+model FuelSupplySys_001
+  extends Modelica.Icons.Example;
+  //----------
+  replaceable package fluid1 = Modelica.Media.Incompressible.Examples.Glycol47;
+  //redeclare package Medium = fluid1
+  //----------
+  inner Modelica.Fluid.System system annotation(
+    Placement(visible = true, transformation(origin = {-50, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Sources.Boundary_pT fuelStart(redeclare package Medium = fluid1, T = 288.15, nPorts = 1, p = 101.3 * 1000) annotation(
+    Placement(visible = true, transformation(origin = {-190, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Pipes.DynamicPipe HX(redeclare package Medium = fluid1, diameter = 0.05, length = 0.2, nNodes = 10, use_HeatTransfer = true)  annotation(
+    Placement(visible = true, transformation(origin = {-70, 20}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
+  Modelica.Fluid.Machines.Pump pump1(redeclare package Medium = fluid1, redeclare function flowCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.quadraticFlow(V_flow_nominal = {0, 5, 10}, head_nominal = {100, 60, 0}), redeclare function efficiencyCharacteristic=Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal=0.9), N_nominal = 10000, V = 0.1, checkValve = true, m_flow_start = 10, p_b_start = 10 * system.p_start) annotation(
+    Placement(visible = true, transformation(origin = {-130, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Mechanics.Rotational.Sources.Speed speed1 annotation(
+    Placement(visible = true, transformation(origin = {-150, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Valves.ValveLinear valveLinear1(redeclare package Medium = fluid1) annotation(
+    Placement(visible = true, transformation(origin = {-30, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Pipes.StaticPipe pipe(redeclare package Medium = fluid1, diameter = 0.05, length = 0.2) annotation(
+    Placement(visible = true, transformation(origin = {-150, -20}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Fluid.Pipes.StaticPipe pipe1(redeclare package Medium = fluid1, diameter = 0.01, length = 0.2) annotation(
+    Placement(visible = true, transformation(origin = {10, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Fittings.SimpleGenericOrifice orifice(redeclare package Medium = fluid1, diameter = 0.01, zeta = 1 / 0.6 ^ 2) annotation(
+    Placement(visible = true, transformation(origin = {-120, -20}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Fluid.Fittings.SimpleGenericOrifice orifice1(redeclare package Medium = fluid1, diameter = 0.01, zeta = 1 / 0.6 ^ 2) annotation(
+    Placement(visible = true, transformation(origin = {50, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Sources.Boundary_pT combChamber(redeclare package Medium = fluid1, T = 600, nPorts = 1, p =  101.325 * 1000) annotation(
+    Placement(visible = true, transformation(origin = {110, 20}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Ramp ramp_valveOpening(duration = 10, height = 0.4, offset = 0.5, startTime = 10)  annotation(
+    Placement(visible = true, transformation(origin = {-50, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow1[HX.nNodes] annotation(
+    Placement(visible = true, transformation(origin = {-70, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
+  Modelica.Blocks.Sources.Ramp ramp_pumpSpeed(duration = 10, height = 0, offset = 10000, startTime = 10)  annotation(
+    Placement(visible = true, transformation(origin = {-180, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Ramp ramp_heat(duration = 10, height = 0, offset = 10 * 1000, startTime = 10) annotation(
+    Placement(visible = true, transformation(origin = {-120, -70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Math.Gain gain1(k = 1 / HX.nNodes)  annotation(
+    Placement(visible = true, transformation(origin = {-90, -70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Routing.Replicator replicator1(nout = HX.nNodes)  annotation(
+    Placement(visible = true, transformation(origin = {-70, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
+equation
+  connect(gain1.y, replicator1.u) annotation(
+    Line(points = {{-78, -70}, {-70, -70}, {-70, -52}, {-70, -52}}, color = {0, 0, 127}));
+  connect(ramp_heat.y, gain1.u) annotation(
+    Line(points = {{-108, -70}, {-102, -70}, {-102, -70}, {-102, -70}}, color = {0, 0, 127}));
+  connect(replicator1.y, prescribedHeatFlow1.Q_flow) annotation(
+    Line(points = {{-70, -28}, {-70, -28}, {-70, -20}, {-70, -20}}, color = {0, 0, 127}, thickness = 0.5));
+  connect(ramp_pumpSpeed.y, speed1.w_ref) annotation(
+    Line(points = {{-169, 70}, {-162, 70}}, color = {0, 0, 127}));
+  connect(prescribedHeatFlow1.port, HX.heatPorts) annotation(
+    Line(points = {{-70, 0}, {-70, 0}, {-70, 16}, {-70, 16}}, color = {191, 0, 0}, thickness = 0.5));
+  connect(ramp_valveOpening.y, valveLinear1.opening) annotation(
+    Line(points = {{-38, 60}, {-30, 60}, {-30, 28}, {-30, 28}}, color = {0, 0, 127}));
+  connect(fuelStart.ports[1], pump1.port_a) annotation(
+    Line(points = {{-180, 20}, {-140, 20}}, color = {0, 127, 255}));
+  connect(HX.port_b, valveLinear1.port_a) annotation(
+    Line(points = {{-60, 20}, {-40, 20}, {-40, 20}, {-40, 20}}, color = {0, 127, 255}));
+  connect(pump1.port_b, HX.port_a) annotation(
+    Line(points = {{-120, 20}, {-80, 20}}, color = {0, 127, 255}));
+  connect(pump1.port_b, orifice.port_a) annotation(
+    Line(points = {{-120, 20}, {-100, 20}, {-100, -20}, {-110, -20}}, color = {0, 127, 255}));
+  connect(pipe.port_b, pump1.port_a) annotation(
+    Line(points = {{-160, -20}, {-166, -20}, {-166, 20}, {-140, 20}}, color = {0, 127, 255}));
+  connect(speed1.flange, pump1.shaft) annotation(
+    Line(points = {{-140, 70}, {-130, 70}, {-130, 30}}));
+  connect(valveLinear1.port_b, pipe1.port_a) annotation(
+    Line(points = {{-20, 20}, {2.08615e-06, 20}, {2.08615e-06, 20}, {2.08615e-06, 20}}, color = {0, 127, 255}));
+  connect(pipe1.port_b, orifice1.port_a) annotation(
+    Line(points = {{20, 20}, {40, 20}, {40, 20}, {40, 20}}, color = {0, 127, 255}));
+  connect(orifice1.port_b, combChamber.ports[1]) annotation(
+    Line(points = {{60, 20}, {100, 20}, {100, 20}, {100, 20}}, color = {0, 127, 255}));
+  connect(pipe.port_a, orifice.port_b) annotation(
+    Line(points = {{-140, -20}, {-130, -20}, {-130, -20}, {-130, -20}}, color = {0, 127, 255}));
+  annotation(
+    Diagram(coordinateSystem(extent = {{-200, -100}, {200, 100}})),
+    __OpenModelica_commandLineOptions = "");
+    
+end FuelSupplySys_001;
