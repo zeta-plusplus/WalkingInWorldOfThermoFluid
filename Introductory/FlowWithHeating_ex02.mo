@@ -16,7 +16,7 @@ model FlowWithHeating_ex02
     Placement(visible = true, transformation(origin = {-80, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow1[pipe.nNodes] annotation(
     Placement(visible = true, transformation(origin = {10, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Pipes.DynamicPipe pipe(redeclare package Medium = liquid1, diameter = 0.01, length = 0.5, modelStructure = Modelica.Fluid.Types.ModelStructure.a_v_b, nNodes = 5, use_HeatTransfer = true) annotation(
+  Modelica.Fluid.Pipes.DynamicPipe pipe(redeclare package Medium = liquid1, diameter = 0.01,flowModel(show_Res = true), length = 5.0, modelStructure = Modelica.Fluid.Types.ModelStructure.a_vb, nNodes = 5, use_HeatTransfer = true) annotation(
     Placement(visible = true, transformation(origin = {40, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.Gain gain1(k = 1 / pipe.nNodes)  annotation(
     Placement(visible = true, transformation(origin = {-50, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
