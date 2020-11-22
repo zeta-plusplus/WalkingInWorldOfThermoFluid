@@ -43,6 +43,14 @@ model pumpingSystem_ex03
   Modelica.Blocks.Sources.Ramp ramp_valve(duration = 10, height = -0.5, offset = 1.0, startTime = 30) annotation(
     Placement(visible = true, transformation(origin = {70, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
+  connect(powerSensor1.flange_b, pump1.shaft) annotation(
+    Line(points = {{-30, 10}, {-30, 10}, {-30, 0}, {-30, 0}}));
+  connect(speed1.flange, powerSensor1.flange_a) annotation(
+    Line(points = {{-40, 50}, {-30, 50}, {-30, 30}, {-30, 30}}));
+  connect(from_rpm1.y, speed1.w_ref) annotation(
+    Line(points = {{-68, 50}, {-62, 50}, {-62, 50}, {-62, 50}}, color = {0, 0, 127}));
+  connect(ramp_pump_N.y, from_rpm1.u) annotation(
+    Line(points = {{-98, 50}, {-94, 50}, {-94, 50}, {-92, 50}}, color = {0, 0, 127}));
   connect(relativePressure1.p_rel, d_flowPwrInlet.u1) annotation(
     Line(points = {{-30, -79}, {-30, -79}, {-30, -83}, {-58, -83}, {-58, -89}, {-58, -89}}, color = {0, 0, 127}));
   connect(relativePressure1.p_rel, d_flowPwrOutlet.u2) annotation(
