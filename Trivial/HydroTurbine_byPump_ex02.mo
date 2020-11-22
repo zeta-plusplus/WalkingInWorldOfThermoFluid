@@ -71,6 +71,6 @@ equation
   annotation(
     experiment(StartTime = 0, StopTime = 50, Tolerance = 1e-06, Interval = 0.1),
     __OpenModelica_simulationFlags(lv = "LOG_STATS", outputFormat = "mat", s = "dassl"),
-    Diagram(coordinateSystem(extent = {{-160, -80}, {140, 100}}, initialScale = 0.1), graphics = {Line(origin = {-64.5071, 30.002}, points = {{9.0238, -15.0238}, {7.0238, 12.9762}, {-8.9762, 14.9762}}, arrow = {Arrow.None, Arrow.Open}), Text(origin = {-176, 33}, extent = {{64, -1}, {112, -7}}, textString = "mechanical power"), Text(origin = {-140, -47}, extent = {{64, -1}, {148, -15}}, textString = "hydro turbine by 'pump' component")}),
+    Diagram(coordinateSystem(extent = {{-160, -80}, {140, 100}}, initialScale = 0.1), graphics = {Line(origin = {-64.5071, 30.002}, points = {{9.0238, -15.0238}, {7.0238, 12.9762}, {-8.9762, 14.9762}}, arrow = {Arrow.None, Arrow.Open}), Text(origin = {-170, 33}, extent = {{64, -1}, {112, -7}}, textString = "mechanical power"), Text(origin = {-140, -47}, extent = {{64, -1}, {148, -15}}, textString = "hydro turbine by 'pump' component")}),
     __OpenModelica_commandLineOptions = "");
 end HydroTurbine_byPump_ex02;
