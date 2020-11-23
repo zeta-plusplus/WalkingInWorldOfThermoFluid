@@ -10,8 +10,6 @@ model FlowWithHeating_ex02
     Placement(visible = true, transformation(origin = {-90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sources.MassFlowSource_T boundary(redeclare package Medium = liquid1, T = 15 + 273.15, m_flow = 1, nPorts = 1, use_m_flow_in = false) annotation(
     Placement(visible = true, transformation(origin = {-30, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Sources.Boundary_pT boundary1(redeclare package Medium = liquid1, T = 15 + 273.15, nPorts = 1, p = 101.325 * 1000) annotation(
-    Placement(visible = true, transformation(origin = {110, 10}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp ramp_heat(duration = 10, height = 100 * 1000, offset = 0, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-80, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow1[pipe.nNodes] annotation(
@@ -26,9 +24,11 @@ model FlowWithHeating_ex02
     Placement(visible = true, transformation(origin = {10, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
   Modelica.Fluid.Vessels.ClosedVolume volume1(redeclare package Medium = liquid1, V = 0.000001, nPorts = 2, use_portsData = false) annotation(
     Placement(visible = true, transformation(origin = {70, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
+  Modelica.Fluid.Sources.Boundary_pT boundary1(redeclare package Medium = liquid1,nPorts = 1)  annotation(
+    Placement(visible = true, transformation(origin = {100, 10}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
 equation
   connect(volume1.ports[2], boundary1.ports[1]) annotation(
-    Line(points = {{70, 10}, {100, 10}, {100, 10}, {100, 10}}, color = {0, 127, 255}, thickness = 0.5));
+    Line(points = {{70, 10}, {90, 10}, {90, 10}, {90, 10}}, color = {0, 127, 255}, thickness = 0.5));
   connect(pipe.port_b, volume1.ports[1]) annotation(
     Line(points = {{50, 10}, {68, 10}, {68, 10}, {70, 10}}, color = {0, 127, 255}));
   connect(volume.ports[2], pipe.port_a) annotation(
