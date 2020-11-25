@@ -55,17 +55,17 @@ model CoolingSystem_temp01
     Placement(visible = true, transformation(origin = {180, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Pipes.DynamicPipe pipe1(redeclare package Medium = fluid1, diameter = 0.02, length = 2, modelStructure = Modelica.Fluid.Types.ModelStructure.a_vb, nNodes = 2, use_HeatTransfer = false) annotation(
     Placement(visible = true, transformation(origin = {170, -110}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Modelica.Fluid.Sources.Boundary_ph boundary(redeclare package Medium = fluid1, nPorts = 1, p = 101.325 * 1000, use_h_in = true)  annotation(
-    Placement(visible = true, transformation(origin = {-100, -50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Vessels.ClosedVolume tank(redeclare package Medium = fluid1, T_start = 15 + 273.15, V = 20 * 0.001, nPorts = 2, use_HeatTransfer = false, use_portsData = false) annotation(
     Placement(visible = true, transformation(origin = {-70, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Sources.Boundary_pT boundary1(redeclare package Medium = fluid1, nPorts = 1, p = 101.325 * 1000)  annotation(
-    Placement(visible = true, transformation(origin = {70, -100}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.SpecificEnthalpy specificEnthalpy(redeclare package Medium = fluid1) annotation(
     Placement(visible = true, transformation(origin = {110, -120}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
   Modelica.Fluid.Vessels.ClosedVolume volume1(redeclare package Medium = fluid2, T_start = 15 + 273.15, V = 1 * 0.001, nPorts = 2, use_HeatTransfer = false, use_portsData = false) annotation(
     Placement(visible = true, transformation(origin = {120, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
+  connect(tank.ports[2], pump1.port_a) annotation(
+    Line(points = {{-70, -50}, {-50, -50}, {-50, -50}, {-50, -50}}, color = {0, 127, 255}));
+  connect(specificEnthalpy.port, tank.ports[1]) annotation(
+    Line(points = {{110, -110}, {-70, -110}, {-70, -50}, {-70, -50}}, color = {0, 127, 255}));
   connect(ramp_heat_generation.y, prescribedHeatFlow1.Q_flow) annotation(
     Line(points = {{191, -10}, {199, -10}, {199, -20}, {199, -20}}, color = {0, 0, 127}));
   connect(prescribedHeatFlow1.port, volume.heatPort) annotation(
@@ -82,14 +82,6 @@ equation
     Line(points = {{120, 50}, {144, 50}, {144, 70}, {150, 70}}, color = {0, 127, 255}, thickness = 0.5));
   connect(cooler_cside.port_b, volume1.ports[1]) annotation(
     Line(points = {{100, 50}, {116, 50}, {116, 50}, {120, 50}}, color = {0, 127, 255}));
-  connect(tank.ports[2], pump1.port_a) annotation(
-    Line(points = {{-70, -50}, {-50, -50}, {-50, -50}, {-50, -50}}, color = {0, 127, 255}));
-  connect(boundary.ports[1], tank.ports[1]) annotation(
-    Line(points = {{-90, -50}, {-72, -50}, {-72, -50}, {-70, -50}}, color = {0, 127, 255}, thickness = 0.5));
-  connect(specificEnthalpy.h_out, boundary.h_in) annotation(
-    Line(points = {{99, -120}, {-126, -120}, {-126, -46}, {-112, -46}}, color = {0, 0, 127}));
-  connect(boundary1.ports[1], specificEnthalpy.port) annotation(
-    Line(points = {{80, -100}, {95, -100}, {95, -110}, {110, -110}}, color = {0, 127, 255}));
   connect(const.y, replicator2.u) annotation(
     Line(points = {{41, 0}, {43, 0}, {43, 20}, {47, 20}, {47, 20}}, color = {0, 0, 127}));
   connect(const.y, replicator1.u) annotation(

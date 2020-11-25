@@ -32,21 +32,21 @@ model CoolingSystem_ex01
   Modelica.Fluid.Sources.MassFlowSource_T boundary2(redeclare package Medium = fluid2, T = 15 + 273.15, m_flow = 5, nPorts = 1) annotation(
     Placement(visible = true, transformation(origin = {-10, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Pipes.DynamicPipe cooler_cside(redeclare package Medium = fluid2, T_start = 15 + 273.15, diameter = 0.02, length = 2, modelStructure = Modelica.Fluid.Types.ModelStructure.a_vb, nNodes = cooler_hside.nNodes, use_HeatTransfer = true) annotation(
-    Placement(visible = true, transformation(origin = {90, 50}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {90, 30}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   Modelica.Fluid.Sources.Boundary_pT boundary3(redeclare package Medium = fluid2, nPorts = 1) annotation(
     Placement(visible = true, transformation(origin = {190, 70}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Thermal.HeatTransfer.Components.Convection convection1[cooler_hside.nNodes] annotation(
-    Placement(visible = true, transformation(origin = {90, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
-  Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor1[cooler_hside.nNodes](C = 1000) annotation(
-    Placement(visible = true, transformation(origin = {100, 0}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+    Placement(visible = true, transformation(origin = {90, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
+  Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor1[cooler_hside.nNodes](C = 10) annotation(
+    Placement(visible = true, transformation(origin = {100, -10}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Thermal.HeatTransfer.Components.Convection convection2[cooler_hside.nNodes] annotation(
-    Placement(visible = true, transformation(origin = {90, 20}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
+    Placement(visible = true, transformation(origin = {90, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
   Modelica.Blocks.Routing.Replicator replicator1(nout = cooler_hside.nNodes) annotation(
-    Placement(visible = true, transformation(origin = {60, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {60, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Routing.Replicator replicator2(nout = cooler_cside.nNodes) annotation(
-    Placement(visible = true, transformation(origin = {60, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {60, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant const(k = 5000) annotation(
-    Placement(visible = true, transformation(origin = {30, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {30, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Vessels.ClosedVolume volume(redeclare package Medium = fluid1, V = 1 * 0.001, nPorts = 2, use_HeatTransfer = true, use_portsData = false) annotation(
     Placement(visible = true, transformation(origin = {200, -70}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow1 annotation(
@@ -64,12 +64,30 @@ model CoolingSystem_ex01
   Modelica.Fluid.Sensors.SpecificEnthalpy specificEnthalpy(redeclare package Medium = fluid1) annotation(
     Placement(visible = true, transformation(origin = {110, -120}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
   Modelica.Fluid.Vessels.ClosedVolume volume1(redeclare package Medium = fluid2, T_start = 15 + 273.15, V = 1 * 0.001, nPorts = 2, use_HeatTransfer = false, use_portsData = false) annotation(
-    Placement(visible = true, transformation(origin = {140, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {140, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
-  connect(heatCapacitor1.port, convection2.fluid) annotation(
-    Line(points = {{90, 0}, {90, 10}}, color = {191, 0, 0}));
-  connect(convection1.fluid, heatCapacitor1.port) annotation(
-    Line(points = {{90, -10}, {90, 0}}, color = {191, 0, 0}));
+  connect(cooler_cside.port_b, volume1.ports[1]) annotation(
+    Line(points = {{100, 30}, {110, 30}, {110, 70}, {140, 70}}, color = {0, 127, 255}));
+  connect(volume1.ports[2], boundary3.ports[1]) annotation(
+    Line(points = {{140, 70}, {180, 70}}, color = {0, 127, 255}, thickness = 0.5));
+  connect(convection2.fluid, cooler_cside.heatPorts) annotation(
+    Line(points = {{90, 20}, {90, 26}}, color = {191, 0, 0}, thickness = 0.5));
+  connect(boundary2.ports[1], cooler_cside.port_a) annotation(
+    Line(points = {{0, 70}, {50, 70}, {50, 30}, {80, 30}}, color = {0, 127, 255}));
+  connect(const.y, replicator1.u) annotation(
+    Line(points = {{41, -10}, {43, -10}, {43, -30}, {48, -30}}, color = {0, 0, 127}));
+  connect(const.y, replicator2.u) annotation(
+    Line(points = {{41, -10}, {43, -10}, {43, 10}, {48, 10}}, color = {0, 0, 127}));
+  connect(replicator2.y, convection2.Gc) annotation(
+    Line(points = {{71, 10}, {80, 10}}, color = {0, 0, 127}, thickness = 0.5));
+  connect(heatCapacitor1.port, convection2.solid) annotation(
+    Line(points = {{90, -10}, {90, 0}}, color = {191, 0, 0}, thickness = 0.5));
+  connect(replicator1.y, convection1.Gc) annotation(
+    Line(points = {{71, -30}, {80, -30}}, color = {0, 0, 127}, thickness = 0.5));
+  connect(heatCapacitor1.port, convection1.solid) annotation(
+    Line(points = {{90, -10}, {90, -20}}, color = {191, 0, 0}, thickness = 0.5));
+  connect(convection1.fluid, cooler_hside.heatPorts) annotation(
+    Line(points = {{90, -40}, {90, -46}}, color = {191, 0, 0}, thickness = 0.5));
   connect(speed1.flange, powerSensor1.flange_a) annotation(
     Line(points = {{-60, 50}, {-50, 50}, {-50, 30}}));
   connect(powerSensor1.flange_b, pump1.shaft) annotation(
@@ -78,12 +96,6 @@ equation
     Line(points = {{-89, 50}, {-83, 50}, {-83, 50}, {-83, 50}}, color = {0, 0, 127}));
   connect(ramp_pump_N.y, from_rpm1.u) annotation(
     Line(points = {{-119, 70}, {-116, 70}, {-116, 50}, {-113, 50}}, color = {0, 0, 127}));
-  connect(cooler_cside.port_b, volume1.ports[1]) annotation(
-    Line(points = {{100, 50}, {140, 50}}, color = {0, 127, 255}));
-  connect(volume1.ports[2], boundary3.ports[1]) annotation(
-    Line(points = {{140, 50}, {162, 50}, {162, 70}, {180, 70}}, color = {0, 127, 255}, thickness = 0.5));
-  connect(boundary2.ports[1], cooler_cside.port_a) annotation(
-    Line(points = {{0, 70}, {50, 70}, {50, 50}, {80, 50}}, color = {0, 127, 255}));
   connect(ramp_heat_generation.y, prescribedHeatFlow1.Q_flow) annotation(
     Line(points = {{191, -10}, {199, -10}, {199, -20}, {199, -20}}, color = {0, 0, 127}));
   connect(prescribedHeatFlow1.port, volume.heatPort) annotation(
@@ -104,18 +116,6 @@ equation
     Line(points = {{99, -120}, {-126, -120}, {-126, -46}, {-112, -46}}, color = {0, 0, 127}));
   connect(boundary1.ports[1], specificEnthalpy.port) annotation(
     Line(points = {{80, -100}, {95, -100}, {95, -110}, {110, -110}}, color = {0, 127, 255}));
-  connect(const.y, replicator2.u) annotation(
-    Line(points = {{41, 0}, {43, 0}, {43, 20}, {47, 20}, {47, 20}}, color = {0, 0, 127}));
-  connect(const.y, replicator1.u) annotation(
-    Line(points = {{41, 0}, {43, 0}, {43, -20}, {47, -20}, {47, -20}}, color = {0, 0, 127}));
-  connect(convection2.solid, cooler_cside.heatPorts) annotation(
-    Line(points = {{90, 30}, {90, 30}, {90, 46}, {90, 46}}, color = {191, 0, 0}, thickness = 0.5));
-  connect(replicator2.y, convection2.Gc) annotation(
-    Line(points = {{71, 20}, {80, 20}}, color = {0, 0, 127}, thickness = 0.5));
-  connect(replicator1.y, convection1.Gc) annotation(
-    Line(points = {{71, -20}, {80, -20}}, color = {0, 0, 127}, thickness = 0.5));
-  connect(convection1.solid, cooler_hside.heatPorts) annotation(
-    Line(points = {{90, -30}, {90, -30}, {90, -46}, {90, -46}}, color = {191, 0, 0}, thickness = 0.5));
   connect(volumeFlowRate1.port_b, cooler_hside.port_a) annotation(
     Line(points = {{0, -50}, {80, -50}}, color = {0, 127, 255}));
   connect(pump1.port_b, volumeFlowRate1.port_a) annotation(
