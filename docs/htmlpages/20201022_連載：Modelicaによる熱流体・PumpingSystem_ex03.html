@@ -1,0 +1,406 @@
+<head>
+	<style type="text/css">
+	highlightYellow
+	{
+		background: linear-gradient(transparent 0%, yellow 0%);
+	}
+	
+	highlightGreen
+	{
+		background: linear-gradient(transparent 0%, green 0%);
+	}
+	
+	highlightRed
+	{
+		background: linear-gradient(transparent 0%, red 0%);
+	}
+	</style>
+</head>
+
+<!-- ******************************************************************************** -->
+<!-- ----------------------------------------------------------------------
+[連載]Modelicaによる熱流体の世界の歩き方・PumpingSystem_ex03
+	update: 2020/10/29
+---------------------------------------------------------------------- -->
+
+
+<p>
+本例題では<a href="https://virtualmbdlabmodelica.net/walkingthermofluid_pumpingsystem_ex01/">pumpingSystem_ex01</a>のシステムを少し発展させる。従って、解説は変更/追加を行う場所だけに絞り、<a href="https://virtualmbdlabmodelica.net/walkingthermofluid_pumpingsystem_ex01/">pumpingSystem_ex01</a>で既出のものは省略して極力簡潔なものにする。
+</p>
+<p>
+追加する次項は下記の2つ。
+<ul>
+	<li> 遠心ポンプのコンポーネントを、機械回転数信号入力のものから、シャフトインターフェイス（flange connector）を持ちMechanicsライブラリに繋げることが出来るものに取り換える。 </li>
+	<li> ポンプ下流に、流量調整用のバルブを追加する。 </li>
+</ul>
+</p>
+<p>
+因みに、_ex02が欠番となっているが、これは上記２つのうち、1つ目のみを適用した段階のもの。解説記事はスキップしたが、例題を収録しているライブラリ「WalkingInWorldOfThermoFluid」にはモデルを収録しているので、興味のある方は参照願いたい。
+</p>
+
+<ol>
+	<h1><li> 手書きスケッチ</h1> &emsp;
+		<p>	作ろうとしているものを手書きで書き下すのは、今回も定型作業として実施しておこう。 </p>
+		<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_sketch.JPG?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_sketch.JPG?raw=true" width="800"></a>
+		<br />
+		<br />
+		<p> 同じく定型作業として、モデル化対象物についての情報を簡単に纏める。ただし、記述するのは<a href="https://virtualmbdlabmodelica.net/walkingthermofluid_pumpingsystem_ex01/">pumpingSystem_ex01</a>から変更/追加するものだけとする。 </p>
+		<ul>
+			<li> 内包する物理現象： </li>
+			<ol>
+				<li> バルブ開度変更による圧力損失（ポンプ出口圧力）、流量の変化。 </li>
+				<li> ポンプ駆動トルクが、機械回転数とポンプ消費powerで決まる。 </li>
+			</ol>
+			
+			<li> 境界条件（Input）： </li>
+			<ol>
+				<li> バルブ開度（0 - 1 の信号） </li>
+			</ol>
+			
+			<li> Output（注目する出力）： </li>
+			<ol>
+				<li> ポンプ駆動軸トルク </li>
+				<li> ＊<a href="https://virtualmbdlabmodelica.net/walkingthermofluid_pumpingsystem_ex01/">pumpingSystem_ex01</a>でポンプのpowerと共に観た、断熱効率に関わるoutputは省略する。 </li>
+			</ol>
+				
+		</ul>
+		
+	<br />
+	</li>
+	
+	<h1><li> model（とpackage）ファイルの作成</h1> &emsp;
+		<p>過去記事でも述べたが、演習例題用のpackageは作成しておこう。過去記事の例で既に作成済みなら、そのpackageにmodelを作成すればOK。
+		</p>
+	<br />
+	</li>
+	
+	<h1><li> コンポーネントの配置</h1> &emsp;
+		<p> 下図の通りにコンポーネントを配置、接続する。 </p>
+		<p> インスタンス名はコンポーネントを配置する際に自動で命名される（設定次第では名前を尋ねるウィンドウが出てくる）が、筆者は適宜、名前をつけた方が後々判りやすいものだけ命名している。下図のものだと解りにくければ、解りやすいように名前を変えてくれて構わない。 </p>
+		<p>センサ等、物理的な役割を果たさないものも複数有るが、variablesのモニタリングに便利なので置いておくだけ。煩わしければ省略/削除しても構わない。 </p>
+		<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_01.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_01.jpg?raw=true" width="800"></a>
+		<br />
+		
+		<h2> 使用コンポーネントリスト </h2>
+			<p>
+			必要なコンポーネントを見つけるのは慣れていないと意外と苦労する作業なので、総てのコンポーネントをリストアップしておく。概要については過去記事で記述したものは省略する。
+			</p>
+			<ol>
+				<li> Modelica.Fluid.Machines.Pump </li>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Machines.Pump_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Machines.Pump_icon.JPG?raw=true" width="100"></a><br />
+					<p> 遠心ポンプコンポーネント。PrescribedPumpとインターフェイスが異なり、機械回転数を受け取るReal connectorが、シャフトインターフェイスであるflangeに置き換わっている。Mechanics-Rotationalライブラリのコンポーネントと繋げてシステムを作成出来る。 </p>
+				
+				<li> Modelica.Mechanics.Rotational.Sources.Speed </li>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Mechanics.Rotational.Sources.Speed_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Mechanics.Rotational.Sources.Speed_icon.JPG?raw=true" width="100"></a><br />
+					<p> 回転機械コンポーネントに境界条件として機械回転数を与えるコンポーネント。Real connectorで機械回転数の信号を受け取る。単位は [rad/s]。 </p>
+				
+				<li> Modelica.Blocks.Math.UnitConversions.From_rpm </li>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Blocks.Math.UnitConversions.From_rpm_icon.JPG?raw=true target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Blocks.Math.UnitConversions.From_rpm_icon.JPG?raw=true" width="100"></a><br />
+					<p> 単位変換コンポーネント。[rpm] を [rad/s] に変換する。 </p>
+				
+				<li> Modelica.Fluid.Valves.ValveLinear </li>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Valves.ValveLinear_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Valves.ValveLinear_icon.JPG?raw=true" width="100"></a><br />
+					<p> Modelica Standard Libraryに収録されている最もシンプルなバルブのコンポーネント。Linearの名が示すように、</p>
+					<p> m_flow = k * opening * dp </p>
+					<p> と、質量流量と差圧の関係が線形となるモデルが記述されている。　＊k は定格質量流量と定格差圧から決まる定数。 </p>
+				
+				<li> Modelica.Fluid.System </li>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.System_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.System_icon.JPG?raw=true" width="100"></a><br />
+				
+				<li> Modelica.Fluid.Sources.Boundary_pT </li>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Sources.Boundary_pT_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Sources.Boundary_pT_icon.JPG?raw=true" width="100"></a><br />
+				
+				<li> Modelica.Fluid.Sensors.VolumeFlowRate </li>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Sensors.VolumeFlowRate_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Sensors.VolumeFlowRate_icon.JPG?raw=true" width="100"></a><br />
+				
+				<li> Modelica.Fluid.Sensors.MassFlowRate </li>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Sensors.MassFlowRate_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Sensors.MassFlowRate_icon.JPG?raw=true" width="100"></a><br />
+				
+				<li> Modelica.Fluid.Pipes.StaticPipe </li>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Pipes.StaticPipe_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Pipes.StaticPipe_icon.JPG?raw=true" width="100"></a><br />
+				
+				<li> Modelica.Blocks.Sources.Ramp </li>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Blocks.Sources.Ramp_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Blocks.Sources.Ramp_icon.JPG?raw=true" width="100"></a><br />
+				
+				<li> Modelica.Fluid.Sensors.RelativePressure </li>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Sensors.RelativePressure_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Sensors.RelativePressure_icon.JPG?raw=true" width="100"></a><br />
+				
+				<li> Modelica.Blocks.Math.Product </li>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Blocks.Math.Product_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Blocks.Math.Product_icon.JPG?raw=true" width="100"></a><br />
+				
+				<li> Modelica.Blocks.Math.Gain </li>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Blocks.Math.Gain_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Blocks.Math.Gain_icon.JPG?raw=true" width="100"></a><br />
+				
+			</ol>
+	</li>
+	
+	<h1><li> parameterの設定</h1> 
+		<p>	各コンポーネントのparameter設定を示す。コンポーネントを右クリックしてparametersを選択するか、ダブルクリックするとparametersウィンドウが現れるので、必要箇所に値を設定する。
+		</p>
+		<p>	尚、デフォルト設定のままにしておいて済むコンポーネント、parameterと、<a href="https://virtualmbdlabmodelica.net/walkingthermofluid_pumpingsystem_ex01/">pumpingSystem_ex01</a>と値が同じものは記載を省略する。また、parameterの意味もparameterウィンドウ上の記載から意味が理解可能なものは省略/簡潔に済ます。
+		</p>
+		
+		<ol>
+			<li> ramp_pump_N &emsp;
+			＊インスタンス名を「ramp1」から変更したが、parameter設定値は<a href="https://virtualmbdlabmodelica.net/walkingthermofluid_pumpingsystem_ex01/">pumpingSystem_ex01</a>の「ramp1」と同じ。
+			</li>
+			
+			<li> pump1 &emsp;
+				<h5> General タブ下 </h5>
+				<ol>
+					<li> nParallel: 1 </li>
+					<li> N_nominal: 1000 </li>
+				</ol>
+				
+				<h5> Assumption タブ下 </h5>
+				<ol>
+					<li> checkValve: true, *一応trueにしておく。　</li>
+					<li> V: 1 </li> 
+					<li> energyDynamics: Modelica.Fluid.Types.Dynamics.DynamicFreeInitial </li>
+					<li> massDynamics: Modelica.Fluid.Types.Dynamics.DynamicFreeInitial </li>
+				</ol>
+				
+				<h5> Initialization タブ下 </h5>
+				<ol>
+					<li> p_b_start (in Initialization tab): 10*system.p_start </li>&emsp;*計算初期値なので、最終結果には影響しないが、ある程度高い値を与えておかないと計算がinitalizationでfailする。
+					<li> m_flow_start (in Initialization tab): 10 </li>&emsp;*計算初期値なので、最終結果には影響しないが、ある程度大きい値を与えておかないと計算がinitalizationでfailする。
+				</ol>
+				
+				<p> 以上に加えて、「PrescribedPump」同様に、揚程 vs. 体積流量と断熱効率の特性をソースコードに記述しなければならないが、ここではparametersウィンドウから設定するものだけを示す。ソースコード記載事項は次項で記す。 </p>
+			</li>
+			
+			<li> ramp_valve &emsp;
+				<ol>
+					<li> height: -0.5 </li>
+					<li> duration: 10 </li>
+					<li> offset: 1 </li>
+					<li> startTime: 30 </li>
+				</ol>
+			</li>
+			
+			<li> valveLinear1 &emsp;
+				<ol>
+					<li> m_flow_nominal: 100 [kg/s] </li>
+					<li> dp_nominal: 500*1000 [Pa] </li>
+				</ol>
+			</li>
+		</ol>
+	<br />
+	</li>
+	
+	<h1><li> ソースコード</h1> &emsp;
+		<p>	上記までを行うとOpenModelicaがソースコードを自動生成してくれている。一部ソースコードを直接書かなければならない箇所が有るのと、エラーが生じた場合の比較のために、本モデルの完成状態のソースコードを示す。尚、ソースコードを直書きする作業が残っているが、その解説はソースコードの後に記載する。
+		</p>
+		
+		<ol>
+			<li> 完成状態のソースコード（チェック用） &emsp;
+				<p>				コンパイルエラーや、計算結果が意図通りのものとならないような場合に比較・チェック用に参照して欲しい。尚、annotation()の部分はGUI上の配置位置や向きで値が変わるものなので、比較する必要は無い。
+				</p>
+				<p>-------------------------------------------------------------------------------</p>
+				<pre>
+model pumpingSystem_ex03
+  extends Modelica.Icons.Example;
+  <highlightYellow>//----------
+  replaceable package fluid1 = Modelica.Media.Water.StandardWaterOnePhase;
+  //redeclare package Medium = fluid1
+  //----------</highlightYellow>
+  inner Modelica.Fluid.System system annotation(
+    Placement(visible = true, transformation(origin = {-50, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Sources.Boundary_pT boundary(<highlightYellow>redeclare package Medium = fluid1</highlightYellow>, T = 288.15, nPorts = 1, p = 101.325 * 1000) annotation(
+    Placement(visible = true, transformation(origin = {-110, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Pipes.StaticPipe pipe(<highlightYellow>redeclare package Medium = fluid1</highlightYellow>, diameter = 0.05, length = 0.5, nParallel = 1) annotation(
+    Placement(visible = true, transformation(origin = {60, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Sources.Boundary_pT boundary1(<highlightYellow>redeclare package Medium = fluid1</highlightYellow>, nPorts = 1, p = 101.325 * 1000) annotation(
+    Placement(visible = true, transformation(origin = {120, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Ramp ramp_pump_N(duration = 10, height = 1000, offset = 1000, startTime = 10) annotation(
+    Placement(visible = true, transformation(origin = {-110, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Math.UnitConversions.From_rpm from_rpm1 annotation(
+    Placement(visible = true, transformation(origin = {-80, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Machines.Pump pump1(<highlightYellow>redeclare package Medium = fluid1</highlightYellow>, <highlightRed>redeclare function flowCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.quadraticFlow(V_flow_nominal = {0, 0.25, 0.5}, head_nominal = {100, 60, 0})</highlightRed>, <highlightRed>redeclare function efficiencyCharacteristic=Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal=0.9)</highlightRed>, N_nominal = 1000, V(displayUnit = "l") = 0.001, checkValve = true, energyDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, m_flow_start = 10, massDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, nParallel = 1, p_b_start = 10 * system.p_start) annotation(
+    Placement(visible = true, transformation(origin = {-30, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Mechanics.Rotational.Sources.Speed speed1(phi(fixed = false))  annotation(
+    Placement(visible = true, transformation(origin = {-50, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Mechanics.Rotational.Sensors.PowerSensor powerSensor1 annotation(
+    Placement(visible = true, transformation(origin = {-30, 20}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
+  Modelica.Fluid.Sensors.VolumeFlowRate volumeFlowRate1(<highlightYellow>redeclare package Medium = fluid1</highlightYellow>) annotation(
+    Placement(visible = true, transformation(origin = {0, -10}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
+  Modelica.Fluid.Sensors.RelativePressure relativePressure1(<highlightYellow>redeclare package Medium = fluid1</highlightYellow>) annotation(
+    Placement(visible = true, transformation(origin = {-30, -70}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Blocks.Math.Gain gain_pumpEff(k = 0.9)  annotation(
+    Placement(visible = true, transformation(origin = {0, 28}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Math.Product d_flowPwrOutlet annotation(
+    Placement(visible = true, transformation(origin = {-24, -100}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+  Modelica.Fluid.Sensors.VolumeFlowRate volumeFlowRate2(<highlightYellow>redeclare package Medium = fluid1</highlightYellow>) annotation(
+    Placement(visible = true, transformation(origin = {-70, -10}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
+  Modelica.Fluid.Sensors.MassFlowRate massFlowRate1(<highlightYellow>redeclare package Medium = fluid1</highlightYellow>) annotation(
+    Placement(visible = true, transformation(origin = {30, -10}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
+  Modelica.Blocks.Math.Product d_flowPwrInlet annotation(
+    Placement(visible = true, transformation(origin = {-64, -100}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+  Modelica.Fluid.Valves.ValveLinear valveLinear1(<highlightYellow>redeclare package Medium = fluid1</highlightYellow>, dp_nominal(displayUnit = "Pa") = 500 * 1000, m_flow_nominal = 100)  annotation(
+    Placement(visible = true, transformation(origin = {90, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Ramp ramp_valve(duration = 10, height = -0.5, offset = 1.0, startTime = 30) annotation(
+    Placement(visible = true, transformation(origin = {70, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+equation
+  connect(d_flowPwrOutlet.u1, volumeFlowRate1.V_flow) annotation(
+    Line(points = {{-18, -88}, {-18, -82}, {0, -82}, {0, -22}}, color = {0, 0, 127}));
+  connect(relativePressure1.p_rel, d_flowPwrInlet.u1) annotation(
+    Line(points = {{-30, -79}, {-30, -79}, {-30, -83}, {-58, -83}, {-58, -89}, {-58, -89}}, color = {0, 0, 127}));
+  connect(relativePressure1.p_rel, d_flowPwrOutlet.u2) annotation(
+    Line(points = {{-30, -79}, {-30, -87}}, color = {0, 0, 127}));
+  connect(pump1.port_a, relativePressure1.port_b) annotation(
+    Line(points = {{-40, -10}, {-48, -10}, {-48, -70}, {-40, -70}}, color = {0, 127, 255}));
+  connect(relativePressure1.port_a, pump1.port_b) annotation(
+    Line(points = {{-20, -70}, {-14, -70}, {-14, -10}, {-20, -10}}, color = {0, 127, 255}));
+  connect(volumeFlowRate2.V_flow, d_flowPwrInlet.u2) annotation(
+    Line(points = {{-70, -20}, {-70, -88}}, color = {0, 0, 127}));
+  connect(ramp_valve.y, valveLinear1.opening) annotation(
+    Line(points = {{82, 50}, {90, 50}, {90, -2}, {90, -2}}, color = {0, 0, 127}));
+  connect(valveLinear1.port_b, boundary1.ports[1]) annotation(
+    Line(points = {{100, -10}, {110, -10}, {110, -10}, {110, -10}}, color = {0, 127, 255}));
+  connect(pipe.port_b, valveLinear1.port_a) annotation(
+    Line(points = {{70, -10}, {80, -10}, {80, -10}, {80, -10}}, color = {0, 127, 255}));
+  connect(boundary.ports[1], volumeFlowRate2.port_a) annotation(
+    Line(points = {{-100, -10}, {-80, -10}}, color = {0, 127, 255}));
+  connect(massFlowRate1.port_b, pipe.port_a) annotation(
+    Line(points = {{40, -10}, {50, -10}}, color = {0, 127, 255}));
+  connect(volumeFlowRate1.port_b, massFlowRate1.port_a) annotation(
+    Line(points = {{10, -10}, {20, -10}, {20, -10}, {20, -10}}, color = {0, 127, 255}));
+  connect(volumeFlowRate2.port_b, pump1.port_a) annotation(
+    Line(points = {{-60, -10}, {-40, -10}, {-40, -10}, {-40, -10}}, color = {0, 127, 255}));
+  connect(powerSensor1.power, gain_pumpEff.u) annotation(
+    Line(points = {{-18, 28}, {-12, 28}, {-12, 28}, {-12, 28}}, color = {0, 0, 127}));
+  connect(pump1.port_b, volumeFlowRate1.port_a) annotation(
+    Line(points = {{-20, -10}, {-10, -10}}, color = {0, 127, 255}));
+  connect(powerSensor1.flange_b, pump1.shaft) annotation(
+    Line(points = {{-30, 10}, {-30, 0}}));
+  connect(speed1.flange, powerSensor1.flange_a) annotation(
+    Line(points = {{-40, 50}, {-30, 50}, {-30, 30}}));
+  connect(from_rpm1.y, speed1.w_ref) annotation(
+    Line(points = {{-69, 50}, {-63, 50}, {-63, 50}, {-63, 50}}, color = {0, 0, 127}));
+  connect(ramp_pump_N.y, from_rpm1.u) annotation(
+    Line(points = {{-99, 50}, {-93, 50}}, color = {0, 0, 127}));
+  annotation(
+    experiment(StartTime = 0, StopTime = 60, Tolerance = 1e-06, Interval = 0.12),
+    __OpenModelica_simulationFlags(lv = "LOG_STATS", outputFormat = "mat", s = "dassl"),
+  Diagram(coordinateSystem(extent = {{-140, -120}, {140, 100}})),
+  __OpenModelica_commandLineOptions = "");
+end pumpingSystem_ex03;
+				</pre>
+				<p>-------------------------------------------------------------------------------</p>
+			</li>
+			<br />
+			
+			<li> mediumのredeclare; 黄色ハイライト部 &emsp;
+				<p>	（＊OpenModelica ver 1.16.0 でparameterウィンドウから設定出来るようになっている。） </p>
+				<p>OpenModelica の表示を、text　viewに切り替える。そして、モデルソースコード内に、前項に示したソースコード中で黄色ハイライトで示されている記述を直接書き足す。これらの記述で、使用する物性モデル（本モデルでは水であること）を指定する。</p>
+				<br />
+				<p> <a href="https://virtualmbdlabmodelica.net/walkingthermofluid_pumpingsystem_ex01/">pumpingSystem_ex01の回</a>でも述べたが、筆者はモデルの階層で一度「fluid1」というmediumを定義し、各コンポーネント内では = fluid1 と宣言している。これにより、参照した物性を変更する時に書き換える箇所を1か所で済ませる事が出来る。 </p>
+			</li>
+			<br />
+			
+			<li> pumpの揚程 vs. 体積流量、断熱効率の特性設定； 赤色ハイライト部 &emsp;
+				<p>　設定すべき事項、設定値共に<a href="https://virtualmbdlabmodelica.net/walkingthermofluid_pumpingsystem_ex01/">pumpingSystem_ex01の回</a>のpumpと同一なのでコピー＆ペーストすれば良い。解説は省略する。　</p>
+				
+			</li>
+			<br />
+		</ol>
+		
+	<br />
+	</li>
+	
+	
+	<h1><li> シミュレーション実行＆結果評価</h1> &emsp;
+		<p>
+		それでは、観たいvariableの値や動きを評価してゆこう。
+		</p>
+		<p>毎度通り、本連載はOpenModelicaでモデルを組む演習が主目的なのでサクサク観てゆく。本記事では答え合わせとして軽い解説で進めるが、実用としてModelica,１DCAEを実物/試験を再現したり、設計予測に使えるようになったら、本来はこの段階の考察が最も重要かつ時間をかけるべきところだ。その点は憶えておいて頂きたい。</p>
+		
+		<ul>
+		<h2><li> Input </h2> &emsp;
+			<p> inputsとして与えた（変化させた）値が意図通りvariablesに反映されているか確認。　</p>
+			<ol>
+				<li> ポンプ機械回転数, pump.N </li>&emsp;
+				<p> 意図通り、時刻 10 - 20 [s] で加速させられている。 </p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_res01.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_res01.jpg?raw=true" width="800"></a>
+				<br />
+				
+				
+				<li> バルブ開度, valveLinear1.opening </li>&emsp;
+				<p> 意図通り、時刻 30 - 40 [s] で全開から開度半分に変化させられている。 </p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_res02.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_res02.jpg?raw=true" width="800"></a>
+				<br />
+				
+			</ol>
+		</li>
+		
+		<h2><li> Output </h2> 
+			<p> どの時系列グラフも0 [s] 直後、最左部で急激な動きをしているが、これは<a href="https://virtualmbdlabmodelica.net/walkingthermofluid_pumpingsystem_ex01/">pumpingSystem_ex01の時</a>と同様、ポンプ内にvolume項よる過渡挙動なのでここでは無視すれば良い。 </p>
+			
+			<ol>
+				<li> ポンプ通過体積流量; pump.V_flow </li>
+				<p> 意図通り、機械回転数を上げるのに応じて増加、バルブを閉じるのに従って減少している。 </p>
+				<p> ここで注意点だが、バルブ閉じに対する挙動が線形でないが、これは正しい動きだ。次項で観るが、バルブはlinearと名付けられているものの、開度と体積流量（質量流量）の関係が線形にはならない。 </p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_res03.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_res03.jpg?raw=true" width="800"></a>
+				<br />
+				
+				<li> バルブ差圧 vs. バルブ通過質量流量; valveLinear1.dp vs. valveLinear1.m_flow </li>
+				<p> valveLinearでは、開度と体積流量の関係は線形にならないが、差圧と質量流量の関係が線形となる。 </p>
+				<p> pumpの加速に応じて線形に通過質量流量・差圧共に線形増加し、開度を下げるのに応じて質量流量は下がり、線形に差圧が増加している。 </p>
+				<p> 参考までに、開度下げ終了位置（赤点部）からポンプを加速/減速した場合に想定される動きを点線で示す。 </p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_res09.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_res09.jpg?raw=true" width="800"></a>
+				<br />
+				
+				<li> ポンプ通過体積流量 vs. 機械回転数; pump.V_flow vs. pump.N </li>
+				<p> <a href="https://virtualmbdlabmodelica.net/walkingthermofluid_pumpingsystem_ex01/">pumpingSystem_ex01</a>と同様に線形の動き。一番右で体積流量が低下しているのはバルブを閉じることにより、同回転数のまま通過流量が小さくなったため。 </p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_res04.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_res04.jpg?raw=true" width="800"></a>
+				<br />
+				
+				<li> ポンプ出口流体圧力; pump.port_b.p </li>
+				<p> 機械回転数の増加に伴って2次カーブ状に増加。その後、30 - 40 [s] でバルブを閉じるのに応じて同様にバルブ差圧上昇分2次カーブ状に増加する。 </p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_res05.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_res05.jpg?raw=true" width="800"></a>
+				<br />
+				
+				<li> ポンプ消費機械power; pump.W_total </li>
+				<p> 機械回転数を上げるのに従って増加し、その後、バルブ閉じに応じて減少する。バルブ閉じに対して消費機械powerが増えるか減るかは一概には言えない。消費機械powerは通過体積流量と圧力上昇(=下流の圧力損失）で決まるが、バルブを閉じると通過体積流量は減り、下流圧力損失は増え、それぞれ逆の動きをするからだ。本例題の場合は、バルブの差圧上昇よりも通過体積流量減少の効きの方が強く、消費パワーが減少した。 </p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_res06.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_res06.jpg?raw=true" width="800"></a>
+				<br />
+				
+				<li> ポンプ駆動軸トルク; pump.shaft.tau </li>
+				<p> 当然のことながら消費powerとほぼ同じ動きとなる。 </p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_res08.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_res08.jpg?raw=true" width="800"></a>
+				<br />
+				
+				<li> ポンプ消費機械power vs. 機械回転数; pump.W_total vs. pump.N </li>
+				<p> <a href="https://virtualmbdlabmodelica.net/walkingthermofluid_pumpingsystem_ex01/">pumpingSystem_ex01</a>と同様の3次カーブの動き。 </p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_res07.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/pumpingSystem_ex03_res07.jpg?raw=true" width="800"></a>
+				<br />
+			</ol>
+		</li>
+		</ul>
+	<br />
+	</li>
+	
+	<h1><li> 最後に</h1>
+		<p> <a href="https://virtualmbdlabmodelica.net/walkingthermofluid_pumpingsystem_ex01/">pumpingSystem_ex01</a>に回転機械のインターフェイスと流量調整機構を加え、ごく単純に見えて多くの要素現象を内包したシステムのモデルが作成された。 </p>
+		<p> 熱授受、熱交換、伝熱、流路分岐、ループを持つ流体回路、非定常応答、流体からのpower取出し（タービンやピストン）、センサ読取値を用いて機器のinputを決める自動制御等、カバーできていない要素/現象はまだ数多有る。しかし、本例題までで取り扱った要素・現象の組み合わせでもある程度複雑で実用的なシステムのモデルを組み立てられるようになれたのではないかと思う。是非各自、身の回りのものや興味のあるものなどを対象にモデリングを試みて1DcAEのスキルを伸ばして欲しい。 </p>
+		<p> 上述した、まだ取り扱えていない要素/現象やそれらの組み合わせは、今後も連載記事で引き続き例題を挙げていく予定だ。乞うご期待。 </p>
+		<p>本例題は以上。</p>
+	<br />
+	</li>
+	
+	<h1><li> 例モデルに関する情報</h1>
+		<p>	本記事で取り上げたモデルは専用の「WalkingInWorldOfThermoFluid」ライブラリに公開しており、その情報を記しておく。ソースコードは本記事にも記載したが、直接OpenModelicaで読み込みたい方はダウンロードしてGPL3の範囲内で自由に使っていただいて構わない。
+		</p>
+		<ul>
+			<li> モデルのフルパス： WalkingInWorldOfThermoFluid.Introductory.pumpingSystem_ex03 </li>
+			<li> <a href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid"> githubのライブラリページリンク </a> </li>
+		</ul>
+		<br />
+	</li>
+	
+</ol>
+
+<a href="https://virtualmbdlabmodelica.net/walkinginworldofthermofluid_listofarticles/"> リンク：[連載]Modelicaによる熱流体の世界の歩き方 の記事一覧ページ </a>
+<br />
+
+<div  style="text-align: right;">以上 </div>

@@ -1,0 +1,337 @@
+
+<head>
+	<style type="text/css">
+	highlightYellow
+	{
+		background: linear-gradient(transparent 0%, yellow 0%);
+	}
+	</style>
+</head>
+
+
+<!-- -------------------------------------------------------
+[連載]Modelicaによる熱流体の世界の歩き方・FlowResistance_ex01
+	update: 2020/10/29
+------------------------------------------------------- -->
+<p>
+例題第1号。最も単純な流体回路、ただ直管の圧力損失抵抗が有るだけの、1本道の流路を作る。
+</p>
+<p>
+OpenModelicaで既存コンポーネントを組み合わせてモデルを作成する手順は、内容に関わらず毎回ほぼ同じだ（コンポーネント自体を1から作成する場合は全く異なる）。従って、OpenModelicaを用いたモデル作成操作手順は各例題のページでは割愛する。別途、モデル作成の手順一通りを解説するページを設けようと考えている。
+</p>
+<br />
+
+<ol>
+<li> 手書きスケッチ
+	<p>	先ずは、作成しようとしているシステムの概念図を書く。慣れるまでは、作ろうとしているものを一度図に書き出す習慣を持っておこう。Modelicaではグラフィカルにコンポーネントを配置・接続してシステムモデルを組立られるが、モデリング・離散化の都合で物理的な実物の形から大きく離れた見た目のものが出来てしまうことがよく起きる。そうなった時に、作るモノのイメージを一度具体化しておかないと、何を作っているのか自分で見失ってしまう事が起きてしまう為だ。
+	</p>
+	<p>	対象物の形、要素要素の相互の繋がり、モデルに入れ込めたい物理現象、実装したい数式、など自身で必要と思うものを書き出そう。ここで書き出す情報の詳細度は人によって違いが出るところだと思う。どこまで書き出すのが正しと言うものは無い。筆者の場合は上図の通りの大雑把さだ。
+	</p>
+	<a  href="https://github.com/zeta-plusplus/PropulsionSystem/blob/master/docs/Examples/WalkingInWorldOfThermoFluid/FlowResistance_ex01_01.jpg?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/PropulsionSystem/blob/master/docs/Examples/WalkingInWorldOfThermoFluid/FlowResistance_ex01_01.jpg?raw=true" width="600"></a>
+	
+	<br />
+	<p>
+	モデル作成に進む前に、作成対象物について軽く纏めておこう。（parameterは省略。）
+		<ul>
+		<li> 流路は1本の直管。 </li>
+		<li> 流す流体は水(液相) </li>
+		<li> 内包する物理現象： </li>
+			<ol>
+			<li> 圧力損失。 </li>
+			<li> 質量保存。 </li>
+			<li> 熱量（エンタルピ）保存。出入口でエンタルピは変化しない。 </li>
+			<li> 圧力損失に伴う、出口での流体の温度上昇。熱流体の世界を歩くのだから、ただの流路でも熱的な現象を観る。＊ただし、これは非圧縮性流体でしか発生しない。 </li>
+			</ol>
+		<li> 境界条件（Input）： </li>
+			<ol>
+			<li> 入口質量流量。（値を変化させる） </li>
+			<li> 入口温度。（固定値） </li>
+			<li> 出口圧力。（固定値） </li>
+			</ol>
+		<li> Output（多数有るが、注目するもの）： </li>
+			<ol>
+			<li> 入口圧力（出口圧力と圧力損失から決まる）。 </li>
+			<li> 入口比エンタルピ。　</li>
+			<li> 出口比エンタルピ。 </li>
+			<li> 入口温度。 </li>
+			<li> 出口温度。 </li>
+			</ol>
+		</ul>
+	</p>
+</li>
+<br />
+
+<!-- ------------------------------------------------------------ -->
+<!-- ------------------------------------------------------------ -->
+
+
+<!-- 忍者admax 記事内1 468x60　-->
+<!-- admax -->
+<script src="https://adm.shinobi.jp/s/1d2709c73dac3b7a347631f79382ba46"></script>
+<!-- admax -->
+
+
+<li> packageとmodelファイルの作成 
+	<p>	package作成は必須ではなく、modelだけを作成しても良い。しかし、演習ならそれ用packageを作っておいて、そこにmodelを足してゆく方が管理が行い易く、お薦めする。
+	</p>
+	<p>
+	packageを用意して、そこにmodelを作成する操作の解説は別途解説する記事を設けようと考えているのでここでは解説しない。
+	</p>
+</li>
+<br />
+
+
+<br />
+<br />
+
+<li> コンポーネントの配置 
+	<p>	下図の通りにコンポーネントを配置・接続する。慣れないうちは使用するコンポーネントを探す事が非常に手間・高いハードルだろうと思う。従って、以下にフルパスでリストアップしておく。
+	</p>
+	<ol>
+	<li> Modelica.Fluid.System  </li>
+		<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.System_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.System_icon.JPG?raw=true" width="100"></a>
+		<br />
+		Modelica.Fluidのコンポーネントを使う為におまじない的に必要なものと考えれば良い。
+		
+	<li> Modelica.Blocks.Sources.Ramp </li>
+		<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Blocks.Sources.Ramp_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Blocks.Sources.Ramp_icon.JPG?raw=true" width="100"></a>
+		<br />
+		ランプ信号発生器
+	
+	<li> Modelica.Fluid.Sources.MassFlowSource_T </li>
+		<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Sources.MassFlowSource_T_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Sources.MassFlowSource_T_icon.JPG?raw=true" width="100"></a>
+		<br />
+		質量流量,温度を境界条件として与えるもの。
+	
+	<li> Modelica.Fluid.Vessels.ClosedVolume </li>
+		<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Vessels.ClosedVolume_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Vessels.ClosedVolume_icon.JPG?raw=true" width="100"></a>
+		<br />
+		ボリューム効果（質量流量、エネルギの過渡的な溜り）を代表する。
+	
+	<li> Modelica.Fluid.Pipes.StaticPipe </li>
+		<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Pipes.StaticPipe_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Pipes.StaticPipe_icon.JPG?raw=true" width="100"></a>
+		<br />
+		名の通り配管。圧力損失のみが起きるタイプのもので、ボリューム効果は別途上記コンポーネントで表現する。
+	
+	<li> Modelica.Fluid.Sources.Boundary_pT </li>
+		<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Sources.Boundary_pT_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Sources.Boundary_pT_icon.JPG?raw=true" width="100"></a>
+		<br />
+		圧力、温度を境界条件として与えるもの。ただし、流体が本コンポーネントに流れ込む場合、温度のinputは使われない。
+	</ol>
+	
+	<br />
+	<a  href="https://github.com/zeta-plusplus/PropulsionSystem/blob/master/docs/Examples/WalkingInWorldOfThermoFluid/FlowResistance_ex01_00.jpg?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/PropulsionSystem/blob/master/docs/Examples/WalkingInWorldOfThermoFluid/FlowResistance_ex01_00.jpg?raw=true" width="800"></a>
+	<p>	コンポーネントをドラッグ＆ドロップで配置する、port間を線で繋ぐ、と言うと作業自体は単純だ。しかし、このプロセスこそが1DCAEの肝。各コンポーネントに何の機能を持たせるのか、各々の接続が何を意味するのか/何のためのものなのか、を意識・理解しなければ、自在に複雑奇怪な物理システムのモデルを組み立てられるようにはならない。上記の通り、使用コンポーネントリストにそれぞれの概要を、図中にシステム内での役割を簡単に記しているので、必ず理解・意識しながら進めて欲しい。このようなメモ書き程度の説明では理解が及ばなければ、是非、各コンポーネントのdocumentationやソースコードを見てみよう。
+	</p>
+	<p>
+	加えて、些細だが1点注意点が有る。multi-portを持つコンポーネント（図中の、boudary, volume, volume1, boundary1）を接続する時、何番portに繋ぐかを設定しなければならない。この時、番号を重複させたり、存在しない番号を設定（例、portは2つまでになのに、3番に設定。）してしまわないよう注意しておかねばならない。混乱しないよう、"左・上から1,2,,,と順に番号を与える"、と言ったマイルールを定めておく事をお薦めする。とは言っても、接続番号設定に不適切なものが有ると、コンパイル時にエラーが出て発覚するので神経質になる必要は無い。不適切な番号設定のまま計算が流れて不適切な結果が出る、と言う事態は心配しなくて良い。
+	</p>
+</li>
+<br />
+
+<li> parameterの設定 
+	<p>	コンポーネント配置・接続が済んだら、各々のparameterを設定していく。コンポーネントを右クリックしてparametersを選択するか、ダブルクリックするとparametersウィンドウが現れるので、必要箇所を設定する。
+	</p>
+	<p>	コンポーネント（のインスタンス）毎に、parameterの意味と設定値を記載する。尚、デフォルト設定のままにしておいて済むコンポーネント、parameterは記載自体を省略する。また、parameterの意味もparameterウィンドウ上の記載から意味が理解可能なものは省略/簡潔に済ます。
+	</p>
+	<ol>
+		<li> ramp1 
+		<ol>
+			<li> height: 10 </li>
+			<li> duration: 10 </li>
+			<li> offset: 10 </li>
+			<li> startTime: 10 </li>
+		</ol>
+		</li>
+		
+		<li> boudary 
+		<ol>
+			<li> user_m_flow_in: チェックを入れる。 </li> &nbsp;
+			質量流量inputをparameterではなく、portから信号で与えるスイッチ。
+			<li> T: 15+273.15 [K] </li>
+			<li> nPorts: 1 </li>
+		</ol>
+		</li>
+		
+		<li> volume 
+		<ol>
+			<li> V: 1.0e-3  </li> &nbsp;配管内部容積に合わせて値を設定するのが正しいが、今回はvolumeで圧力損失による温度上昇を見られれば良いので現実的で適当な値を入れる。 
+			<li> nPorts: 2 </li>
+			<li> use_portsData: false </li> &nbsp; portに高さ、径の情報を与えるかのスイッチ。volumeをタンクの様に出入口を持つ容器として扱いたい場合にtrueを選ぶ。今回はvolume効果を入れ、体積を持つノードして扱うので不要。
+		</ol>
+		</li>
+		
+		<li> pipe 
+		<ol>
+			<li> length: 5 </li>
+			<li> diameter: 0.05 </li>
+		</ol>
+		</li>
+		
+		<li> volume1 
+		<ol>
+			<li> V: 1.0e-3 </li>
+			<li> nPorts: 2 </li>
+			<li> use_portsData:　false </li>
+		</ol>
+		</li>
+		
+		<li> boundary1
+		<ol>
+			<li> p: 101.325*1000 </li>
+			<li> T: 15+273.15  </li> &nbsp;＊今回、流体が本コンポーネントに流れ込むので設定値は上流の計算に使われないが、本コンポーネント内のmediumの計算には使われるので、エラーを起こさせないように現実的な値を与えておく。
+			<li> nPorts: 1 </li>
+		</ol>		
+		</li>
+	</ol>
+</li>
+<br />
+
+
+<!-- 忍者admax 記事内2 728x90　-->
+<!-- admax -->
+<script src="https://adm.shinobi.jp/s/4fa392ee64bc24466b25a3e962a2598c"></script>
+<!-- admax -->
+
+
+<br />
+<br />
+
+<li> ソースコード
+	<p>	上記までを行うとOpenModelicaがソースコードを自動生成してくれている。一部ソースコードを直接触らなければならない作業が有るのと、エラーが生じた場合の比較のために、本モデルの完成状態のソースコードを示す。
+	</p>
+	<p>	＊誤解して欲しく無いが、”Modelica”はGUIベースで1DCAEモデルを組み立てるツールではなく、飽くまで物理モデリング用の言語。GUIでモデリングが出来るのは、OpenModelica等Modelicaを扱うツールの機能だ。
+	</p>
+	<ol>
+		<li> mediumのredeclareコードを直接記述 
+			<p>
+			（＊OpenModelica ver 1.16でparameterウィンドウから設定出来るようになり、不要な手順となる見込み。nightly build版では既に可能になっている（2020年6月時点の情報）。）
+			</p>
+			<p>
+			text viewに切り替え、モデルソースコード内に、次項に示すソースコード中で<highlightYellow>黄色ハイライト</highlightYellow>で示されている記述を、直接書き足す。これらの記述が各流体コンポーネント内の計算が参照する物性計算パッケージを指定する。これを記述することで漸く流す流体が液体の水であることを指定される。そして、使用する流体を切り替える場合はこの部分だけを書き換えるだけで済む。
+			</p>
+		</li>
+		
+		<li> 完成状態のソースコード（チェック用）
+			<p>
+			コンパイルエラーや、計算結果が意図通りのものとならないような場合に比較・チェック用に参照して欲しい。尚、annotation()の部分はGUI上の配置位置や向きで値が変わるものなので、比較する必要は無い。
+			</p>
+			<p>-------------------------------------------------------------------------------</p>
+			<pre>
+within PropulsionSystem.Examples.WalkingInWorldOfThermoFluid;
+
+model FlowResistance_ex01
+  extends Modelica.Icons.Example;
+  <highlightYellow>//----------
+  replaceable package liquid1 = Modelica.Media.Water.StandardWaterOnePhase;
+  //----------</highlightYellow>
+  inner Modelica.Fluid.System system(T_ambient(displayUnit = "K") = 15 + 273.15, p_ambient(displayUnit = "Pa") = 101.325 * 1000) annotation(
+    Placement(visible = true, transformation(origin = {-90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Sources.MassFlowSource_T boundary(<highlightYellow>redeclare package Medium = liquid1,</highlightYellow> T = 15 + 273.15, m_flow = 1, nPorts = 1, use_m_flow_in = true) annotation(
+    Placement(visible = true, transformation(origin = {-50, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Sources.Boundary_pT boundary1(<highlightYellow>redeclare package Medium = liquid1,</highlightYellow> T = 15 + 273.15, nPorts = 1, p = 101.325 * 1000) annotation(
+    Placement(visible = true, transformation(origin = {70, 50}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Fluid.Pipes.StaticPipe pipe(<highlightYellow>redeclare package Medium = liquid1,</highlightYellow> diameter = 0.05, length = 5) annotation(
+    Placement(visible = true, transformation(origin = {10, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Vessels.ClosedVolume volume(<highlightYellow>redeclare package Medium = liquid1,</highlightYellow> V = 1.0e-3, nPorts = 2, use_portsData = false) annotation(
+    Placement(visible = true, transformation(origin = {-20, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Vessels.ClosedVolume volume1(<highlightYellow>redeclare package Medium = liquid1,</highlightYellow> V = 1.0e-3, nPorts = 2, use_portsData = false) annotation(
+    Placement(visible = true, transformation(origin = {40, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Ramp ramp1(duration = 10, height = 10, offset = 10, startTime = 10) annotation(
+    Placement(visible = true, transformation(origin = {-90, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+equation
+  connect(volume.ports[2], pipe.port_a) annotation(
+    Line(points = {{-20, 50}, {0, 50}}, color = {0, 127, 255}));
+  connect(boundary.ports[1], volume.ports[1]) annotation(
+    Line(points = {{-40, 50}, {-20, 50}}, color = {0, 127, 255}, thickness = 0.5));
+  connect(volume1.ports[2], boundary1.ports[1]) annotation(
+    Line(points = {{40, 50}, {60, 50}, {60, 50}, {60, 50}}, color = {0, 127, 255}, thickness = 0.5));
+  connect(ramp1.y, boundary.m_flow_in) annotation(
+    Line(points = {{-78, 50}, {-76, 50}, {-76, 58}, {-60, 58}, {-60, 58}}, color = {0, 0, 127}));
+  connect(pipe.port_b, volume1.ports[1]) annotation(
+    Line(points = {{20, 50}, {38, 50}, {38, 50}, {40, 50}}, color = {0, 127, 255}));
+  annotation(
+    experiment(StartTime = 0, StopTime = 30, Tolerance = 1e-06, Interval = 0.06),
+    __OpenModelica_simulationFlags(lv = "LOG_STATS", outputFormat = "mat", s = "dassl"));
+end FlowResistance_ex01;
+			</pre>
+			<p>-------------------------------------------------------------------------------</p>
+		</li>
+		
+	</ol>
+</li>
+<br />
+
+<li> シミュレーション実行＆結果評価
+	<p>
+	ここまで来たら、作業として残っているのはシミュレーション実行だけだ。そして、観たいvariableの値や動きを評価してゆこう。
+	</p>
+	<ul>
+		<li> Inputs
+			<p> inputsとして与えた（変化させた）値が意図通りvariablesに反映されているか確認。　</p>
+			<ol>
+				<li> 通過質量流量: volume.ports[1].m_flow </li>
+					<p>
+					意図通り、時刻10 [s] から10 [s] 掛けてランプ状に増加させられている。
+					</p>
+					<a  href="https://github.com/zeta-plusplus/PropulsionSystem/blob/master/docs/Examples/WalkingInWorldOfThermoFluid/FlowResistance_ex01_res01.jpg?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/PropulsionSystem/blob/master/docs/Examples/WalkingInWorldOfThermoFluid/FlowResistance_ex01_res01.jpg?raw=true" width="800"></a>
+			</ol>
+		</li>
+		
+		<li> Outputs
+			<p>　事前に述べた、興味のあるvariablesの動き。 </p>
+			<ol>
+				<li> 入口圧力: pipe.port_a.p </li>
+					<p>
+					通過質量流量を線形に増加させたのに対して、２次カーブに近い形で増加している。圧力損失は流速の２乗に比例して増加するので妥当な動きである。
+					</p>
+					<p>
+					＊ただし、圧力損失係数がRe数に応じて変化するので、完全な２乗にはならない。
+					</p>
+					<a  href="https://github.com/zeta-plusplus/PropulsionSystem/blob/master/docs/Examples/WalkingInWorldOfThermoFluid/FlowResistance_ex01_res02.jpg?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/PropulsionSystem/blob/master/docs/Examples/WalkingInWorldOfThermoFluid/FlowResistance_ex01_res02.jpg?raw=true" width="800"></a>
+				<li> 入口/出口比エンタルピ: volume.medium.h, volume1.medium.h </li>
+					<p>	出入口で、比エンタルピの値は等しく、エンタルピ保存は保たれている。圧力損失の形で流体がエネルギを失っても、次項で観るように、失われた圧力は温度に換わるだけで流体の持つ総熱量は変わらない。もし、配管内外の温度差が大きい等、外部へ熱が逃げる経路が有る場合はエンタルピ保存は成り立たない。それを再現したい場合は、熱が逃げる回路をモデル化しなければならない。
+					</p>
+					<p>	尚、過渡応答中（シミュレーション開始直後と通過流量増加の最中）は出口に比エンタルピが入口より僅かに小さい。これはボリューム項による質量と熱量の一時的な溜りの為。従って、この事象を再現するにはvolumeをモデルに加えるか、内部にvolumeを持つdynamic pipeを持ちる必要が有る。なお、流体の持つ圧縮性が強いほど顕著に過渡応答中の差が表れる。
+					</p>
+					<a  href="https://github.com/zeta-plusplus/PropulsionSystem/blob/master/docs/Examples/WalkingInWorldOfThermoFluid/FlowResistance_ex01_res03.jpg?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/PropulsionSystem/blob/master/docs/Examples/WalkingInWorldOfThermoFluid/FlowResistance_ex01_res03.jpg?raw=true" width="800"></a>
+				<li> 入口/出口温度: pipe.flowModel.states[1].T, pipe.flowModel.states[2].T </li>
+					<p>	出口の温度は常に入口より僅かに高い。圧力損失として失われた流体のエネルギが温度に換わる。従って、通過流量を増し、圧力損失が大きくなるに従って、温度差が大きくなっている。
+					</p>
+					<a  href="https://github.com/zeta-plusplus/PropulsionSystem/blob/master/docs/Examples/WalkingInWorldOfThermoFluid/FlowResistance_ex01_res04.jpg?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/PropulsionSystem/blob/master/docs/Examples/WalkingInWorldOfThermoFluid/FlowResistance_ex01_res04.jpg?raw=true" width="800"></a>
+			</ol>
+		</li>
+	</ul>
+</li>
+<br />
+
+<li> 最後に
+	<p>
+	これで、圧力損失が発生する流路を、熱的現象を含めて一通りシミュレート完了。本例題はここまで。
+	</p>
+	<p>初回で色々述べておきたいことが有ったために、単純なモデルであるにも関わらず長い記事となってしまった。今回のモデリング対象システムは、Excelや手計算でも実施出来そうなレベルのものだったので、つまらなかったかもしれない。今後は分岐や熱授受を含む、手計算では厳しい・Excelで実施すると大変なModelicaで行ってこそのシステムも取り扱っていくので楽しみにお待ち頂きたい。
+	</p>
+	<p>	このような単純極まりない例でも、色々とparameterを変えてみてvariablesの変化を観たり、判る範囲で造り替え（例えば、pipeをorificeに変えてみるなど）を行ったりして遊ぶと理解も作業スキルも格段に高まる。是非配布している例を弄って遊んで欲しい。
+	</p>
+</li>
+<br />
+
+<li> 例モデルに関する情報
+	<p>
+	本記事で取り上げたモデルは専用の「WalkingInWorldOfThermoFluid」ライブラリに公開しており、その情報を記しておく。
+	</p>
+	<ul>
+		<li> モデルのフルパス： WalkingInWorldOfThermoFluid.Introductory.flowResistance_ex01 </li>
+		<li> <a href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid"> githubのライブラリページリンク </a> </li>
+	</ul>
+</li>
+<br />
+
+</ol>
+
+<a href="https://virtualmbdlabmodelica.net/2020/09/17/list_walkinginworldofthermofluid/"> リンク：[連載]Modelicaによる熱流体の世界の歩き方 の記事一覧ページ </a>
+
+<br />
+<div  style="text-align: right;">以上 </div>
+
+

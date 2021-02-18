@@ -1,0 +1,370 @@
+<head>
+	<style type="text/css">
+	highlightYellow
+	{
+		background: linear-gradient(transparent 0%, yellow 0%);
+	}
+	
+	highlightGreen
+	{
+		background: linear-gradient(transparent 0%, green 0%);
+	}
+	
+	highlightRed
+	{
+		background: linear-gradient(transparent 0%, red 0%);
+	}
+	</style>
+</head>
+
+<!-- ******************************************************************************** -->
+<!-- ----------------------------------------------------------------------
+[連載]Modelicaによる熱流体の世界の歩き方・FlowWithHeating_ex01
+	update: 2020/11/04
+---------------------------------------------------------------------- -->
+
+
+<p>
+今回は、流体の流れに熱を流入させる回路を作成する。熱流入以外の要素については極力シンプルに済ませ、1本の圧力損失が生じる流路の途中の1点で流体に熱が注入されるシステムを組む。
+</p>
+<p>
+本例題が目的としていることは大きく下記の２つ。
+<ul>
+	<li> 加熱機器や排熱機器の様な熱授受が発生する機器/システムの作成の基礎を習得する。 </li>
+	<li> 圧力損失（流路抵抗）が温度に依存する場合が有る。そのため、熱授受を伴う流体システムでは、流量-圧力の解析に熱授受・温度の正しい予測モデルが必要となり得ることを習得する。 </li>
+</ul>
+</p>
+
+<ol>
+	<h1><li> 手書きスケッチと作成対象物の整理</h1></li>
+		<p>	作ろうとしているものを手書きで書き下すのは、今回も定型作業として実施しておこう。 </p>
+		<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_sketch.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_sketch.jpg?raw=true" width="800"></a>
+		<br />
+		<br />
+		<p> 同じく定型作業として、モデル化対象物についての情報を纏める。極力簡潔に、箇条書きを並べるのがお勧め。 </p>
+		<ul>
+			<li> 内包する物理現象： </li>
+			<ol>
+				<li> 液体の水を使用する。 </li>
+				<li> 分岐無しの流路。 </li>
+				<li> 配管圧力損失。 </li>
+				<li> 流路途中における、流体の受熱。 </li>
+					<p>配管２つの間の1点（体積を持つとは言え）で熱量が集中して入ってくるというのは当然現実と乖離している。実際には配管全体を通して、一定の熱量が均等に流入するといったことの方が多いだろう。もちろん、広い区間を通して熱量が分布して流入するような現象を模擬するために要素の「刻み」を増やして対応することは可能だし、後の例題で必ず扱う。しかし、演習である以上は、最初は最もシンプルなところから始める。まずは1点に熱が集中流入するモデルからだ。</p>
+					<p>なお、モデリングする以上は必ず抽象化・離散化が伴う。３Dで空間メッシュを切るのとは違い、１Dは特に抽象化の度合いが強く、何を/どこまでを”１つのコンポーネント”で代表させるかが常に迷い所となるだろう。そこで重要なのは解析目的、”何を模擬したいか/観たいか”だ。観たいものに影響しない/変化を与えない部分は本例題のように1コンポーネントで済ませるべきだし、観たい現象・観たいものに強く影響を与える現象は手間を惜しまず徹底して細分化モデルを組むべきだ。例題で演習をする際や例題を組換えて遊ぶ際も、何を観ようとしているのかを常に意識して欲しい。</p>
+				<li> 受熱部下流の、配管圧力損失の変化。 </li>
+			</ol>
+			
+			<li> 境界条件（Input）： </li>
+			<ol>
+				<li> 流体の質量流量 </li>
+				<li> 流路入口の流体圧力 </li>
+				<li> 流路出口の流体圧力 </li>
+					<p> 流路入口の流体圧力は、流路圧力損失の積上げで決まる。 </p>
+				<li> 流体に流入する熱量 </li>
+			</ol>
+			
+			<li> Output（注目する出力）： </li>
+			<ol>
+				<li> 受熱部; 流体比エンタルピ </li>
+				<li> 受熱部; 流体温度 </li>
+				<li> 受熱下流の配管; 圧力損失 </li>
+				<li> 受熱下流の配管入口; 流体密度 </li>
+				<li> 受熱下流の配管入口; 流体粘度 </li>
+				<li> 受熱下流の配管入口; 流速 </li>
+				<li> 受熱下流の配管入口; レイノルズ数 </li>
+			</ol>
+				
+		</ul>
+	<br />
+	
+	
+	<h1><li> model（とpackage）ファイルの作成</h1></li>
+		<p>過去記事でも述べたように、必須ではないが、演習例題用のpackageは作成しておこう。過去記事の例で既に作成済みなら、そのpackageにmodelを作成すればOK。
+		</p>
+	<br />
+	
+	
+	<h1><li> コンポーネントの配置</h1></li>
+		<p> 下図の通りにコンポーネントを配置、接続する。 </p>
+		<p> インスタンス名はコンポーネントを配置する際に自動で命名される（標準設定では名前を尋ねるウィンドウが出てくる）が、筆者は適宜、名前をつけた方が後々判りやすいものだけ命名している。下図のものだと解りにくければ、解りやすいように名前を変えてくれて構わない。 </p>
+		
+		<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_01.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_01.jpg?raw=true" width="800"></a>
+		<br />
+		
+		<h2> 使用コンポーネントリスト </h2>
+			<p>
+			必要なコンポーネントを見つけるのは慣れていないと意外と苦労する作業なので、総てのコンポーネントをリストアップしておく。概要については過去記事で記述したものは省略する。
+			</p>
+			<ol>
+				<li> Modelica.Fluid.System </li>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.System_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.System_icon.JPG?raw=true" width="100"></a><br /><br />
+				
+				<li> Modelica.Blocks.Sources.Ramp </li>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Blocks.Sources.Ramp_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Blocks.Sources.Ramp_icon.JPG?raw=true" width="100"></a><br /><br />
+				
+				<li> Modelica.Fluid.Sources.MassFlowSource_T </li>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Sources.MassFlowSource_T_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Sources.MassFlowSource_T_icon.JPG?raw=true" width="100"></a><br /><br />
+				
+				<li> Modelica.Fluid.Sources.Boundary_pT </li>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Sources.Boundary_pT_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Sources.Boundary_pT_icon.JPG?raw=true" width="100"></a><br /><br />
+				
+				<li> Modelica.Fluid.Pipes.StaticPipe </li>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Pipes.StaticPipe_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Pipes.StaticPipe_icon.JPG?raw=true" width="100"></a><br /><br />
+				
+				<li> Modelica.Fluid.Vessels.ClosedVolume </li>
+					<p>流体に熱量を加えるコンポーネント。 </p>
+					<p>実は本コンポーネントには伝熱用のコネクタ"heatPort"が備わっており、流体系に外部から熱量を加える事が出来る（アイコンから判ったかもしれないが）。後述するがparameter設定にてスイッチを切り替える事でheatPortを有効化出来る。以後も、等容加熱過程や伝熱による流体への熱授受を表現したい場合等利用する場面が多々生じるだろう。</p>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Vessels.ClosedVolume_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Fluid.Vessels.ClosedVolume_icon.JPG?raw=true" width="100"></a><br /><br />
+				
+				<li> Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow </li>
+					<p>熱流量(heat flow)を境界条件として与えるThermalライブラリのコンポーネント。与える熱流量はReal信号で与える。</p>
+					<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow_icon.JPG?raw=true" target="_blank"><img  src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/componentIcons/Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow_icon.JPG?raw=true" width="100"></a><br /><br />
+				
+			</ol>
+	
+	
+	<h1><li> parameterの設定</h1> 
+		<p>	各コンポーネントのparameter設定を示す。コンポーネントを右クリックしてparametersを選択するか、ダブルクリックするとparametersウィンドウが現れるので、必要箇所に値を設定する。
+		</p>
+		<p>	尚、デフォルト設定のままにしておいて済むコンポーネント、parameterは記載を省略する。また、parameterの意味もparameterウィンドウ上の記載から意味が理解可能なものは省略/簡潔に済ます。
+		</p>
+		
+		<ol>
+			<li> ramp_heat </li>
+			<ol>
+				<li> height: 100*1000 </li>
+				<li> duration: 10 [s] </li>
+				<li> offset: 0 </li>
+				<li> startTime: 10 [s] </li>
+			</ol>
+			
+			<li> boundary </li>
+			<ol>
+				<li> m_flow: 1.0 [kg/s] </li>
+				<li> T: 15+273.15 [K] </li>
+				<li> nPorts: 1 </li>
+			</ol>
+			
+			<li> pipe </li>
+			<ol>
+				<li> length: 0.5 [m] </li>
+				<li> diameter: 0.01 [m] </li>
+			</ol>
+			
+			<li> pipe1 </li>
+			<ol>
+				<li> length: 0.5 [m] </li>
+				<li> diameter: 0.01 [m] </li>
+			</ol>
+			
+			<li> volume </li>
+			<ul>
+				<li>General タブ下</li>
+				<ol>
+					<li> V: Modelica.Constants.pi / 4 * pipe.diameter ^ 2.0 * pipe.length [m^3] </li>
+					<li> nPorts: 2 </li>
+					<li> use_portsData: false </li>
+				</ol>
+				
+				<li>Assumptions タブ下</li>
+				<ol>
+					<li> use_HeatTransfer: true </li>
+					<p>本parameterをtrueに設定することで、heatPortが有効化される。</p>
+				</ol>
+			</ul>
+			
+			<li> volume1 </li>
+			<ul>
+				<li>General タブ下</li>
+				<ol>
+					<li> V: Modelica.Constants.pi / 4 * pipe1.diameter ^ 2.0 * pipe1.length [m^3] </li>
+					<li> nPorts: 2 </li>
+					<li> use_portsData: false </li>
+				</ol>
+			</ul>
+			
+			<li> boundary1 </li>
+			<ol>
+				<li> p: 101.325*1000 [Pa] </li>
+				<li> T: 15+273.15 [K] </li>
+				<li> nPorts: 1 </li>
+			</ol>
+			
+		</ol>
+	<br />
+	</li>
+	
+	<h1><li> ソースコード</h1></li>
+		<p>	上記までを行うとOpenModelicaがソースコードを自動生成してくれている。一部ソースコードを直接書かなければならない箇所が有るのと、エラーが生じた場合の比較のために、本モデルの完成状態のソースコードを示す。尚、ソースコードを直書きする作業が残っているが、その解説はソースコードの後に記載する。
+		</p>
+		
+		<ol>
+			<li> 完成状態のソースコード（チェック用） </li>
+				<p>				コンパイルエラーや、計算結果が意図通りのものとならないような場合に比較・チェック用に参照して欲しい。尚、annotation()の部分はGUI上の配置位置や向きで値が変わるものなので、比較する必要は無い。
+				</p>
+				<p>-------------------------------------------------------------------------------</p>
+<pre>
+model FlowWithHeating_ex01
+  extends Modelica.Icons.Example;
+  <highlightYellow>//----------
+  replaceable package liquid1 = Modelica.Media.Water.StandardWaterOnePhase;
+  //redeclare package Medium = liquid1
+  //----------</highlightYellow>
+  inner Modelica.Fluid.System system(T_ambient(displayUnit = "K") = 15 + 273.15, p_ambient(displayUnit = "Pa") = 101.325 * 1000) annotation(
+    Placement(visible = true, transformation(origin = {-90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Sources.MassFlowSource_T boundary(<highlightYellow>redeclare package Medium = liquid1,</highlightYellow> T = 15 + 273.15, m_flow = 1, nPorts = 1, use_m_flow_in = false) annotation(
+    Placement(visible = true, transformation(origin = {-70, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Sources.Boundary_pT boundary1(<highlightYellow>redeclare package Medium = liquid1,</highlightYellow> T = 15 + 273.15, nPorts = 1, p = 101.325 * 1000) annotation(
+    Placement(visible = true, transformation(origin = {80, 10}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Ramp ramp_heat(duration = 10, height = 100 * 1000, offset = 0, startTime = 10) annotation(
+    Placement(visible = true, transformation(origin = {-70, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow1 annotation(
+    Placement(visible = true, transformation(origin = {-40, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Vessels.ClosedVolume volume(<highlightYellow>redeclare package Medium = liquid1,</highlightYellow> V = Modelica.Constants.pi / 4 * pipe.diameter ^ 2.0 * pipe.length,nPorts = 2, use_HeatTransfer = true, use_portsData = false)  annotation(
+    Placement(visible = true, transformation(origin = {-10, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Pipes.StaticPipe pipe(<highlightYellow>redeclare package Medium = liquid1,</highlightYellow> diameter = 0.01, length = 0.5)  annotation(
+    Placement(visible = true, transformation(origin = {-40, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Pipes.StaticPipe pipe1(<highlightYellow>redeclare package Medium = liquid1,</highlightYellow> diameter = 0.01, <highlightRed>flowModel(show_Res = true),</highlightRed> length = 0.5)  annotation(
+    Placement(visible = true, transformation(origin = {20, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Vessels.ClosedVolume volume1(<highlightYellow>redeclare package Medium = liquid1,</highlightYellow> V = Modelica.Constants.pi / 4 * pipe1.diameter ^ 2.0 * pipe1.length, nPorts = 2, use_HeatTransfer = false, use_portsData = false) annotation(
+    Placement(visible = true, transformation(origin = {50, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+equation
+  connect(ramp_heat.y, prescribedHeatFlow1.Q_flow) annotation(
+    Line(points = {{-59, 50}, {-50, 50}}, color = {0, 0, 127}));
+  connect(prescribedHeatFlow1.port, volume.heatPort) annotation(
+    Line(points = {{-30, 50}, {-20, 50}, {-20, 20}}, color = {191, 0, 0}));
+  connect(boundary.ports[1], pipe.port_a) annotation(
+    Line(points = {{-60, 10}, {-50, 10}, {-50, 10}, {-50, 10}}, color = {0, 127, 255}));
+  connect(pipe.port_b, volume.ports[1]) annotation(
+    Line(points = {{-30, 10}, {-12, 10}, {-12, 10}, {-10, 10}}, color = {0, 127, 255}));
+  connect(volume.ports[2], pipe1.port_a) annotation(
+    Line(points = {{-10, 10}, {10, 10}, {10, 10}, {10, 10}}, color = {0, 127, 255}));
+  connect(pipe1.port_b, volume1.ports[1]) annotation(
+    Line(points = {{30, 10}, {46, 10}, {46, 10}, {50, 10}}, color = {0, 127, 255}));
+  connect(volume1.ports[2], boundary1.ports[1]) annotation(
+    Line(points = {{50, 10}, {70, 10}}, color = {0, 127, 255}, thickness = 0.5));
+  annotation(
+    experiment(StartTime = 0, StopTime = 50, Tolerance = 1e-06, Interval = 0.1),
+    __OpenModelica_simulationFlags(lv = "LOG_STATS", outputFormat = "mat", s = "dassl"),
+  Diagram(coordinateSystem(extent = {{-100, -100}, {120, 100}})),
+  __OpenModelica_commandLineOptions = "");
+end FlowWithHeating_ex01;
+</pre>
+				<p>-------------------------------------------------------------------------------</p>
+			<br />
+			
+			<li> mediumのredeclare; 黄色ハイライト部 </li>
+				<p>＊OpenModelica ver 1.16.0 でparameterウィンドウから設定出来るようになっている。</p>
+				<p>OpenModelica の表示を、text　viewに切り替える。そして、モデルソースコード内に、前項に示したソースコード中で黄色ハイライトで示されている記述を直接書き足す。これらの記述で、使用する物性モデル（本モデルでは水であること）を指定する。</p>
+				<p> <a href="https://virtualmbdlabmodelica.net/walkingthermofluid_pumpingsystem_ex01/">pumpingSystem_ex01の回</a>でも述べたが、筆者はモデルの階層で一度「fluid1」というmediumを定義し、各コンポーネント内では = fluid1 と宣言している。これにより、参照した物性を変更する時に書き換える箇所を1か所で済ませる事が出来る。 </p>
+			<br />
+			
+			<li>pipe1のvariableの表示に関わる設定; 赤色ハイライト部</li>
+				<p>pipe1入口のレイノルズ数を表示するためにはpipe内にある"flowModel"というインスタンス内のparameter、"show_Res"というスイッチをtrueに設定しなければならない。しかし、pipeのparameterには当該設定項目が表示されない為、赤色ハイライトで示すコードを直接書く。</p>
+			<br />
+		</ol>
+	<br />
+	
+	
+	
+	<h1><li> シミュレーション実行＆結果評価</h1></li>
+		<p>
+		それでは、観たいvariableの値や動きを評価してゆこう。
+		</p>
+		<p>毎度通り、本連載はOpenModelicaでモデルを組む演習が主目的なのでサクサク観てゆく。本記事では答え合わせとして軽い解説で進めるが、実用としてModelica,１DCAEを実物/試験を再現や、設計予測に使えるようになったら、本来はこの段階の考察が最も重要かつ時間をかけるべきところだ。その点は憶えておいて頂きたい。</p>
+		
+		<ul>
+		<h2><li> Input </h2> </li>
+			<p> inputsとして与えた（変化させた）値が意図通りvariablesに反映されているか確認。　</p>
+			
+			<ol>
+				<li> prescribedHeatFlow1.Q_flow </li>
+				<p>意図通り、10 [s] までは熱流量0 [W] で、10 - 20 [s] で100 [kW] まで増加させ、その後一定値を与えられている。</p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res01.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res01.jpg?raw=true" width="800"></a>
+				<br /><br />
+			</ol>
+		
+		
+		<h2><li> Output </h2></li> 
+			<ol>
+				<li> volume.medium.h </li>
+				<p>意図通り、熱流量インプットの動きに応じて、10 - 20 [s] の間に増加している。</p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res02.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res02.jpg?raw=true" width="800"></a>
+				<br /><br />
+				
+				<li> volume.medium.T </li>
+				<p>volume.medium.hと同様に、意図通り熱流量インプットの動きに応じて増加。</p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res03.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res03.jpg?raw=true" width="800"></a>
+				<br /><br />
+				
+				<li> pipe1.flowModel.dps_fg[1] </li>
+				<p>熱流量インプットの動きに応じて、10 - 20 [s] の間に圧力損失が減少する。今回の例題の場合、変化量は大した事が無いが、圧力損失が流体温度に依存していることは明確に見て取れる。</p>
+				<p>後ほどvariablesでも観てゆくが、これはvolumeの流体温度上昇に伴って、流体の粘度が下がる為。流体粘度が下がることで、レイノルズ数が増加し圧力損失係数が低下する（圧力損失係数はレイノルズ数の関数。そして一般的に、レイノルズ数が上昇すると圧力損失係数が減少する）。</p>
+				<p>＊気体の場合、温度が上がると粘度は上昇することが多い。密度が温度に伴って下がるが、動粘度= 粘度/密度 は温度に対して増加する動きとなる。従って、気体では温度が上昇すると一般的にレイノルズ数は下がる。</p>
+				<p>なお、流体密度も低下し、dp=k*d*v^2 のdも減少するのだが、後述の通りvは増加するため、僅かだが圧力損失は増加する方向に働く。</p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res04.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res04.jpg?raw=true" width="800"></a>
+				<br /><br />
+				
+				<li> pipe1.flowModel.mus[1] </li>
+				<p>上述した通り、約半分程度までと大幅に減少している。</p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res07.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res07.jpg?raw=true" width="800"></a>
+				<br /><br />
+				
+				<li> pipe1.flowModel.mus[1] vs. pipe1.flowModel.states[1].T </li>
+				<p>基本的に液体の粘度は温度が高くなるに従って小さくなり、その変化の仕方（カーブの形）は流体ごとに異なる。潤滑に用いるような油類は桁が変わるほどの変化が有り、氷点下の様な低温下ではこねり飴のように固く粘つき、100 [degC] のような高温（といっても日常的な高温）下では水の様にサラサラとなる。故に、途中で熱授受が有る流体回路で流体が油類のような粘度が温度で激変するものの場合は、圧力損失を見積もる為に、受熱/放熱も正しく見積もる必要が生じる。 </p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res08.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res08.jpg?raw=true" width="800"></a>
+				<br /><br />
+				
+				<li> pipe1.flowModel.Res[1] </li>
+				<p>volumeの流体温度上昇に伴って上昇。上述した粘度の変化がほぼそのまま現れている。＊レイノルズ数は、流速、流体密度に比例し、粘度に反比例する。</p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res10.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res10.jpg?raw=true" width="800"></a>
+				<br /><br />
+				
+				<li> pipe1.flowModel.states[1].d </li>
+				<p>上述した通り減少。</p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res05.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res05.jpg?raw=true" width="800"></a>
+				<br /><br />
+				
+				<li> pipe1.flowModel.states[1].d vs. pipe1.flowModel.states[1].T </li>
+				<p>温度が高くなるに伴い減少するが、粘度ほど大きな変化ではない。</p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res06.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res06.jpg?raw=true" width="800"></a>
+				<br /><br />
+				
+				
+				<li> pipe1.flowModel.vs[1] </li>
+				<p>上述した通り、増加している。これは、連続の方程式 m_flow= d*A*v を観ると解るが、Aが一定で、dを減らすとm_flowを一定に保つためにvが増えてしまうため。上述の通り圧力損失dpに対して、rhoは比例、vは2乗の比例で効くため、rhoが減ると圧力損失は僅かだが増える。</p>
+				<a  href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res09.jpg?raw=true" target="_blank"><img src="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid/blob/master/docs/Introductory/FlowWithHeating_ex01_res09.jpg?raw=true" width="800"></a>
+				<br /><br />
+				
+			</ol>
+		</ul>
+	<br />
+	
+	
+	<h1><li> 最後に</h1></li>
+		<p>例題を通して、流体の流れの中に熱量を投入するモデルの組み方を習得して頂けただろうか。極めて初歩的な例題だが、加熱/排熱を伴う流体システムをモデリングするときに必ず基礎となる必須のものだ。確実に習得しておいて欲しい。今後も、加熱/排熱/伝熱/熱回路を伴う流体システムの例題を扱う予定だが、どれも基本的には基礎の重ね合わせ・組み合わせで造る。 </p>
+		<p>
+		また、圧力損失が流体温度に依存し、流量-圧力の解析を行いたい場合に熱授受/温度予測のモデルが重要になり得ることも計算結果を通して習得できたかと思う。是非、使用する流体や投入熱量を変えて遊んでみて欲しい。
+		</p>
+		<p>
+		＊圧力損失が流体温度に伴って変化したのは、本例題で用いている配管コンポーネントに、”そういう挙動を模擬するように”造られたモデルが備わっているからという点は憶えておいて欲しい。必ずしもすべての圧力損失が発生するコンポーネントでこれが模擬できる訳ではない。圧力損失係数が固定だったり、幾何形状にしか依存しないモデルを用いたコンポーネントも多数存在する。今回、圧力損失の温度依存性を模擬したいから、それを達成できるコンポーネントを選択し使った。モデリング前に述べたように、何を観たいか/何を模擬したいか、を基に使用するコンポーネントを考え選ぶことは1DCAEの最も重要なプロセスだ。
+		</p>
+		<p>本例題は以上。</p>
+	<br />
+	
+	
+	<h1><li> 例モデルに関する情報</h1></li>
+		<p>	本記事で取り上げたモデルは専用の「WalkingInWorldOfThermoFluid」ライブラリに公開しており、その情報を記しておく。ソースコードは本記事にも記載したが、直接OpenModelicaで読み込みたい方はダウンロードしてGPL3の範囲内で自由に使っていただいて構わない。
+		</p>
+		<ul>
+			<li> モデルのフルパス： WalkingInWorldOfThermoFluid.Introductory.FlowWithHeating_ex01 </li>
+			<li> <a href="https://github.com/zeta-plusplus/WalkingInWorldOfThermoFluid"> githubのライブラリページリンク </a> </li>
+		</ul>
+		<br />
+		
+</ol>
+
+<a href="https://virtualmbdlabmodelica.net/walkinginworldofthermofluid_listofarticles/"> リンク：[連載]Modelicaによる熱流体の世界の歩き方 の記事一覧ページ </a>
+<br />
+
+<div  style="text-align: right;">以上 </div>
