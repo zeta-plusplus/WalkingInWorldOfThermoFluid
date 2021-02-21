@@ -21,7 +21,7 @@ model HydroTurbine_byPump_ex02
     Placement(visible = true, transformation(origin = {-80, -30}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   Modelica.Fluid.Sensors.MassFlowRate massFlowRate1(redeclare package Medium = fluid1) annotation(
     Placement(visible = true, transformation(origin = {50, -30}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp ramp_N(duration = 10, height = 100, offset = 1000, startTime = 50) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_N(duration = 10, height = 100, offset = 1000, startTime = 30) annotation(
     Placement(visible = true, transformation(origin = {-150, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Mechanics.Rotational.Sources.Speed speed1 annotation(
     Placement(visible = true, transformation(origin = {-80, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -31,7 +31,7 @@ model HydroTurbine_byPump_ex02
     Placement(visible = true, transformation(origin = {140, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp ramp_p_in(duration = 10, height = 0 * 101.325 * 1000, offset = 5 * 101.325 * 1000, startTime = 30) annotation(
     Placement(visible = true, transformation(origin = {-150, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp ramp_T_in(duration = 10, height = 50, offset = 288.15, startTime = 30) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_T_in(duration = 10, height = 0, offset = 288.15, startTime = 30) annotation(
     Placement(visible = true, transformation(origin = {-150, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.UnitConversions.From_rpm from_rpm1 annotation(
     Placement(visible = true, transformation(origin = {-120, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
