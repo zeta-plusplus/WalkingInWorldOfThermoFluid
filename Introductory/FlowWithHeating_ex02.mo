@@ -3,28 +3,28 @@ within WalkingInWorldOfThermoFluid.Introductory;
 model FlowWithHeating_ex02
   extends Modelica.Icons.Example;
   //----------
-  replaceable package liquid1 = Modelica.Media.Water.StandardWaterOnePhase;
+  //replaceable package liquid1 = Modelica.Media.Water.StandardWaterOnePhase;
   //redeclare package Medium = liquid1
   //----------
   inner Modelica.Fluid.System system(T_ambient(displayUnit = "K") = 15 + 273.15, p_ambient(displayUnit = "Pa") = 101.325 * 1000) annotation(
     Placement(visible = true, transformation(origin = {-90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Sources.MassFlowSource_T boundary(redeclare package Medium = liquid1, T = 15 + 273.15, m_flow = 1, nPorts = 1, use_m_flow_in = false) annotation(
+  Modelica.Fluid.Sources.MassFlowSource_T boundary(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, T = 15 + 273.15, m_flow = 1, nPorts = 1, use_m_flow_in = false) annotation(
     Placement(visible = true, transformation(origin = {-30, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp ramp_heat(duration = 10, height = 100 * 1000, offset = 0, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-80, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow1[pipe.nNodes] annotation(
     Placement(visible = true, transformation(origin = {10, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Pipes.DynamicPipe pipe(redeclare package Medium = liquid1, diameter = 0.01,flowModel(show_Res = true), length = 5.0, modelStructure = Modelica.Fluid.Types.ModelStructure.a_vb, nNodes = 5, use_HeatTransfer = true) annotation(
+  Modelica.Fluid.Pipes.DynamicPipe pipe(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, diameter = 0.01,flowModel(show_Res = true), length = 5.0, modelStructure = Modelica.Fluid.Types.ModelStructure.a_vb, nNodes = 5, use_HeatTransfer = true) annotation(
     Placement(visible = true, transformation(origin = {40, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.Gain gain1(k = 1 / pipe.nNodes)  annotation(
     Placement(visible = true, transformation(origin = {-50, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Routing.Replicator replicator1(nout = pipe.nNodes)  annotation(
     Placement(visible = true, transformation(origin = {-20, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Vessels.ClosedVolume volume(redeclare package Medium = liquid1, V = 0.000001, nPorts = 2, use_portsData = false)  annotation(
+  Modelica.Fluid.Vessels.ClosedVolume volume(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, V = 0.000001, nPorts = 2, use_portsData = false)  annotation(
     Placement(visible = true, transformation(origin = {10, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
-  Modelica.Fluid.Vessels.ClosedVolume volume1(redeclare package Medium = liquid1, V = 0.000001, nPorts = 2, use_portsData = false) annotation(
+  Modelica.Fluid.Vessels.ClosedVolume volume1(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, V = 0.000001, nPorts = 2, use_portsData = false) annotation(
     Placement(visible = true, transformation(origin = {70, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
-  Modelica.Fluid.Sources.Boundary_pT boundary1(redeclare package Medium = liquid1,nPorts = 1)  annotation(
+  Modelica.Fluid.Sources.Boundary_pT boundary1(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase,nPorts = 1)  annotation(
     Placement(visible = true, transformation(origin = {100, 10}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
 equation
   connect(volume1.ports[2], boundary1.ports[1]) annotation(

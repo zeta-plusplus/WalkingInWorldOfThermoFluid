@@ -3,7 +3,7 @@ within WalkingInWorldOfThermoFluid.Introductory;
 model HeatingClosedPiston_ex01
   extends Modelica.Icons.Example;
   //----------
-  replaceable package fluid1 = Modelica.Media.Water.StandardWaterOnePhase;
+  //replaceable package fluid1 = Modelica.Media.Water.StandardWaterOnePhase;
   //redeclare package Medium = fluid1
   //----------
   inner Modelica.Fluid.System system annotation(
@@ -12,7 +12,7 @@ model HeatingClosedPiston_ex01
     Placement(visible = true, transformation(origin = {-40, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Pulse pulse_heating(amplitude = 10 * 1000, nperiod = 1, offset = 0, period = 10, startTime = 10, width = 100) annotation(
     Placement(visible = true, transformation(origin = {-70, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Machines.SweptVolume sweptVolume1(redeclare package Medium = fluid1, clearance = 0.001, pistonCrossArea = 0.1, use_HeatTransfer = true, use_portsData = false) annotation(
+  Modelica.Fluid.Machines.SweptVolume sweptVolume1(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, clearance = 0.001, pistonCrossArea = 0.1, use_HeatTransfer = true, use_portsData = false) annotation(
     Placement(visible = true, transformation(origin = {-10, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(prescribedHeatFlow1.port, sweptVolume1.heatPort) annotation(

@@ -4,36 +4,36 @@ model FuelSupplySys_ex01
   extends Modelica.Icons.Example;
   //----------
   //replaceable package fluid1 = Modelica.Media.Water.StandardWaterOnePhase;
-  replaceable package fluid1 = Modelica.Media.Incompressible.Examples.Glycol47;
+  //replaceable package fluid1 = Modelica.Media.Incompressible.Examples.Glycol47;
   //redeclare package Medium = fluid1
   //----------
   inner Modelica.Fluid.System system annotation(
     Placement(visible = true, transformation(origin = {10, 110}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Sources.Boundary_pT fuelStart(redeclare package Medium = fluid1, T = 288.15, nPorts = 1, p = 101.325 * 1000) annotation(
+  Modelica.Fluid.Sources.Boundary_pT fuelStart(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47, T = 288.15, nPorts = 1, p = 101.325 * 1000) annotation(
     Placement(visible = true, transformation(origin = {-170, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Pipes.StaticPipe pipe(redeclare package Medium = fluid1, diameter = 0.01, length = 0.1, nParallel = 1) annotation(
+  Modelica.Fluid.Pipes.StaticPipe pipe(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47, diameter = 0.01, length = 0.1, nParallel = 1) annotation(
     Placement(visible = true, transformation(origin = {-100, -40}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Modelica.Fluid.Sources.Boundary_pT combChamber(redeclare package Medium = fluid1, nPorts = 4, p = 40 * 101.325 * 1000) annotation(
+  Modelica.Fluid.Sources.Boundary_pT combChamber(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47, nPorts = 4, p = 40 * 101.325 * 1000) annotation(
     Placement(visible = true, transformation(origin = {180, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp ramp_pump_N(duration = 10, height = 0, offset = 10000, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-170, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.UnitConversions.From_rpm from_rpm1 annotation(
     Placement(visible = true, transformation(origin = {-140, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Machines.Pump pump1(redeclare package Medium = fluid1, redeclare function flowCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.quadraticFlow(V_flow_nominal = {0, 0.0025, 0.005}, head_nominal = {20 * 100, 20 * 60, 0}), redeclare function efficiencyCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal = 0.9), N_nominal = 10000, V(displayUnit = "l") = 0.001, checkValve = true, energyDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, m_flow_start = 10, massDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, nParallel = 1, p_b_start = 10 * system.p_start) annotation(
+  Modelica.Fluid.Machines.Pump pump1(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47, redeclare function flowCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.quadraticFlow(V_flow_nominal = {0, 0.0025, 0.005}, head_nominal = {20 * 100, 20 * 60, 0}), redeclare function efficiencyCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal = 0.9), N_nominal = 10000, V(displayUnit = "l") = 0.001, checkValve = true, energyDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, m_flow_start = 10, massDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, nParallel = 1, p_b_start = 10 * system.p_start) annotation(
     Placement(visible = true, transformation(origin = {-90, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Mechanics.Rotational.Sources.Speed speed1(phi(fixed = false)) annotation(
     Placement(visible = true, transformation(origin = {-110, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Mechanics.Rotational.Sensors.PowerSensor powerSensor1 annotation(
     Placement(visible = true, transformation(origin = {-90, 20}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
-  Modelica.Fluid.Valves.ValveLinear valveLinear1(redeclare package Medium = fluid1, dp_nominal(displayUnit = "Pa") = 10.0 * 1000, m_flow_nominal = 1.0) annotation(
+  Modelica.Fluid.Valves.ValveLinear valveLinear1(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47, dp_nominal(displayUnit = "Pa") = 10.0 * 1000, m_flow_nominal = 1.0) annotation(
     Placement(visible = true, transformation(origin = {-30, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp ramp_valve(duration = 10, height = 0.1, offset = 0.5, startTime = 30) annotation(
     Placement(visible = true, transformation(origin = {-50, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Pipes.StaticPipe pipe1(redeclare package Medium = fluid1, diameter = 0.01, length = 0.1, nParallel = 1) annotation(
+  Modelica.Fluid.Pipes.StaticPipe pipe1(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47, diameter = 0.01, length = 0.1, nParallel = 1) annotation(
     Placement(visible = true, transformation(origin = {80, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Fittings.SimpleGenericOrifice orifice(redeclare package Medium = fluid1, diameter = 0.005, zeta = 1 / 0.6 ^ 2) annotation(
+  Modelica.Fluid.Fittings.SimpleGenericOrifice orifice(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47, diameter = 0.005, zeta = 1 / 0.6 ^ 2) annotation(
     Placement(visible = true, transformation(origin = {-70, -40}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Modelica.Fluid.Pipes.DynamicPipe HX(redeclare package Medium = fluid1, diameter = 0.05, length = 0.5, nNodes = 10, use_HeatTransfer = true) annotation(
+  Modelica.Fluid.Pipes.DynamicPipe HX(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47, diameter = 0.05, length = 0.5, nNodes = 10, use_HeatTransfer = true) annotation(
     Placement(visible = true, transformation(origin = {10, -10}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow1[HX.nNodes] annotation(
     Placement(visible = true, transformation(origin = {10, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
@@ -43,19 +43,19 @@ model FuelSupplySys_ex01
     Placement(visible = true, transformation(origin = {-10, -110}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp ramp_HX_heat(duration = 10, height = 0, offset = 10 * 1000, startTime = 30) annotation(
     Placement(visible = true, transformation(origin = {-40, -110}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Fittings.SimpleGenericOrifice nzl1(redeclare package Medium = fluid1, diameter = 0.005, zeta = 1 / 0.6 ^ 2) annotation(
+  Modelica.Fluid.Fittings.SimpleGenericOrifice nzl1(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47, diameter = 0.005, zeta = 1 / 0.6 ^ 2) annotation(
     Placement(visible = true, transformation(origin = {110, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Pipes.StaticPipe pipe2(redeclare package Medium = fluid1, diameter = 0.01, length = 0.2) annotation(
+  Modelica.Fluid.Pipes.StaticPipe pipe2(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47, diameter = 0.01, length = 0.2) annotation(
     Placement(visible = true, transformation(origin = {80, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Fittings.SimpleGenericOrifice nzl2(redeclare package Medium = fluid1, diameter = 0.005, zeta = 1 / 0.6 ^ 2) annotation(
+  Modelica.Fluid.Fittings.SimpleGenericOrifice nzl2(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47, diameter = 0.005, zeta = 1 / 0.6 ^ 2) annotation(
     Placement(visible = true, transformation(origin = {110, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Fittings.SimpleGenericOrifice nzl3(redeclare package Medium = fluid1, diameter = 0.005, zeta = 1 / 0.6 ^ 2) annotation(
+  Modelica.Fluid.Fittings.SimpleGenericOrifice nzl3(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47, diameter = 0.005, zeta = 1 / 0.6 ^ 2) annotation(
     Placement(visible = true, transformation(origin = {110, -70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Pipes.StaticPipe pipe3(redeclare package Medium = fluid1, diameter = 0.01, length = 0.3) annotation(
+  Modelica.Fluid.Pipes.StaticPipe pipe3(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47, diameter = 0.01, length = 0.3) annotation(
     Placement(visible = true, transformation(origin = {80, -70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Pipes.StaticPipe pipe4(redeclare package Medium = fluid1, diameter = 0.01, length = 0.4) annotation(
+  Modelica.Fluid.Pipes.StaticPipe pipe4(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47, diameter = 0.01, length = 0.4) annotation(
     Placement(visible = true, transformation(origin = {80, -100}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Fittings.SimpleGenericOrifice nzl4(redeclare package Medium = fluid1, diameter = 0.005, zeta = 1 / 0.6 ^ 2) annotation(
+  Modelica.Fluid.Fittings.SimpleGenericOrifice nzl4(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47, diameter = 0.005, zeta = 1 / 0.6 ^ 2) annotation(
     Placement(visible = true, transformation(origin = {110, -100}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(nzl4.port_b, combChamber.ports[4]) annotation(

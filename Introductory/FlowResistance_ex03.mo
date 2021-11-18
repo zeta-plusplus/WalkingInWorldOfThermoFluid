@@ -3,28 +3,28 @@ within WalkingInWorldOfThermoFluid.Introductory;
 model FlowResistance_ex03
   extends Modelica.Icons.Example;
   //----------
-  replaceable package liquid1 = Modelica.Media.Water.StandardWaterOnePhase;
+  //replaceable package liquid1 = Modelica.Media.Water.StandardWaterOnePhase;
   //redeclare package Medium = liquid1
   //----------
   inner Modelica.Fluid.System system(T_ambient(displayUnit = "K") = 15 + 273.15, p_ambient(displayUnit = "Pa") = 101.325 * 1000) annotation(
     Placement(visible = true, transformation(origin = {-90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Sources.MassFlowSource_T boundary(redeclare package Medium = liquid1, T = 15 + 273.15, m_flow = 1, nPorts = 1, use_m_flow_in = true) annotation(
+  Modelica.Fluid.Sources.MassFlowSource_T boundary(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, T = 15 + 273.15, m_flow = 1, nPorts = 1, use_m_flow_in = true) annotation(
     Placement(visible = true, transformation(origin = {-70, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Sources.Boundary_pT boundary1(redeclare package Medium = liquid1, T = 15 + 273.15, nPorts = 1, p = 101.325 * 1000) annotation(
+  Modelica.Fluid.Sources.Boundary_pT boundary1(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, T = 15 + 273.15, nPorts = 1, p = 101.325 * 1000) annotation(
     Placement(visible = true, transformation(origin = {100, 30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Modelica.Fluid.Pipes.StaticPipe pipe(redeclare package Medium = liquid1, diameter = 0.05, length = 5) annotation(
+  Modelica.Fluid.Pipes.StaticPipe pipe(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, diameter = 0.05, length = 5) annotation(
     Placement(visible = true, transformation(origin = {30, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Vessels.ClosedVolume volume(redeclare package Medium = liquid1, V = 1.0e-3, nPorts = 2, use_portsData = false) annotation(
+  Modelica.Fluid.Vessels.ClosedVolume volume(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, V = 1.0e-3, nPorts = 2, use_portsData = false) annotation(
     Placement(visible = true, transformation(origin = {-10, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Vessels.ClosedVolume volume1(redeclare package Medium = liquid1, V = 1.0e-3, nPorts = 2, use_portsData = false) annotation(
+  Modelica.Fluid.Vessels.ClosedVolume volume1(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, V = 1.0e-3, nPorts = 2, use_portsData = false) annotation(
     Placement(visible = true, transformation(origin = {60, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica_DeviceDrivers.Blocks.OperatingSystem.SynchronizeRealtime synchronizeRealtime1 annotation(
     Placement(visible = true, transformation(origin = {-50, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   InteractiveSimulation.Utilities.TimeSignalOut timeSignalOut1 annotation(
     Placement(visible = true, transformation(origin = { -30, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Sensors.Pressure pressure1(redeclare package Medium = liquid1) annotation(
+  Modelica.Fluid.Sensors.Pressure pressure1(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase) annotation(
     Placement(visible = true, transformation(origin = {4, 20}, extent = {{10, -10}, {-10, 10}}, rotation = 180)));
-  Modelica.Fluid.Sensors.Temperature temperature(redeclare package Medium = liquid1) annotation(
+  Modelica.Fluid.Sensors.Temperature temperature(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase) annotation(
     Placement(visible = true, transformation(origin = {70, 20}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   Modelica_DeviceDrivers.Blocks.InputDevices.KeyboardInput keyboardInput1(sampleTime = 0.1)  annotation(
     Placement(visible = true, transformation(origin = {-170, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -34,7 +34,7 @@ model FlowResistance_ex03
     Placement(visible = true, transformation(origin = {-130, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.Add add1 annotation(
     Placement(visible = true, transformation(origin = {-100, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Sensors.MassFlowRate massFlowRate1(redeclare package Medium = liquid1) annotation(
+  Modelica.Fluid.Sensors.MassFlowRate massFlowRate1(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase) annotation(
     Placement(visible = true, transformation(origin = {-40, 30}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   InteractiveSimulation.Output.dispVarPyConsole02_00 dispVarPyConsole(nVariables = 4, nameVariables = {"time[s]", "m_flow[kg/s]", "P_I[kPa]", "T_O[K}"})  annotation(
     Placement(visible = true, transformation(origin = {130, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
