@@ -30,11 +30,11 @@ model CoolingSystem_ex01
   Modelica.Fluid.Pipes.DynamicPipe pipe(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47, diameter = 0.02, length = 2, modelStructure = Modelica.Fluid.Types.ModelStructure.a_vb, nNodes = 2, use_HeatTransfer = false) annotation(
     Placement(visible = true, transformation(origin = {184, -50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sources.MassFlowSource_T boundary2(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, T = 15 + 273.15, m_flow = 5, nPorts = 1, use_m_flow_in = true) annotation(
-    Placement(visible = true, transformation(origin = {10, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {10, 110}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Pipes.DynamicPipe cooler_cside(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, T_start = 15 + 273.15, diameter = 0.02, length = 2, modelStructure = Modelica.Fluid.Types.ModelStructure.a_vb, nNodes = cooler_hside.nNodes, use_HeatTransfer = true) annotation(
-    Placement(visible = true, transformation(origin = {120, 40}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {120, 76}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   Modelica.Fluid.Sources.Boundary_pT boundary3(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, nPorts = 1) annotation(
-    Placement(visible = true, transformation(origin = {230, 90}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {220, 110}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Thermal.HeatTransfer.Components.Convection convection1[cooler_hside.nNodes] annotation(
     Placement(visible = true, transformation(origin = {120, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
   Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor1[cooler_hside.nNodes](C = 10) annotation(
@@ -64,9 +64,9 @@ model CoolingSystem_ex01
   Modelica.Fluid.Sensors.SpecificEnthalpy specificEnthalpy(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47) annotation(
     Placement(visible = true, transformation(origin = {110, -120}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
   Modelica.Fluid.Vessels.ClosedVolume volume1(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, T_start = 15 + 273.15, V = 1 * 0.001, nPorts = 2, use_HeatTransfer = false, use_portsData = false) annotation(
-    Placement(visible = true, transformation(origin = {180, 100}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {180, 120}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp ramp_m_flow_coolant(duration = 10, height = 0.2, offset = 2, startTime = 160) annotation(
-    Placement(visible = true, transformation(origin = {-30, 100}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-30, 120}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.Pressure pressure(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase) annotation(
     Placement(visible = true, transformation(origin = {4, -60}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue(significantDigits = 4, use_numberPort = true)  annotation(
@@ -80,9 +80,9 @@ model CoolingSystem_ex01
   Modelica.Blocks.Interaction.Show.RealValue realValue4(significantDigits = 4, use_numberPort = true) annotation(
     Placement(visible = true, transformation(origin = {2, -76}, extent = {{12, -7}, {-12, 7}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue5(significantDigits = 4, use_numberPort = true) annotation(
-    Placement(visible = true, transformation(origin = {90, 80}, extent = {{-12, -8}, {12, 8}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {90, 100}, extent = {{-12, -8}, {12, 8}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue6(significantDigits = 4, use_numberPort = true) annotation(
-    Placement(visible = true, transformation(origin = {160, 80}, extent = {{-12, -8}, {12, 8}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {160, 100}, extent = {{-12, -8}, {12, 8}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue7(significantDigits = 4, use_numberPort = true) annotation(
     Placement(visible = true, transformation(origin = {156, -30}, extent = {{12, -8}, {-12, 8}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue8(significantDigits = 4, use_numberPort = true) annotation(
@@ -102,14 +102,16 @@ model CoolingSystem_ex01
   Modelica.Fluid.Sensors.TemperatureTwoPort temperature4(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47) annotation(
     Placement(visible = true, transformation(origin = {130, -110}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.TemperatureTwoPort temperature5(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase) annotation(
-    Placement(visible = true, transformation(origin = {60, 80}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+    Placement(visible = true, transformation(origin = {60, 100}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Fluid.Sensors.TemperatureTwoPort temperature6(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase) annotation(
-    Placement(visible = true, transformation(origin = {130, 80}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
+    Placement(visible = true, transformation(origin = {130, 100}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
+  Modelica.Thermal.HeatTransfer.Sensors.HeatFlowSensor heatFlowSensor[cooler_hside.nNodes] annotation(
+    Placement(visible = true, transformation(origin = {120, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
+  Modelica.Blocks.Math.Sum sum1(nin = cooler_hside.nNodes)  annotation(
+    Placement(visible = true, transformation(origin = {150, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(volume1.ports[1], boundary3.ports[1]) annotation(
-    Line(points = {{180, 90}, {220, 90}}, color = {0, 127, 255}, thickness = 0.5));
-  connect(convection2.fluid, cooler_cside.heatPorts) annotation(
-    Line(points = {{120, 28}, {120, 36}}, color = {191, 0, 0}, thickness = 0.5));
+    Line(points = {{180, 110}, {210, 110}}, color = {0, 127, 255}, thickness = 0.5));
   connect(const.y, replicator1.u) annotation(
     Line(points = {{71, -10}, {73, -10}, {73, -30}, {78, -30}}, color = {0, 0, 127}));
   connect(const.y, replicator2.u) annotation(
@@ -145,7 +147,7 @@ equation
   connect(volumeFlowRate1.port_b, cooler_hside.port_a) annotation(
     Line(points = {{40, -50}, {110, -50}}, color = {0, 127, 255}));
   connect(ramp_m_flow_coolant.y, boundary2.m_flow_in) annotation(
-    Line(points = {{-19, 100}, {-17, 100}, {-17, 98}, {-1, 98}}, color = {0, 0, 127}));
+    Line(points = {{-19, 120}, {-17, 120}, {-17, 118}, {-1, 118}}, color = {0, 0, 127}));
   connect(pressure.port, volumeFlowRate1.port_a) annotation(
     Line(points = {{4, -50}, {20, -50}}, color = {0, 127, 255}));
   connect(powerSensor1.power, realValue.numberPort) annotation(
@@ -191,20 +193,26 @@ equation
   connect(temperature4.T, realValue9.numberPort) annotation(
     Line(points = {{130, -98}, {130, -92}}, color = {0, 0, 127}));
   connect(boundary2.ports[1], temperature5.port_a) annotation(
-    Line(points = {{20, 90}, {60, 90}}, color = {0, 127, 255}));
+    Line(points = {{20, 110}, {60, 110}}, color = {0, 127, 255}));
   connect(temperature5.T, realValue5.numberPort) annotation(
-    Line(points = {{72, 80}, {76, 80}}, color = {0, 0, 127}));
+    Line(points = {{71, 100}, {75, 100}}, color = {0, 0, 127}));
   connect(temperature5.port_b, cooler_cside.port_a) annotation(
-    Line(points = {{60, 70}, {60, 40}, {110, 40}}, color = {0, 127, 255}));
+    Line(points = {{60, 90}, {60, 76}, {110, 76}}, color = {0, 127, 255}));
   connect(cooler_cside.port_b, temperature6.port_a) annotation(
-    Line(points = {{130, 40}, {130, 70}}, color = {0, 127, 255}));
+    Line(points = {{130, 76}, {130, 90}}, color = {0, 127, 255}));
   connect(temperature6.port_b, volume1.ports[2]) annotation(
-    Line(points = {{130, 90}, {180, 90}}, color = {0, 127, 255}));
+    Line(points = {{130, 110}, {180, 110}}, color = {0, 127, 255}));
   connect(temperature6.T, realValue6.numberPort) annotation(
-    Line(points = {{142, 80}, {146, 80}}, color = {0, 0, 127}));
+    Line(points = {{141, 100}, {145, 100}}, color = {0, 0, 127}));
+  connect(heatFlowSensor.port_b, cooler_cside.heatPorts) annotation(
+    Line(points = {{120, 60}, {120, 72}}, color = {191, 0, 0}, thickness = 0.5));
+  connect(heatFlowSensor.port_a, convection2.fluid) annotation(
+    Line(points = {{120, 40}, {120, 28}}, color = {191, 0, 0}, thickness = 0.5));
+  connect(heatFlowSensor.Q_flow, sum1.u) annotation(
+    Line(points = {{130, 50}, {138, 50}}, color = {0, 0, 127}, thickness = 0.5));
   annotation(
     experiment(StartTime = 0, StopTime = 260, Tolerance = 1e-06, Interval = 0.05),
     __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl"),
-    Diagram(coordinateSystem(extent = {{-160, -140}, {240, 120}}, initialScale = 0.1), graphics = {Rectangle(origin = {107, 22}, extent = {{-61, 82}, {39, -86}}), Text(origin = {94, 108}, extent = {{-34, 4}, {34, -4}}, textString = "Heat Exchanger"), Text(origin = {2, 76}, extent = {{-34, 4}, {34, -4}}, textString = "coolant flow line")}),
+    Diagram(coordinateSystem(extent = {{-160, -140}, {240, 140}}, initialScale = 0.1), graphics = {Rectangle(origin = {108, 28}, extent = {{-62, 96}, {40, -101}}), Text(origin = {94, 128}, extent = {{-34, 4}, {34, -4}}, textString = "Heat Exchanger"), Text(origin = {2, 96}, extent = {{-34, 4}, {34, -4}}, textString = "coolant flow line")}),
     __OpenModelica_commandLineOptions = "");
 end CoolingSystem_ex01;
