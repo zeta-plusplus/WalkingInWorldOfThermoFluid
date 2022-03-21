@@ -72,7 +72,7 @@ model CoolingSystem_ex01
   Modelica.Blocks.Interaction.Show.RealValue realValue(significantDigits = 4, use_numberPort = true)  annotation(
     Placement(visible = true, transformation(origin = {-10, 27}, extent = {{-12, -9}, {12, 9}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue1(significantDigits = 5, use_numberPort = true) annotation(
-    Placement(visible = true, transformation(origin = {-66, -28}, extent = {{-12, -8}, {12, 8}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-64, -28}, extent = {{-26, -8}, {26, 8}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue2(significantDigits = 4, use_numberPort = true) annotation(
     Placement(visible = true, transformation(origin = {-22, -32}, extent = {{12, -8}, {-12, 8}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue3(significantDigits = 4, use_numberPort = true) annotation(
@@ -167,7 +167,7 @@ equation
   connect(temperature.port_b, pump1.port_a) annotation(
     Line(points = {{-70, -50}, {-60, -50}}, color = {0, 127, 255}));
   connect(temperature.T, realValue1.numberPort) annotation(
-    Line(points = {{-80, -38}, {-80, -28}}, color = {0, 0, 127}));
+    Line(points = {{-80, -38}, {-80, -33}, {-94, -33}, {-94, -28}}, color = {0, 0, 127}));
   connect(pump1.port_b, temperature1.port_a) annotation(
     Line(points = {{-40, -50}, {-30, -50}}));
   connect(temperature1.port_b, pressure.port) annotation(
