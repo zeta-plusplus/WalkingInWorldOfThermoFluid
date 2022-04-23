@@ -19,7 +19,7 @@ model SteamGenerator_ex01 "Complete drum boiler model, including evaporator and 
     Placement(transformation(extent = {{-90, 70}, {-70, 90}})));
   Modelica.Blocks.Sources.Ramp ramp_Q_flow_in(duration = 100, height = 1e6, offset = 1e6, startTime = 100) annotation(
     Placement(visible = true, transformation(origin = {-70, -70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp ramp_valveopen(duration = 10, height = -0.5, offset = 1, startTime = 300) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_valveopen(duration = 10, height = -0.0, offset = 1, startTime = 300) annotation(
     Placement(visible = true, transformation(origin = {40, -60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sources.MassFlowSource_T LiquidSupplyPump(redeclare package Medium = Modelica.Media.Water.StandardWater, T = 15 + 273.15, m_flow = 1, nPorts = 1, use_m_flow_in = true) annotation(
     Placement(visible = true, transformation(origin = {-70, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -64,7 +64,7 @@ equation
     Line(points = {{-80, 40}, {-96, 40}, {-96, -12}, {-80, -12}}, color = {0, 0, 127}));
   annotation(
     Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-100, -100}, {100, 100}}), graphics = {Text(lineColor = {0, 0, 255}, extent = {{-151, 165}, {138, 102}}, textString = "%name"), Text(extent = {{-79, 67}, {67, 21}}, textString = "drum"), Text(extent = {{-90, -14}, {88, -64}}, textString = "boiler")}),
-    experiment(StopTime = 1000, StartTime = 0, Tolerance = 1e-06, Interval = 0.1),
+    experiment(StopTime = 400, StartTime = 0, Tolerance = 1e-06, Interval = 0.01),
     Documentation(info = "<html>
 
 </html>"),
