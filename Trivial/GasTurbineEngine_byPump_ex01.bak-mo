@@ -1,0 +1,92 @@
+within WalkingInWorldOfThermoFluid.Trivial;
+
+model GasTurbineEngine_byPump_ex01
+  extends Modelica.Icons.Example;
+  //----------
+  //replaceable package fluid1 = Modelica.Media.Water.StandardWaterOnePhase;
+  //replaceable package fluid1 = Modelica.Media.Air.DryAirNasa;
+  //redeclare package Medium = fluid1
+  //----------
+  inner Modelica.Fluid.System system annotation(
+    Placement(visible = true, transformation(origin = {-170, 88}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Sources.Boundary_pT boundary(redeclare package Medium = Modelica.Media.Air.DryAirNasa, T = 1000, nPorts = 1, p = 10 * 101.325 * 1000, use_T_in = true, use_p_in = true) annotation(
+    Placement(visible = true, transformation(origin = {-250, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Machines.Pump trb(redeclare package Medium = Modelica.Media.Air.DryAirNasa, redeclare function flowCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.quadraticFlow(V_flow_nominal = {0, -0.25, -0.50}, head_nominal = {-20000, -15000, 0}), redeclare function efficiencyCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal = 0.9), N_nominal = 10000, V(displayUnit = "l") = 0.001, allowFlowReversal = true, checkValve = false, energyDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, m_flow_start = -2, massDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, nParallel = 1, p_b_start = 5 * system.p_start) annotation(
+    Placement(visible = true, transformation(origin = {10, -30}, extent = {{10, 10}, {-10, -10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Ramp ramp_N(duration = 10, height = 100, offset = 10000, startTime = 10) annotation(
+    Placement(visible = true, transformation(origin = {122, -90}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Mechanics.Rotational.Sources.Speed speed1 annotation(
+    Placement(visible = true, transformation(origin = {60, -90}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Fluid.Sensors.Pressure pressure1(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
+    Placement(visible = true, transformation(origin = {60, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
+  Modelica.Fluid.Sources.Boundary_pT boundary1(redeclare package Medium = Modelica.Media.Air.DryAirNasa, T = 288.15, nPorts = 1, p = 101.325 * 1000) annotation(
+    Placement(visible = true, transformation(origin = {130, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Ramp ramp_p_in(duration = 10, height = 0 * 101.325 * 1000, offset =  101.325 * 1000, startTime = 30) annotation(
+    Placement(visible = true, transformation(origin = {-290, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Ramp ramp_T_in(duration = 10, height = 0, offset = 288.15, startTime = 30) annotation(
+    Placement(visible = true, transformation(origin = {-290, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Math.UnitConversions.From_rpm from_rpm1 annotation(
+    Placement(visible = true, transformation(origin = {90, -90}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Ramp ramp_valve(duration = 10, height = 0, offset = 1, startTime = 30) annotation(
+    Placement(visible = true, transformation(origin = {90, 10}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+  parameter Real kHeadCmp=6;
+  parameter Real kFlowCmp=1;
+  Modelica.Fluid.Machines.Pump Cmp(redeclare package Medium = Modelica.Media.Air.DryAirNasa, redeclare function flowCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.quadraticFlow(V_flow_nominal = {kFlowCmp*0, kFlowCmp*0.25, kFlowCmp*0.50}, head_nominal = {kHeadCmp*20000, kHeadCmp*15000, kHeadCmp*0}), redeclare function efficiencyCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal = 0.9),N_nominal = 10000, V(displayUnit = "l") = 0.001, allowFlowReversal = true, checkValve = false, energyDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, m_flow_start = 2, massDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, nParallel = 1, p_b_start = 5 * system.p_start) annotation(
+    Placement(visible = true, transformation(origin = {-158, -30}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
+  Modelica.Mechanics.Rotational.Sensors.PowerSensor powerSensor annotation(
+    Placement(visible = true, transformation(origin = {-130, -90}, extent = {{-10, 10}, {10, -10}}, rotation = 180)));
+  Modelica.Fluid.Sensors.MassFlowRate massFlowRate(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
+    Placement(visible = true, transformation(origin = {-200, -30}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
+  Modelica.Fluid.Valves.ValveCompressible valve1(redeclare package Medium = Modelica.Media.Air.DryAirNasa, dp_nominal = 200 * 1000, m_flow_nominal = 2)  annotation(
+    Placement(visible = true, transformation(origin = {90, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Sensors.Pressure pressure2(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
+    Placement(visible = true, transformation(origin = {-128, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
+  Modelica.Fluid.Sensors.Pressure pressure4(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
+    Placement(visible = true, transformation(origin = {-222, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
+  Modelica.Mechanics.Rotational.Sensors.PowerSensor powerSensor1 annotation(
+    Placement(visible = true, transformation(origin = {30, -90}, extent = {{10, 10}, {-10, -10}}, rotation = 180)));
+  Modelica.Fluid.Vessels.ClosedVolume volume(V = 0.01, energyDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, massDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, use_HeatTransfer = true, use_portsData = false, nPorts = 2)  annotation(
+    Placement(visible = true, transformation(origin = {-80, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+equation
+  connect(ramp_p_in.y, boundary.p_in) annotation(
+    Line(points = {{-279, -10}, {-270, -10}, {-270, -22}, {-262, -22}}, color = {0, 0, 127}));
+  connect(ramp_T_in.y, boundary.T_in) annotation(
+    Line(points = {{-279, -40}, {-273, -40}, {-273, -26}, {-262, -26}}, color = {0, 0, 127}));
+  connect(pressure1.port, valve1.port_a) annotation(
+    Line(points = {{60, -30}, {80, -30}}, color = {0, 127, 255}));
+  connect(valve1.port_b, boundary1.ports[1]) annotation(
+    Line(points = {{100, -30}, {120, -30}}, color = {0, 127, 255}));
+  connect(ramp_valve.y, valve1.opening) annotation(
+    Line(points = {{90, -1}, {90, -23}}, color = {0, 0, 127}));
+  connect(Cmp.port_b, pressure2.port) annotation(
+    Line(points = {{-148, -30}, {-128, -30}}, color = {0, 127, 255}));
+  connect(pressure4.port, boundary.ports[1]) annotation(
+    Line(points = {{-222, -30}, {-240, -30}}, color = {0, 127, 255}));
+  connect(pressure4.port, massFlowRate.port_a) annotation(
+    Line(points = {{-222, -30}, {-210, -30}}, color = {0, 127, 255}));
+  connect(massFlowRate.port_b, Cmp.port_a) annotation(
+    Line(points = {{-190, -30}, {-168, -30}}, color = {0, 127, 255}));
+  connect(trb.port_a, pressure1.port) annotation(
+    Line(points = {{20, -30}, {60, -30}}, color = {0, 127, 255}));
+  connect(Cmp.shaft, powerSensor.flange_b) annotation(
+    Line(points = {{-158, -40}, {-158, -90}, {-140, -90}}));
+  connect(powerSensor.flange_a, trb.shaft) annotation(
+    Line(points = {{-120, -90}, {10, -90}, {10, -40}}));
+  connect(from_rpm1.y, speed1.w_ref) annotation(
+    Line(points = {{80, -90}, {72, -90}}, color = {0, 0, 127}));
+  connect(ramp_N.y, from_rpm1.u) annotation(
+    Line(points = {{112, -90}, {102, -90}}, color = {0, 0, 127}));
+  connect(trb.shaft, powerSensor1.flange_a) annotation(
+    Line(points = {{10, -40}, {10, -90}, {20, -90}}));
+  connect(powerSensor1.flange_b, speed1.flange) annotation(
+    Line(points = {{40, -90}, {50, -90}}));
+  connect(volume.ports[1], pressure2.port) annotation(
+    Line(points = {{-80, -30}, {-128, -30}}, color = {0, 127, 255}));
+  connect(volume.ports[2], trb.port_b) annotation(
+    Line(points = {{-80, -30}, {0, -30}}, color = {0, 127, 255}));
+  annotation(
+    experiment(StartTime = 0, StopTime = 50, Tolerance = 1e-06, Interval = 0.1),
+    __OpenModelica_simulationFlags(lv = "LOG_STATS", outputFormat = "mat", s = "dassl"),
+    Diagram(coordinateSystem(extent = {{-300, -200}, {140, 100}}, initialScale = 0.1), graphics = {Text(origin = {-86, 5}, extent = {{64, -1}, {144, -13}}, textString = "gas turbine by 'pump' component")}),
+    __OpenModelica_commandLineOptions = "");
+end GasTurbineEngine_byPump_ex01;
