@@ -1,6 +1,6 @@
-within WalkingInWorldOfThermoFluid.Trivial;
+within WalkingInWorldOfThermoFluid.Temp;
 
-model TurboJetEngine_byPump_1spool_ex01
+model TurbojetEngine_byPump_2spool_temp01
   extends Modelica.Icons.Example;
   //----------
   //replaceable package fluid1 = Modelica.Media.Water.StandardWaterOnePhase;
@@ -39,7 +39,7 @@ model TurboJetEngine_byPump_1spool_ex01
     Placement(visible = true, transformation(origin = {-75, -15}, extent = {{-15, -15}, {15, 15}}, rotation = 0)));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow annotation(
     Placement(visible = true, transformation(origin = {-100, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp ramp_heat(duration = 2, height = 1000 * 1000, offset = 1000 * 1000, startTime = 10) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_heat(duration = 2, height = 6000 * 1000, offset = 1000 * 1000, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-130, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Mechanics.Rotational.Components.Inertia inertia(J = 0.0001, w(fixed = true, start = 1000 * 2 * Modelica.Constants.pi / 60))  annotation(
     Placement(visible = true, transformation(origin = {-90, -90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -145,4 +145,4 @@ equation
     __OpenModelica_simulationFlags(lv = "LOG_STATS", outputFormat = "mat", s = "dassl"),
     Diagram(coordinateSystem(extent = {{-300, -200}, {300, 100}}, initialScale = 0.1)),
     __OpenModelica_commandLineOptions = "");
-end TurboJetEngine_byPump_1spool_ex01;
+end TurbojetEngine_byPump_2spool_temp01;
