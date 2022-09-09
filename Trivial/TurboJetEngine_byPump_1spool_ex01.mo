@@ -8,9 +8,9 @@ model TurboJetEngine_byPump_1spool_ex01
   //redeclare package Medium = fluid1
   //----------
   parameter Real kHeadCmp=10;
-  parameter Real kFlowCmp=10;
+  parameter Real kFlowCmp=15;
   parameter Real kHeadTrb041=2;
-  parameter Real kFlowTrb041=10;
+  parameter Real kFlowTrb041=15;
   parameter Real kHeadTrb049=2;
   parameter Real kFlowTrb049=1;
   
@@ -48,7 +48,7 @@ model TurboJetEngine_byPump_1spool_ex01
     Placement(visible = true, transformation(origin = {-75, -15}, extent = {{-15, -15}, {15, 15}}, rotation = 0)));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow annotation(
     Placement(visible = true, transformation(origin = {-100, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp ramp_heat(duration = 2, height = 1000 * 1000, offset = 1000 * 1000, startTime = 10) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_heat(duration = 2, height = 1000 * 1000, offset = 2000 * 1000, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-130, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Mechanics.Rotational.Components.Inertia inertia(J = 0.0001, w(fixed = true, start = 1000 * 2 * Modelica.Constants.pi / 60))  annotation(
     Placement(visible = true, transformation(origin = {-90, -90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -80,7 +80,7 @@ model TurboJetEngine_byPump_1spool_ex01
     Placement(visible = true, transformation(origin = {58, -35}, extent = {{-5, -5}, {5, 5}}, rotation = 180)));
   Modelica.Blocks.Interaction.Show.RealValue realValue131(significantDigits = 6) annotation(
     Placement(visible = true, transformation(origin = {33, -54}, extent = {{15, -9}, {-15, 9}}, rotation = 0)));
-  Modelica.Fluid.Valves.ValveCompressible Noz070(redeclare package Medium = Modelica.Media.Air.DryAirNasa, dp_nominal(displayUnit = "Pa") = 150 * 1000, m_flow_nominal = 30, p_nominal = 150 * 1000)  annotation(
+  Modelica.Fluid.Valves.ValveCompressible Noz070(redeclare package Medium = Modelica.Media.Air.DryAirNasa, dp_nominal(displayUnit = "Pa") = 150 * 1000, m_flow_nominal = 50, p_nominal = 150 * 1000)  annotation(
     Placement(visible = true, transformation(origin = {140, -30}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp ramp_opening_noz070(duration = 2, height = 0.1, offset = 0.9, startTime = 15) annotation(
     Placement(visible = true, transformation(origin = {140, 28}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
