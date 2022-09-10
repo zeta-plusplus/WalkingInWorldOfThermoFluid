@@ -213,6 +213,6 @@ equation
   annotation(
     experiment(StartTime = 0, StopTime = 260, Tolerance = 1e-06, Interval = 0.05),
     __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl"),
-    Diagram(coordinateSystem(extent = {{-160, -140}, {240, 140}}, initialScale = 0.1), graphics = {Rectangle(origin = {108, 28}, extent = {{-62, 96}, {40, -101}}), Text(origin = {94, 128}, extent = {{-34, 4}, {34, -4}}, textString = "Heat Exchanger"), Text(origin = {2, 96}, extent = {{-34, 4}, {34, -4}}, textString = "coolant flow line")}),
+    Diagram(coordinateSystem(extent = {{-160, -140}, {240, 140}}, initialScale = 0.1), graphics = {Rectangle(origin = {110, 28}, extent = {{-62, 96}, {40, -101}}), Text(origin = {94, 128}, extent = {{-34, 4}, {34, -4}}, textString = "Heat Exchanger"), Text(origin = {2, 96}, extent = {{-34, 4}, {34, -4}}, textString = "coolant flow line")}),
     __OpenModelica_commandLineOptions = "");
 end CoolingSystem_ex01;

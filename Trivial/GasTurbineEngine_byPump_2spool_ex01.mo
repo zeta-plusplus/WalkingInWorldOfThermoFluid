@@ -50,8 +50,8 @@ model GasTurbineEngine_byPump_2spool_ex01
     Placement(visible = true, transformation(origin = {-75, -15}, extent = {{-15, -15}, {15, 15}}, rotation = 0)));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow annotation(
     Placement(visible = true, transformation(origin = {-100, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp ramp_heat(duration = 2, height = 3000 * 1000, offset = 1000 * 1000, startTime = 10) annotation(
-    Placement(visible = true, transformation(origin = {-130, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Ramp ramp_heat(duration = 2, height = 20000 * 1000, offset = 1000 * 1000, startTime = 10) annotation(
+    Placement(visible = true, transformation(origin = {-140, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Mechanics.Rotational.Components.Inertia inertia(J = 0.01, w(fixed = true, start = 500 * 2 * Modelica.Constants.pi / 60))  annotation(
     Placement(visible = true, transformation(origin = {-90, -90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue(significantDigits = 6)  annotation(
@@ -86,6 +86,10 @@ model GasTurbineEngine_byPump_2spool_ex01
     Placement(visible = true, transformation(origin = {58, -35}, extent = {{-5, -5}, {5, 5}}, rotation = 180)));
   Modelica.Blocks.Interaction.Show.RealValue realValue131(significantDigits = 6) annotation(
     Placement(visible = true, transformation(origin = {33, -54}, extent = {{15, -9}, {-15, 9}}, rotation = 0)));
+  Modelica.Blocks.Math.Gain calcWfuel(k = 1 / (43 * 10 ^ 6))  annotation(
+    Placement(visible = true, transformation(origin = {-95, 60}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
+  Modelica.Blocks.Math.Division calcFAR annotation(
+    Placement(visible = true, transformation(origin = {-60, 54}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(ramp_p_in.y, boundary.p_in) annotation(
     Line(points = {{-279, -10}, {-270, -10}, {-270, -22}, {-262, -22}}, color = {0, 0, 127}));
@@ -110,7 +114,7 @@ equation
   connect(prescribedHeatFlow.port, Comb030.heatPort) annotation(
     Line(points = {{-90, 30}, {-90, -15}}, color = {191, 0, 0}));
   connect(ramp_heat.y, prescribedHeatFlow.Q_flow) annotation(
-    Line(points = {{-119, 30}, {-111, 30}}, color = {0, 0, 127}));
+    Line(points = {{-129, 30}, {-111, 30}}, color = {0, 0, 127}));
   connect(pwrSh.flange_a, inertia.flange_a) annotation(
     Line(points = {{-120, -90}, {-100, -90}}));
   connect(inertia.flange_b, trb041.shaft) annotation(
@@ -157,6 +161,12 @@ equation
     Line(points = {{54.5, -35}, {50, -35}, {50, -54}}, color = {0, 0, 127}));
   connect(trb049.shaft, pwrGen.flange_a) annotation(
     Line(points = {{100, -50}, {100, -80}, {110, -80}}));
+  connect(ramp_heat.y, calcWfuel.u) annotation(
+    Line(points = {{-128, 30}, {-124, 30}, {-124, 60}, {-101, 60}}, color = {0, 0, 127}));
+  connect(calcWfuel.y, calcFAR.u1) annotation(
+    Line(points = {{-90, 60}, {-72, 60}}, color = {0, 0, 127}));
+  connect(massFlowRate.m_flow, calcFAR.u2) annotation(
+    Line(points = {{-204, -36}, {-194, -36}, {-194, 48}, {-72, 48}}, color = {0, 0, 127}));
   annotation(
     experiment(StartTime = 0, StopTime = 50, Tolerance = 1e-06, Interval = 0.1),
     __OpenModelica_simulationFlags(lv = "LOG_STATS", outputFormat = "mat", s = "dassl"),
