@@ -7,18 +7,18 @@ model GasTurbineEngine_byPump_2spool_ex01
   //replaceable package fluid1 = Modelica.Media.Air.DryAirNasa;
   //redeclare package Medium = fluid1
   //----------
-  parameter Real kHeadCmp=10;
-  parameter Real kFlowCmp=1;
-  parameter Real kHeadTrb041=2;
-  parameter Real kFlowTrb041=1;
-  parameter Real kHeadTrb049=2;
-  parameter Real kFlowTrb049=1;
-  
+  parameter Real arrFlowCmp[3]={1*0.2, 1*0.3, 1*0.4};
+  parameter Real arrHeadCmp[3]={15*20000, 15*5000, 15*0};
+  parameter Real arrFlowTrb041[3]={0, 2*(-0.25), 2*(-0.50)};
+  parameter Real arrHeadTrb041[3]={2*(-20000), 2*(-18000), 0};
+  parameter Real arrFlowTrb049[3]={0, 2*(-0.25), 2*(-0.50)};
+  parameter Real arrHeadTrb049[3]={2*(-20000), 2*(-18000), 0};
+  //----------
   inner Modelica.Fluid.System system annotation(
-    Placement(visible = true, transformation(origin = {-170, 88}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-270, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sources.Boundary_pT boundary(redeclare package Medium = Modelica.Media.Air.DryAirNasa, T = 1000, nPorts = 1, p =  101.325 * 1000, use_T_in = true, use_p_in = true) annotation(
     Placement(visible = true, transformation(origin = {-250, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Machines.Pump trb041(redeclare package Medium = Modelica.Media.Air.DryAirNasa, redeclare function flowCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.quadraticFlow(V_flow_nominal = {kFlowTrb041*0, kFlowTrb041*(-0.25), kFlowTrb041*(-0.50)}, head_nominal = {kHeadTrb041*(-20000), kHeadTrb041*(-15000), kHeadTrb041*0}), redeclare function efficiencyCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal = 0.9), N_nominal = 1000, V(displayUnit = "l") = 0.001, allowFlowReversal = true, checkValve = false, energyDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, m_flow_start = -2, massDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, nParallel = 1, p_b_start = 5 * system.p_start) annotation(
+  Modelica.Fluid.Machines.Pump trb041(redeclare package Medium = Modelica.Media.Air.DryAirNasa, redeclare function flowCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.quadraticFlow(V_flow_nominal = arrFlowTrb041, head_nominal = arrHeadTrb041), redeclare function efficiencyCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal = 0.9), N_nominal = 1000, V(displayUnit = "l") = 0.001, allowFlowReversal = true, checkValve = false, energyDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, m_flow_start = -2, massDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, nParallel = 1, p_b_start = 5 * system.p_start) annotation(
     Placement(visible = true, transformation(origin = {-20, -30}, extent = {{20, 20}, {-20, -20}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp ramp_N(duration = 2, height = 100, offset = 1000, startTime = 15) annotation(
     Placement(visible = true, transformation(origin = {232, -80}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
@@ -34,7 +34,7 @@ model GasTurbineEngine_byPump_2spool_ex01
     Placement(visible = true, transformation(origin = {-290, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.UnitConversions.From_rpm from_rpm1 annotation(
     Placement(visible = true, transformation(origin = {200, -80}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Modelica.Fluid.Machines.Pump Cmp(redeclare package Medium = Modelica.Media.Air.DryAirNasa, redeclare function flowCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.quadraticFlow(V_flow_nominal = {kFlowCmp*0, kFlowCmp*0.25, kFlowCmp*0.50}, head_nominal = {kHeadCmp*20000, kHeadCmp*15000, kHeadCmp*0}), redeclare function efficiencyCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal = 0.9),N_nominal = 1000, V(displayUnit = "l") = 0.001, allowFlowReversal = true, checkValve = false, energyDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, m_flow_start = 2, massDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, nParallel = 1, p_b_start = 5 * system.p_start) annotation(
+  Modelica.Fluid.Machines.Pump Cmp(redeclare package Medium = Modelica.Media.Air.DryAirNasa, redeclare function flowCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.quadraticFlow(V_flow_nominal = arrFlowCmp, head_nominal = arrHeadCmp), redeclare function efficiencyCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal = 0.9),N_nominal = 1000, V(displayUnit = "l") = 0.001, allowFlowReversal = true, checkValve = false, energyDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, m_flow_start = 2, massDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, nParallel = 1, p_b_start = 5 * system.p_start) annotation(
     Placement(visible = true, transformation(origin = {-160, -30}, extent = {{-20, 20}, {20, -20}}, rotation = 0)));
   Modelica.Mechanics.Rotational.Sensors.PowerSensor pwrSh annotation(
     Placement(visible = true, transformation(origin = {-130, -90}, extent = {{-10, 10}, {10, -10}}, rotation = 180)));
@@ -50,7 +50,7 @@ model GasTurbineEngine_byPump_2spool_ex01
     Placement(visible = true, transformation(origin = {-75, -15}, extent = {{-15, -15}, {15, 15}}, rotation = 0)));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow annotation(
     Placement(visible = true, transformation(origin = {-100, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp ramp_heat(duration = 2, height = 20000 * 1000, offset = 1000 * 1000, startTime = 10) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_heat(duration = 2, height = 3000 * 1000, offset = 1000 * 1000, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-140, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Mechanics.Rotational.Components.Inertia inertia(J = 0.01, w(fixed = true, start = 500 * 2 * Modelica.Constants.pi / 60))  annotation(
     Placement(visible = true, transformation(origin = {-90, -90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -76,7 +76,7 @@ model GasTurbineEngine_byPump_2spool_ex01
     Placement(visible = true, transformation(origin = {210, -35}, extent = {{-5, -5}, {5, 5}}, rotation = 180)));
   Modelica.Blocks.Interaction.Show.RealValue realValue13(significantDigits = 6) annotation(
     Placement(visible = true, transformation(origin = {183, -54}, extent = {{15, -9}, {-15, 9}}, rotation = 0)));
-  Modelica.Fluid.Machines.Pump trb049(redeclare package Medium = Modelica.Media.Air.DryAirNasa, redeclare function flowCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.quadraticFlow(V_flow_nominal = {kFlowTrb049*0, kFlowTrb049*(-0.25), kFlowTrb049*(-0.50)}, head_nominal = {kHeadTrb049*(-20000), kHeadTrb049*(-15000), kHeadTrb049*0}), redeclare function efficiencyCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal = 0.9), N_nominal = 1000, V(displayUnit = "l") = 0.001, allowFlowReversal = true, checkValve = false, energyDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, m_flow_start = -2, massDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, nParallel = 1, p_b_start = 5 * system.p_start) annotation(
+  Modelica.Fluid.Machines.Pump trb049(redeclare package Medium = Modelica.Media.Air.DryAirNasa, redeclare function flowCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.quadraticFlow(V_flow_nominal = arrFlowTrb049, head_nominal = arrHeadTrb049), redeclare function efficiencyCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal = 0.9), N_nominal = 1000, V(displayUnit = "l") = 0.001, allowFlowReversal = true, checkValve = false, energyDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, m_flow_start = -2, massDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, nParallel = 1, p_b_start = 5 * system.p_start) annotation(
     Placement(visible = true, transformation(origin = {100, -30}, extent = {{20, 20}, {-20, -20}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue41(significantDigits = 6) annotation(
     Placement(visible = true, transformation(origin = {22, -40}, extent = {{14, -10}, {-14, 10}}, rotation = 0)));
