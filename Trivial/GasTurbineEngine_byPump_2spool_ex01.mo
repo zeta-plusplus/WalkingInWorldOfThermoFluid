@@ -18,8 +18,10 @@ model GasTurbineEngine_byPump_2spool_ex01
   //----------
   parameter Real arrFlowCmp[3]={1*0.1, 1*0.2, 1*0.3};
   parameter Real arrHeadCmp[3]={15*20000, 15*10000, 50000};
+  //---
   parameter Real arrFlowTrb041[3]={-0.2, -0.9, -1};
   parameter Real arrHeadTrb041[3]={-40000, -35000, -5000};
+  //---
   parameter Real arrFlowTrb049[3]={-0.1, -0.5, -0.8};
   parameter Real arrHeadTrb049[3]={-45000, -40000, -5000};
   //----------
