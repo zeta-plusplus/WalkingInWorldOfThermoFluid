@@ -7,12 +7,21 @@ model GasTurbineEngine_byPump_2spool_ex01
   //replaceable package fluid1 = Modelica.Media.Air.DryAirNasa;
   //redeclare package Medium = fluid1
   //----------
+  /*
   parameter Real arrFlowCmp[3]={1*0.2, 1*0.3, 1*0.4};
   parameter Real arrHeadCmp[3]={15*20000, 15*5000, 15*0};
   parameter Real arrFlowTrb041[3]={0, 2*(-0.25), 2*(-0.50)};
   parameter Real arrHeadTrb041[3]={2*(-20000), 2*(-18000), 0};
   parameter Real arrFlowTrb049[3]={0, 2*(-0.25), 2*(-0.50)};
   parameter Real arrHeadTrb049[3]={2*(-20000), 2*(-18000), 0};
+  */
+  //----------
+  parameter Real arrFlowCmp[3]={1*0.1, 1*0.2, 1*0.3};
+  parameter Real arrHeadCmp[3]={15*20000, 15*10000, 50000};
+  parameter Real arrFlowTrb041[3]={-0.2, -0.9, -1};
+  parameter Real arrHeadTrb041[3]={-40000, -35000, -5000};
+  parameter Real arrFlowTrb049[3]={-0.1, -0.5, -0.8};
+  parameter Real arrHeadTrb049[3]={-45000, -40000, -10000};
   //----------
   inner Modelica.Fluid.System system annotation(
     Placement(visible = true, transformation(origin = {-270, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
