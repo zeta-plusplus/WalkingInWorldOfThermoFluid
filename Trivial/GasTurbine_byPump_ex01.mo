@@ -7,9 +7,16 @@ model GasTurbine_byPump_ex01
   //replaceable package fluid1 = Modelica.Media.Air.DryAirNasa;
   //redeclare package Medium = fluid1
   //----------
-  parameter Real arrFlowTrb[3]={0, 0.3, 0.6};
-  parameter Real arrHeadTrb[3]={-0, -6000, -15000};
+  //parameter Real arrFlowTrb[3]={0, 3, 6};
+  //parameter Real arrHeadTrb[3]={0, -6000, -15000};
+  //parameter Real arrFlowTrb[3]={0, -3, -4};
+  //parameter Real arrHeadTrb[3]={20000, 10000, 0};
+  parameter Real arrFlowTrb[3]={0, -3, -4};
+  parameter Real arrHeadTrb[3]={0, 10000, 20000};
+  //parameter Real arrFlowTrb[3]={0, -3, -4};
+  //parameter Real arrHeadTrb[3]={0, -10000, -20000};
   //----------
+  
   inner Modelica.Fluid.System system annotation(
     Placement(visible = true, transformation(origin = {-50, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sources.Boundary_pT boundary(redeclare package Medium = Modelica.Media.Air.DryAirNasa, T = 1000, nPorts = 2, p = 10 * 101.325 * 1000, use_T_in = true, use_p_in = true) annotation(
