@@ -1,0 +1,14 @@
+within WalkingInWorldOfThermoFluid.Functions;
+
+function ExponentialChokingFlow
+  extends Modelica.Icons.Function;
+  //-----
+  import units= Modelica.SIunits;
+  
+  input Real flow_choke;
+  input Real s_head;
+  //-----
+  output Real head;
+algorithm
+  head:= -1*s_head*log((flow_choke-Flow)/flow_choke);
+end ExponentialChokingFlow;

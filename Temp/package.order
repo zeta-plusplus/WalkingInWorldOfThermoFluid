@@ -4,3 +4,7 @@ FuelSupplySys_temp002
 PumpAsTurbine_temp01
 CoolingSystem_temp01
 TurbojetEngine_byPump_2spool_temp01
+test_ExponentialChokingVFlow
+test_ExponentialChokingNegativeVFlow
+GasTurbine_byPump_ex04
+GasTurbine_byControlledPump_ex02
