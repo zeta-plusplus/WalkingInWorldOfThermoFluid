@@ -8,3 +8,4 @@ test_ExponentialChokingVFlow
 test_ExponentialChokingNegativeVFlow
 GasTurbine_byPump_ex04
 GasTurbine_byControlledPump_ex02
+GasTurbineEngine_byControlledPump_1spool_ex01
