@@ -9,7 +9,7 @@ model GasTurbineEngine_byControlledPump_1spool_ex01
   //----------
   parameter Real kFlowCmp=4;
   parameter Real kHeadCmp=6;
-  parameter Real arrFlowCmp[3]={kFlowCmp*0.0, kFlowCmp*0.2, kFlowCmp*0.4};
+  parameter Real arrFlowCmp[3]={kFlowCmp*0.0, kFlowCmp*0.3, kFlowCmp*0.6};
   parameter Real arrHeadCmp[3]={kHeadCmp*2000000, kHeadCmp*1000000, kHeadCmp*0};
   //---
   parameter Real arrFlowTrb[3]={0, (-0.2), (-0.4)};
@@ -34,7 +34,7 @@ model GasTurbineEngine_byControlledPump_1spool_ex01
   Modelica.Mechanics.Rotational.Sources.Speed speed1 annotation(
     Placement(visible = true, transformation(origin = {128, -140}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.Pressure p5(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
-    Placement(visible = true, transformation(origin = {82, -14}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {82, -12}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
   Modelica.Fluid.Sources.Boundary_pT boundary1(redeclare package Medium = Modelica.Media.Air.DryAirNasa, T = 288.15, nPorts = 2, p = 101.325 * 1000) annotation(
     Placement(visible = true, transformation(origin = {190, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp ramp_p_in(duration = 10, height = 0 * 101.325 * 1000, offset =  101.325 * 1000, startTime = 30) annotation(
@@ -96,7 +96,7 @@ model GasTurbineEngine_byControlledPump_1spool_ex01
   Modelica.Blocks.Sources.RealExpression Wc4(y = Trb.port_b.m_flow * sqrt(T1.T / 288.15) / (p4.p / (101.325 * 1000)))  annotation(
     Placement(visible = true, transformation(origin = {-20, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.Pressure p4(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
-    Placement(visible = true, transformation(origin = {25, -15}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {25, -11}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
   Modelica.Blocks.Sources.RealExpression PR3q1(y = p3.p / p1.p)  annotation(
     Placement(visible = true, transformation(origin = {-220, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.RealExpression PR4q5(y = p4.p / p5.p) annotation(
@@ -111,20 +111,20 @@ model GasTurbineEngine_byControlledPump_1spool_ex01
     Placement(visible = true, transformation(origin = {135, -19}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
   Modelica.Blocks.Math.Gain gain(k = -1) annotation(
     Placement(visible = true, transformation(origin = {64, 6}, extent = {{-4, -4}, {4, 4}}, rotation = -90)));
-  Modelica.Blocks.Sources.RealExpression calc_Wc_Trb(y = 6 * (1 - exp(-(PR_Trb.y - 1) / 0.11))) annotation(
+  Modelica.Blocks.Sources.RealExpression calc_Wc_Trb(y = 1 / 2 * 5 * (1 - exp(-(PR_Trb.y - 1) / 0.11))) annotation(
     Placement(visible = true, transformation(origin = {25, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.RealExpression calc_m_flow_Trb(y = calc_Wc_Trb.y * (p4.p / (101.325 * 1000)) / sqrt(T4.T / 288.15)) annotation(
     Placement(visible = true, transformation(origin = {47, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.Division PR_Trb annotation(
     Placement(visible = true, transformation(origin = {34, 5}, extent = {{-4, -4}, {4, 4}}, rotation = 90)));
-  Modelica.Fluid.Machines.ControlledPump Trb(redeclare package Medium = Modelica.Media.Air.DryAirNasa, N_nominal = -1000, V = 0.01, control_m_flow = true, m_flow_nominal = -5, p_a_nominal = 500 * 1000, p_b_nominal = 100 * 1000, use_m_flow_set = true) annotation(
+  Modelica.Fluid.Machines.ControlledPump Trb(redeclare package Medium = Modelica.Media.Air.DryAirNasa, N_nominal = -1000, V = 0.01, control_m_flow = true, m_flow_nominal = -1 / 2 *5, p_a_nominal = 500 * 1000, p_b_nominal = 100 * 1000, use_m_flow_set = true) annotation(
     Placement(visible = true, transformation(origin = {54, -30}, extent = {{20, -20}, {-20, 20}}, rotation = 0)));
   Modelica.Blocks.Sources.RealExpression calc_Trb_trq(y = -Trb.W_total / w_Trb.w)  annotation(
     Placement(visible = true, transformation(origin = {24, -60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Mechanics.Rotational.Sources.Torque torque_Trb annotation(
-    Placement(visible = true, transformation(origin = {50, -78}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+    Placement(visible = true, transformation(origin = {50, -75}, extent = {{-7, -7}, {7, 7}}, rotation = -90)));
   Modelica.Mechanics.Rotational.Sensors.SpeedSensor w_Trb annotation(
-    Placement(visible = true, transformation(origin = {30, -90}, extent = {{-6, -6}, {6, 6}}, rotation = 180)));
+    Placement(visible = true, transformation(origin = {30, -84}, extent = {{-6, -6}, {6, 6}}, rotation = 180)));
   Modelica.Mechanics.Rotational.Sensors.PowerSensor pwrTrb annotation(
     Placement(visible = true, transformation(origin = {50, -113}, extent = {{-5, 5}, {5, -5}}, rotation = 90)));
   Modelica.Thermal.HeatTransfer.Sensors.HeatFlowSensor heatFlowSensor annotation(
@@ -175,7 +175,7 @@ equation
   connect(T4.T, realValue111.numberPort) annotation(
     Line(points = {{-16.5, -35}, {-40, -35}, {-40, -51}}, color = {0, 0, 127}));
   connect(p5.p, realValue4.numberPort) annotation(
-    Line(points = {{87.5, -14}, {126, -14}, {126, -61}}, color = {0, 0, 127}));
+    Line(points = {{87.5, -12}, {126, -12}, {126, -61}}, color = {0, 0, 127}));
   connect(boundary1.ports[1], T5.port) annotation(
     Line(points = {{180, -30}, {170, -30}}, color = {0, 127, 255}));
   connect(T5.T, realValue13.numberPort) annotation(
@@ -189,7 +189,7 @@ equation
   connect(boundary.ports[2], T1.port) annotation(
     Line(points = {{-240, -30}, {-235, -30}, {-235, -16}}, color = {0, 127, 255}));
   connect(Comb.ports[3], p4.port) annotation(
-    Line(points = {{-74, -30}, {25, -30}, {25, -20}}, color = {0, 127, 255}));
+    Line(points = {{-74, -30}, {25, -30}, {25, -16}}, color = {0, 127, 255}));
   connect(boundary.ports[3], h1.port) annotation(
     Line(points = {{-240, -30}, {-215, -30}, {-215, -22}}, color = {0, 127, 255}));
   connect(Cmp.port_b, h3.port) annotation(
@@ -199,9 +199,9 @@ equation
   connect(inertia.flange_b, pwrGen.flange_a) annotation(
     Line(points = {{-80, -140}, {88, -140}}));
   connect(p4.p, PR_Trb.u1) annotation(
-    Line(points = {{30.5, -15}, {32, -15}, {32, 0}}, color = {0, 0, 127}));
+    Line(points = {{30.5, -11}, {32, -11}, {32, 0}}, color = {0, 0, 127}));
   connect(p5.p, PR_Trb.u2) annotation(
-    Line(points = {{87.5, -14}, {87.5, -4}, {36, -4}, {36, 0}}, color = {0, 0, 127}));
+    Line(points = {{87.5, -12}, {87.5, -4}, {36, -4}, {36, 0}}, color = {0, 0, 127}));
   connect(Comb.ports[4], Trb.port_b) annotation(
     Line(points = {{-74, -30}, {34, -30}}, color = {0, 127, 255}));
   connect(gain.y, Trb.m_flow_set) annotation(
@@ -209,17 +209,17 @@ equation
   connect(Trb.port_a, boundary1.ports[2]) annotation(
     Line(points = {{74, -30}, {180, -30}}, color = {0, 127, 255}));
   connect(w_Trb.flange, torque_Trb.flange) annotation(
-    Line(points = {{36, -90}, {50, -90}, {50, -88}}));
+    Line(points = {{36, -84}, {50, -84}, {50, -82}}));
   connect(calc_Trb_trq.y, torque_Trb.tau) annotation(
-    Line(points = {{35, -60}, {50, -60}, {50, -66}}, color = {0, 0, 127}));
+    Line(points = {{35, -60}, {50, -60}, {50, -67}}, color = {0, 0, 127}));
   connect(torque_Trb.flange, pwrTrb.flange_b) annotation(
-    Line(points = {{50, -88}, {50, -108}}));
+    Line(points = {{50, -82}, {50, -108}}));
   connect(inertia.flange_b, pwrTrb.flange_a) annotation(
     Line(points = {{-80, -140}, {50, -140}, {50, -118}}));
   connect(Trb.port_a, h5.port) annotation(
     Line(points = {{74, -30}, {135, -30}, {135, -24}}, color = {0, 127, 255}));
   connect(Trb.port_a, p5.port) annotation(
-    Line(points = {{74, -30}, {82, -30}, {82, -19}}, color = {0, 127, 255}));
+    Line(points = {{74, -30}, {82, -30}, {82, -17}}, color = {0, 127, 255}));
   connect(Trb.port_b, h4.port) annotation(
     Line(points = {{34, -30}, {-17, -30}, {-17, -24}}, color = {0, 127, 255}));
   connect(prescribedHeatFlow.port, heatFlowSensor.port_a) annotation(
@@ -233,6 +233,6 @@ equation
   annotation(
     experiment(StartTime = 0, StopTime = 50, Tolerance = 1e-06, Interval = 0.1),
     __OpenModelica_simulationFlags(lv = "LOG_STATS", outputFormat = "mat", s = "dassl"),
-    Diagram(coordinateSystem(extent = {{-300, -200}, {200, 100}}, initialScale = 0.1), graphics = {Rectangle(origin = {44, -33}, extent = {{-50, 69}, {50, -69}}), Text(origin = {46, 44}, extent = {{-24, 4}, {24, -4}}, textString = "Turbine")}),
+    Diagram(coordinateSystem(extent = {{-300, -200}, {200, 100}}, initialScale = 0.1), graphics = {Rectangle(origin = {51, -31}, extent = {{-43, 63}, {43, -63}}), Text(origin = {46, 44}, extent = {{-24, 4}, {24, -4}}, textString = "Turbine")}),
     __OpenModelica_commandLineOptions = "");
 end GasTurbineEngine_byControlledPump_1spool_ex01;
