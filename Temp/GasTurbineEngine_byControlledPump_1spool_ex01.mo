@@ -8,9 +8,9 @@ model GasTurbineEngine_byControlledPump_1spool_ex01
   //redeclare package Medium = fluid1
   //----------
   parameter Real kFlowCmp=4;
-  parameter Real kHeadCmp=6;
-  parameter Real arrFlowCmp[3]={kFlowCmp*0.0, kFlowCmp*0.3, kFlowCmp*0.6};
-  parameter Real arrHeadCmp[3]={kHeadCmp*200000, kHeadCmp*150000, kHeadCmp*0};
+  parameter Real kHeadCmp=2;
+  parameter Real arrFlowCmp[3]={kFlowCmp*0.2, kFlowCmp*0.4, kFlowCmp*0.6};
+  parameter Real arrHeadCmp[3]={kHeadCmp*20000, kHeadCmp*10000, kHeadCmp*0};
   //---
   parameter Real arrFlowTrb[3]={0, (-0.2), (-0.4)};
   parameter Real arrHeadTrb[3]={(-20000), (-10000), -0};
@@ -43,23 +43,23 @@ model GasTurbineEngine_byControlledPump_1spool_ex01
     Placement(visible = true, transformation(origin = {-290, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.UnitConversions.From_rpm from_rpm1 annotation(
     Placement(visible = true, transformation(origin = {158, -140}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Modelica.Fluid.Machines.Pump Cmp(redeclare package Medium = Modelica.Media.Air.DryAirNasa, redeclare function flowCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.quadraticFlow(V_flow_nominal = arrFlowCmp, head_nominal = arrHeadCmp), redeclare function efficiencyCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal = 0.9),N_nominal = 10000, V(displayUnit = "l") = 0.001, allowFlowReversal = true, checkValve = false, energyDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, m_flow_start = 2, massDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, nParallel = 1, p_b_start = 5 * system.p_start) annotation(
+  Modelica.Fluid.Machines.Pump Cmp(redeclare package Medium = Modelica.Media.Air.DryAirNasa, redeclare function flowCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.quadraticFlow(V_flow_nominal = arrFlowCmp, head_nominal = arrHeadCmp), redeclare function efficiencyCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal = 0.9),N_nominal = 10000, T_start = 500, V(displayUnit = "l") = 0.001, allowFlowReversal = true, checkValve = false, energyDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, m_flow_start = 2, massDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, nParallel = 1, p_b_start = 5 * system.p_start) annotation(
     Placement(visible = true, transformation(origin = {-160, -30}, extent = {{-20, 20}, {20, -20}}, rotation = 0)));
   Modelica.Mechanics.Rotational.Sensors.PowerSensor pwrSh annotation(
     Placement(visible = true, transformation(origin = {-130, -140}, extent = {{-10, 10}, {10, -10}}, rotation = 180)));
   Modelica.Fluid.Sensors.MassFlowRate m_flow_1(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
     Placement(visible = true, transformation(origin = {-205, -30}, extent = {{-5, 5}, {5, -5}}, rotation = 0)));
   Modelica.Fluid.Sensors.Pressure p3(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
-    Placement(visible = true, transformation(origin = {-120, -30}, extent = {{-7, -7}, {7, 7}}, rotation = 270)));
+    Placement(visible = true, transformation(origin = {-121, -30}, extent = {{-6, -6}, {6, 6}}, rotation = 270)));
   Modelica.Fluid.Sensors.Pressure p1(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
     Placement(visible = true, transformation(origin = {-226, -30}, extent = {{-6, -6}, {6, 6}}, rotation = 270)));
   Modelica.Mechanics.Rotational.Sensors.PowerSensor pwrGen annotation(
     Placement(visible = true, transformation(origin = {98, -140}, extent = {{10, 10}, {-10, -10}}, rotation = 180)));
-  Modelica.Fluid.Vessels.ClosedVolume Comb(redeclare package Medium = Modelica.Media.Air.DryAirNasa, T_start = 800, V = 0.1, energyDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, massDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, nPorts = 4, p_start = 3 * 100 * 1000, use_HeatTransfer = true, use_portsData = false)  annotation(
+  Modelica.Fluid.Vessels.ClosedVolume Comb(redeclare package Medium = Modelica.Media.Air.DryAirNasa, T_start = 500, V = 0.01, energyDynamics = Modelica.Fluid.Types.Dynamics.SteadyStateInitial, massDynamics = Modelica.Fluid.Types.Dynamics.SteadyStateInitial, nPorts = 4, p_start = 3 * 100 * 1000, use_HeatTransfer = true, use_portsData = false)  annotation(
     Placement(visible = true, transformation(origin = {-75, -15}, extent = {{-15, -15}, {15, 15}}, rotation = 0)));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow annotation(
     Placement(visible = true, transformation(origin = {-100, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp ramp_heat(duration = 5, height = 100 * 1000, offset = 800 * 1000, startTime = 10) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_heat(duration = 5, height = 5 * 1000 * 1000, offset = 1 * 1000 * 1000.0, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-140, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Mechanics.Rotational.Components.Inertia inertia(J = 0.01)  annotation(
     Placement(visible = true, transformation(origin = {-90, -140}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -163,7 +163,7 @@ equation
   connect(realValue2.numberPort, m_flow_1.m_flow) annotation(
     Line(points = {{-210, -54}, {-205, -54}, {-205, -35.5}}, color = {0, 0, 127}));
   connect(realValue3.numberPort, p3.p) annotation(
-    Line(points = {{-124, -62}, {-120, -62}, {-120, -38}}, color = {0, 0, 127}));
+    Line(points = {{-124, -62}, {-121, -62}, {-121, -37}}, color = {0, 0, 127}));
   connect(p3.port, T3.port) annotation(
     Line(points = {{-127, -30}, {-100, -30}}, color = {0, 127, 255}));
   connect(Comb.ports[1], T3.port) annotation(
