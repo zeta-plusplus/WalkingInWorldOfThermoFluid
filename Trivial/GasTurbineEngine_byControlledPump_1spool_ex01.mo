@@ -1,4 +1,4 @@
-within WalkingInWorldOfThermoFluid.Temp;
+within WalkingInWorldOfThermoFluid.Trivial;
 
 model GasTurbineEngine_byControlledPump_1spool_ex01
   extends Modelica.Icons.Example;
@@ -50,15 +50,15 @@ model GasTurbineEngine_byControlledPump_1spool_ex01
   Modelica.Fluid.Sensors.MassFlowRate m_flow_1(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
     Placement(visible = true, transformation(origin = {-205, -30}, extent = {{-5, 5}, {5, -5}}, rotation = 0)));
   Modelica.Fluid.Sensors.Pressure p3(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
-    Placement(visible = true, transformation(origin = {-121, -30}, extent = {{-6, -6}, {6, 6}}, rotation = 270)));
+    Placement(visible = true, transformation(origin = {-129, -30}, extent = {{-6, -6}, {6, 6}}, rotation = 270)));
   Modelica.Fluid.Sensors.Pressure p1(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
     Placement(visible = true, transformation(origin = {-226, -30}, extent = {{-6, -6}, {6, 6}}, rotation = 270)));
   Modelica.Mechanics.Rotational.Sensors.PowerSensor pwrGen annotation(
     Placement(visible = true, transformation(origin = {98, -140}, extent = {{10, 10}, {-10, -10}}, rotation = 180)));
   Modelica.Fluid.Vessels.ClosedVolume Comb(redeclare package Medium = Modelica.Media.Air.DryAirNasa, T_start = 500, V = 0.01, energyDynamics = Modelica.Fluid.Types.Dynamics.SteadyStateInitial, massDynamics = Modelica.Fluid.Types.Dynamics.SteadyStateInitial, nPorts = 4, p_start = 3 * 100 * 1000, use_HeatTransfer = true, use_portsData = false)  annotation(
-    Placement(visible = true, transformation(origin = {-75, -15}, extent = {{-15, -15}, {15, 15}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-49, -15}, extent = {{-15, -15}, {15, 15}}, rotation = 0)));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow annotation(
-    Placement(visible = true, transformation(origin = {-100, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-74, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp ramp_heat(duration = 5, height = 5 * 1000 * 1000, offset = 1 * 1000 * 1000.0, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-140, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Mechanics.Rotational.Components.Inertia inertia(J = 0.01)  annotation(
@@ -70,17 +70,17 @@ model GasTurbineEngine_byControlledPump_1spool_ex01
   Modelica.Blocks.Interaction.Show.RealValue realValue2(significantDigits = 6) annotation(
     Placement(visible = true, transformation(origin = {-227, -54}, extent = {{15, -10}, {-15, 10}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue3(significantDigits = 6) annotation(
-    Placement(visible = true, transformation(origin = {-141, -62}, extent = {{15, -10}, {-15, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-109, -72}, extent = {{-15, -10}, {15, 10}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue4(significantDigits = 6) annotation(
     Placement(visible = true, transformation(origin = {110, -61}, extent = {{14, -10}, {-14, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.Temperature T3(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
-    Placement(visible = true, transformation(origin = {-100, -35}, extent = {{-6, -5}, {6, 5}}, rotation = 180)));
+    Placement(visible = true, transformation(origin = {-106, -35}, extent = {{-6, -5}, {6, 5}}, rotation = 180)));
   Modelica.Blocks.Interaction.Show.RealValue realValue11(significantDigits = 6) annotation(
-    Placement(visible = true, transformation(origin = {-88, -62}, extent = {{-16, -10}, {16, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-94, -62}, extent = {{-16, -10}, {16, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.Temperature T4(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
-    Placement(visible = true, transformation(origin = {-3, -35}, extent = {{-5, -5}, {5, 5}}, rotation = 180)));
+    Placement(visible = true, transformation(origin = {-13, -35}, extent = {{-5, -5}, {5, 5}}, rotation = 180)));
   Modelica.Blocks.Interaction.Show.RealValue realValue111(significantDigits = 6) annotation(
-    Placement(visible = true, transformation(origin = {-13, -51}, extent = {{-15, -9}, {15, 9}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-11, -51}, extent = {{-15, -9}, {15, 9}}, rotation = 0)));
   Modelica.Fluid.Sensors.Temperature T5(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
     Placement(visible = true, transformation(origin = {170, -35}, extent = {{-5, -5}, {5, 5}}, rotation = 180)));
   Modelica.Blocks.Interaction.Show.RealValue realValue13(significantDigits = 6) annotation(
@@ -93,20 +93,20 @@ model GasTurbineEngine_byControlledPump_1spool_ex01
     Placement(visible = true, transformation(origin = {-235, -11}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
   Modelica.Blocks.Sources.RealExpression Wc1(y = m_flow_1.m_flow * sqrt(T1.T / 288.15) / (p1.p / (101.325 * 1000)))  annotation(
     Placement(visible = true, transformation(origin = {-220, -6}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.RealExpression Wc4(y = Trb.port_b.m_flow * sqrt(T1.T / 288.15) / (p4.p / (101.325 * 1000)))  annotation(
-    Placement(visible = true, transformation(origin = {-10, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.RealExpression Wc4(y = Trb.port_b.m_flow * sqrt(T4.T / 288.15) / (p4.p / (101.325 * 1000)))  annotation(
+    Placement(visible = true, transformation(origin = {-20, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.Pressure p4(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
     Placement(visible = true, transformation(origin = {25, -11}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
   Modelica.Blocks.Sources.RealExpression PR3q1(y = p3.p / p1.p)  annotation(
     Placement(visible = true, transformation(origin = {-220, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.RealExpression PR4q5(y = p4.p / p5.p) annotation(
-    Placement(visible = true, transformation(origin = {-10, 24}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-20, 24}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.SpecificEnthalpy h1(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
     Placement(visible = true, transformation(origin = {-215, -17}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
   Modelica.Fluid.Sensors.SpecificEnthalpy h3(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
-    Placement(visible = true, transformation(origin = {-109, -19}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-115, -19}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
   Modelica.Fluid.Sensors.SpecificEnthalpy h4(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
-    Placement(visible = true, transformation(origin = {-7, -19}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-17, -19}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
   Modelica.Fluid.Sensors.SpecificEnthalpy h5(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
     Placement(visible = true, transformation(origin = {135, -19}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
   Modelica.Blocks.Math.Gain gain(k = -1) annotation(
@@ -128,16 +128,18 @@ model GasTurbineEngine_byControlledPump_1spool_ex01
   Modelica.Mechanics.Rotational.Sensors.PowerSensor pwrTrb annotation(
     Placement(visible = true, transformation(origin = {50, -113}, extent = {{-5, 5}, {5, -5}}, rotation = 90)));
   Modelica.Thermal.HeatTransfer.Sensors.HeatFlowSensor heatFlowSensor annotation(
-    Placement(visible = true, transformation(origin = {-90, 14}, extent = {{-6, 6}, {6, -6}}, rotation = -90)));
+    Placement(visible = true, transformation(origin = {-64, 14}, extent = {{-6, 6}, {6, -6}}, rotation = -90)));
   Modelica.Blocks.Math.Division effThermal annotation(
     Placement(visible = true, transformation(origin = {107, -187}, extent = {{-7, -7}, {7, 7}}, rotation = 0)));
+  Modelica.Fluid.Vessels.ClosedVolume volume(redeclare package Medium = Modelica.Media.Air.DryAirNasa, T_start = 500, V = 0.01, energyDynamics = Modelica.Fluid.Types.Dynamics.SteadyStateInitial, massDynamics = Modelica.Fluid.Types.Dynamics.SteadyStateInitial, nPorts = 2, p_start = 3 * 100 * 1000, use_HeatTransfer = true, use_portsData = false) annotation(
+    Placement(visible = true, transformation(origin = {-87, -21}, extent = {{-9, -9}, {9, 9}}, rotation = 0)));
 equation
   connect(ramp_p_in.y, boundary.p_in) annotation(
     Line(points = {{-279, -10}, {-270, -10}, {-270, -22}, {-262, -22}}, color = {0, 0, 127}));
   connect(ramp_T_in.y, boundary.T_in) annotation(
     Line(points = {{-279, -40}, {-273, -40}, {-273, -26}, {-262, -26}}, color = {0, 0, 127}));
   connect(Cmp.port_b, p3.port) annotation(
-    Line(points = {{-140, -30}, {-127, -30}}, color = {0, 127, 255}));
+    Line(points = {{-140, -30}, {-135, -30}}, color = {0, 127, 255}));
   connect(p1.port, boundary.ports[1]) annotation(
     Line(points = {{-232, -30}, {-240, -30}}, color = {0, 127, 255}));
   connect(p1.port, m_flow_1.port_a) annotation(
@@ -153,7 +155,7 @@ equation
   connect(pwrGen.flange_b, speed1.flange) annotation(
     Line(points = {{108, -140}, {118, -140}}));
   connect(ramp_heat.y, prescribedHeatFlow.Q_flow) annotation(
-    Line(points = {{-129, 30}, {-111, 30}}, color = {0, 0, 127}));
+    Line(points = {{-129, 30}, {-84, 30}}, color = {0, 0, 127}));
   connect(pwrSh.flange_a, inertia.flange_a) annotation(
     Line(points = {{-120, -140}, {-100, -140}}));
   connect(realValue.numberPort, pwrSh.power) annotation(
@@ -163,17 +165,15 @@ equation
   connect(realValue2.numberPort, m_flow_1.m_flow) annotation(
     Line(points = {{-210, -54}, {-205, -54}, {-205, -35.5}}, color = {0, 0, 127}));
   connect(realValue3.numberPort, p3.p) annotation(
-    Line(points = {{-124, -62}, {-121, -62}, {-121, -37}}, color = {0, 0, 127}));
+    Line(points = {{-126.25, -72}, {-129, -72}, {-129, -37}}, color = {0, 0, 127}));
   connect(p3.port, T3.port) annotation(
-    Line(points = {{-127, -30}, {-100, -30}}, color = {0, 127, 255}));
-  connect(Comb.ports[1], T3.port) annotation(
-    Line(points = {{-75, -30}, {-100, -30}}, color = {0, 127, 255}));
+    Line(points = {{-135, -30}, {-106, -30}}, color = {0, 127, 255}));
   connect(T3.T, realValue11.numberPort) annotation(
-    Line(points = {{-104, -35}, {-111, -35}, {-111, -62}, {-106, -62}}, color = {0, 0, 127}));
-  connect(Comb.ports[2], T4.port) annotation(
-    Line(points = {{-75, -30}, {-3, -30}}, color = {0, 127, 255}));
+    Line(points = {{-110.2, -35}, {-117.2, -35}, {-117.2, -62}, {-112.2, -62}}, color = {0, 0, 127}));
+  connect(Comb.ports[1], T4.port) annotation(
+    Line(points = {{-49, -30}, {-13, -30}}, color = {0, 127, 255}));
   connect(T4.T, realValue111.numberPort) annotation(
-    Line(points = {{-6.5, -35}, {-30, -35}, {-30, -51}}, color = {0, 0, 127}));
+    Line(points = {{-16.5, -35}, {-28, -35}, {-28, -51}}, color = {0, 0, 127}));
   connect(p5.p, realValue4.numberPort) annotation(
     Line(points = {{87.5, -12}, {126, -12}, {126, -61}}, color = {0, 0, 127}));
   connect(boundary1.ports[1], T5.port) annotation(
@@ -188,12 +188,12 @@ equation
     Line(points = {{-205, -35.5}, {-205, -42}, {-198, -42}, {-198, 48}, {-72, 48}}, color = {0, 0, 127}));
   connect(boundary.ports[2], T1.port) annotation(
     Line(points = {{-240, -30}, {-235, -30}, {-235, -16}}, color = {0, 127, 255}));
-  connect(Comb.ports[3], p4.port) annotation(
-    Line(points = {{-74, -30}, {25, -30}, {25, -16}}, color = {0, 127, 255}));
+  connect(Comb.ports[2], p4.port) annotation(
+    Line(points = {{-49, -30}, {25, -30}, {25, -16}}, color = {0, 127, 255}));
   connect(boundary.ports[3], h1.port) annotation(
     Line(points = {{-240, -30}, {-215, -30}, {-215, -22}}, color = {0, 127, 255}));
   connect(Cmp.port_b, h3.port) annotation(
-    Line(points = {{-140, -30}, {-109, -30}, {-109, -24}}, color = {0, 127, 255}));
+    Line(points = {{-140, -30}, {-115, -30}, {-115, -24}}, color = {0, 127, 255}));
   connect(calc_m_flow_Trb.y, gain.u) annotation(
     Line(points = {{58, 20}, {64, 20}, {64, 11}}, color = {0, 0, 127}));
   connect(inertia.flange_b, pwrGen.flange_a) annotation(
@@ -202,8 +202,8 @@ equation
     Line(points = {{30.5, -11}, {32, -11}, {32, 0}}, color = {0, 0, 127}));
   connect(p5.p, PR_Trb.u2) annotation(
     Line(points = {{87.5, -12}, {87.5, -4}, {36, -4}, {36, 0}}, color = {0, 0, 127}));
-  connect(Comb.ports[4], Trb.port_b) annotation(
-    Line(points = {{-74, -30}, {34, -30}}, color = {0, 127, 255}));
+  connect(Comb.ports[3], Trb.port_b) annotation(
+    Line(points = {{-49, -30}, {34, -30}}, color = {0, 127, 255}));
   connect(gain.y, Trb.m_flow_set) annotation(
     Line(points = {{64, 2}, {64, -14}}, color = {0, 0, 127}));
   connect(Trb.port_a, boundary1.ports[2]) annotation(
@@ -221,15 +221,19 @@ equation
   connect(Trb.port_a, p5.port) annotation(
     Line(points = {{74, -30}, {82, -30}, {82, -17}}, color = {0, 127, 255}));
   connect(Trb.port_b, h4.port) annotation(
-    Line(points = {{34, -30}, {-7, -30}, {-7, -24}}, color = {0, 127, 255}));
+    Line(points = {{34, -30}, {-17, -30}, {-17, -24}}, color = {0, 127, 255}));
   connect(prescribedHeatFlow.port, heatFlowSensor.port_a) annotation(
-    Line(points = {{-90, 30}, {-90, 20}}, color = {191, 0, 0}));
+    Line(points = {{-64, 30}, {-64, 20}}, color = {191, 0, 0}));
   connect(heatFlowSensor.port_b, Comb.heatPort) annotation(
-    Line(points = {{-90, 8}, {-90, -14}}, color = {191, 0, 0}));
+    Line(points = {{-64, 8}, {-64, -14}}, color = {191, 0, 0}));
   connect(heatFlowSensor.Q_flow, effThermal.u2) annotation(
-    Line(points = {{-84, 14}, {-34, 14}, {-34, -191}, {99, -191}}, color = {0, 0, 127}, pattern = LinePattern.Dash));
+    Line(points = {{-58, 14}, {-24, 14}, {-24, -191}, {99, -191}}, color = {0, 0, 127}, pattern = LinePattern.Dash));
   connect(pwrGen.power, effThermal.u1) annotation(
     Line(points = {{90, -150}, {90, -183}, {99, -183}}, color = {0, 0, 127}, pattern = LinePattern.Dash));
+  connect(volume.ports[1], Cmp.port_b) annotation(
+    Line(points = {{-87, -30}, {-140, -30}}, color = {0, 127, 255}));
+  connect(Comb.ports[4], volume.ports[2]) annotation(
+    Line(points = {{-48, -30}, {-87, -30}}, color = {0, 127, 255}));
   annotation(
     experiment(StartTime = 0, StopTime = 50, Tolerance = 1e-06, Interval = 0.1),
     __OpenModelica_simulationFlags(lv = "LOG_STATS", outputFormat = "mat", s = "dassl"),
