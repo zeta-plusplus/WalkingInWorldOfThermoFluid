@@ -9,8 +9,11 @@ model GasTurbineEngine_byControlledPump_1spool_ex01
   //----------
   parameter Real kFlowCmp=5;
   parameter Real kHeadCmp=1;
-  parameter Real arrFlowCmp[3]={kFlowCmp*0.2, kFlowCmp*0.4, kFlowCmp*0.8};
-  parameter Real arrHeadCmp[3]={kHeadCmp*40000, kHeadCmp*10000, kHeadCmp*0};
+  //parameter Real arrFlowCmp[3]={kFlowCmp*0.2, kFlowCmp*0.4, kFlowCmp*0.8};
+  //parameter Real arrHeadCmp[3]={kHeadCmp*40000, kHeadCmp*10000, kHeadCmp*0};
+  parameter Real arrFlowCmp[2]={kFlowCmp*0.1, kFlowCmp*0.4};
+  parameter Real arrHeadCmp[2]={kHeadCmp*50000, kHeadCmp*8000};
+  
   //---
   parameter Real arrFlowTrb[3]={0, (-0.2), (-0.4)};
   parameter Real arrHeadTrb[3]={(-20000), (-10000), -0};
@@ -43,7 +46,7 @@ model GasTurbineEngine_byControlledPump_1spool_ex01
     Placement(visible = true, transformation(origin = {-290, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.UnitConversions.From_rpm from_rpm1 annotation(
     Placement(visible = true, transformation(origin = {158, -140}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Modelica.Fluid.Machines.Pump Cmp(redeclare package Medium = Modelica.Media.Air.DryAirNasa, redeclare function flowCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.quadraticFlow(V_flow_nominal = arrFlowCmp, head_nominal = arrHeadCmp), redeclare function efficiencyCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal = 0.9),N_nominal = 10000, T_start = 500, V(displayUnit = "l") = 0.001, allowFlowReversal = true, checkValve = false, energyDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, m_flow_start = 2, massDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, nParallel = 1, p_b_start = 5 * system.p_start) annotation(
+  Modelica.Fluid.Machines.Pump Cmp(redeclare package Medium = Modelica.Media.Air.DryAirNasa, redeclare function flowCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.linearFlow(V_flow_nominal = arrFlowCmp, head_nominal = arrHeadCmp), redeclare function efficiencyCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal = 0.9),N_nominal = 10000, T_start = 500, V(displayUnit = "l") = 0.001, allowFlowReversal = true, checkValve = false, energyDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, m_flow_start = 2, massDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, nParallel = 1, p_b_start = 5 * system.p_start) annotation(
     Placement(visible = true, transformation(origin = {-160, -30}, extent = {{-20, 20}, {20, -20}}, rotation = 0)));
   Modelica.Mechanics.Rotational.Sensors.PowerSensor pwrSh annotation(
     Placement(visible = true, transformation(origin = {-130, -140}, extent = {{-10, 10}, {10, -10}}, rotation = 180)));
@@ -111,7 +114,7 @@ model GasTurbineEngine_byControlledPump_1spool_ex01
     Placement(visible = true, transformation(origin = {135, -19}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
   Modelica.Blocks.Math.Gain gain(k = -1) annotation(
     Placement(visible = true, transformation(origin = {64, 6}, extent = {{-4, -4}, {4, 4}}, rotation = -90)));
-  Modelica.Blocks.Sources.RealExpression calc_Wc_Trb(y = 1 / 2 * 5 * (1 - exp(-(PR_Trb.y - 1) / 0.11))) annotation(
+  Modelica.Blocks.Sources.RealExpression calc_Wc_Trb(y = 1 / 2 * 5 * (1 - exp(-(PR_Trb.y - 1) / 0.1))) annotation(
     Placement(visible = true, transformation(origin = {25, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.RealExpression calc_m_flow_Trb(y = calc_Wc_Trb.y * (p4.p / (101.325 * 1000)) / sqrt(T4.T / 288.15)) annotation(
     Placement(visible = true, transformation(origin = {47, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
