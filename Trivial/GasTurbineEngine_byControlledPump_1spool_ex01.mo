@@ -12,7 +12,7 @@ model GasTurbineEngine_byControlledPump_1spool_ex01
   //parameter Real arrFlowCmp[3]={kFlowCmp*0.2, kFlowCmp*0.4, kFlowCmp*0.8};
   //parameter Real arrHeadCmp[3]={kHeadCmp*40000, kHeadCmp*10000, kHeadCmp*0};
   parameter Real arrFlowCmp[2]={kFlowCmp*0.0, kFlowCmp*0.4};
-  parameter Real arrHeadCmp[2]={kHeadCmp*100000, kHeadCmp*8000};
+  parameter Real arrHeadCmp[2]={kHeadCmp*100000, kHeadCmp*4000};
   
   //---
   parameter Real kFlowTrb=1;
