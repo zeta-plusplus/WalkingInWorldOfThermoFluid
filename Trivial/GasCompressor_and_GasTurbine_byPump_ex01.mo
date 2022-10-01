@@ -20,9 +20,9 @@ model GasCompressor_and_GasTurbine_byPump_ex01
     Placement(visible = true, transformation(origin = {-90, 42}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Fluid.Sources.Boundary_pT boundary1(redeclare package Medium = Modelica.Media.Air.DryAirNasa, T = 288.15, nPorts = 1, p = 101.325 * 1000) annotation(
     Placement(visible = true, transformation(origin = {190, 106}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp ramp_p1(duration = 10, height = 0 * 101.325 * 1000, offset =  101.325 * 1000, startTime = 30) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_p1(duration = 10, height = 0 * 101.325 * 1000, offset =  101.325 * 1000, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-290, 126}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp ramp_T1(duration = 10, height = 0, offset = 288.15, startTime = 30) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_T1(duration = 10, height = 0, offset = 288.15, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-290, 96}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.UnitConversions.From_rpm from_rpm1 annotation(
     Placement(visible = true, transformation(origin = {-60, 42}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
@@ -58,7 +58,7 @@ model GasCompressor_and_GasTurbine_byPump_ex01
     Placement(visible = true, transformation(origin = {-115, 117}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
   Modelica.Fluid.Valves.ValveLinear valveLinear(redeclare package Medium = Modelica.Media.Air.DryAirNasa, dp_nominal = 10 * 100 * 1000, m_flow_nominal = 35)  annotation(
     Placement(visible = true, transformation(origin = {-30, 106}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp ramp(duration = 10, height = -0.6, offset = 1, startTime = 30) annotation(
+  Modelica.Blocks.Sources.Ramp ramp(duration = 10, height = -0.6, offset = 1, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-30, 150}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Fluid.Sensors.Pressure p5(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
     Placement(visible = true, transformation(origin = {44, -60}, extent = {{-6, -6}, {6, 6}}, rotation = 180)));
@@ -66,7 +66,7 @@ model GasCompressor_and_GasTurbine_byPump_ex01
     Placement(visible = true, transformation(origin = {-50, -118}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.Temperature T5(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
     Placement(visible = true, transformation(origin = {20, -57}, extent = {{-8, -7}, {8, 7}}, rotation = 180)));
-  Modelica.Blocks.Sources.Ramp rampT4(duration = 2, height = 300, offset = 800, startTime = 10) annotation(
+  Modelica.Blocks.Sources.Ramp rampT4(duration = 10, height = 300, offset = 800, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-150, -52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.Gain gain(k = -1) annotation(
     Placement(visible = true, transformation(origin = {-5, -94}, extent = {{-6, -6}, {6, 6}}, rotation = 90)));
@@ -78,7 +78,7 @@ model GasCompressor_and_GasTurbine_byPump_ex01
     Placement(visible = true, transformation(origin = {-60, -92}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
   Modelica.Fluid.Sensors.Temperature T4(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
     Placement(visible = true, transformation(origin = {-68, -57}, extent = {{-8, -7}, {8, 7}}, rotation = 180)));
-  Modelica.Blocks.Sources.Ramp ramp_p4(duration = 2, height = 5 * 100 * 1000, offset = 1.2 * 100 * 1000, startTime = 10) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_p4(duration = 10, height = 5 * 100 * 1000, offset = 1.2 * 100 * 1000, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-150, -22}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sources.Boundary_pT boundary_pT(redeclare package Medium = Modelica.Media.Air.DryAirNasa, T = 288.15, nPorts = 1, p = 100 * 1000) annotation(
     Placement(visible = true, transformation(origin = {120, -42}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
