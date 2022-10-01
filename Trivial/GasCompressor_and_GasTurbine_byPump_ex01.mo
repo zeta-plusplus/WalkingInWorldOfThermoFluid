@@ -6,8 +6,8 @@ model GasCompressor_and_GasTurbine_byPump_ex01
   //----------
   parameter Real kFlowCmp=1;
   parameter Real kHeadCmp=1;
-  parameter Real arrFlowCmp[2]={kFlowCmp*0.0, kFlowCmp*45.0};
-  parameter Real arrHeadCmp[2]={kHeadCmp*11000, kHeadCmp*0};
+  parameter Real arrFlowCmp[2]={kFlowCmp*0.0, kFlowCmp*17.0};
+  parameter Real arrHeadCmp[2]={kHeadCmp*13000, kHeadCmp*0};
   //---
   //----------
   inner Modelica.Fluid.System system annotation(
@@ -56,9 +56,9 @@ model GasCompressor_and_GasTurbine_byPump_ex01
     Placement(visible = true, transformation(origin = {-215, 119}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
   Modelica.Fluid.Sensors.SpecificEnthalpy h3(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
     Placement(visible = true, transformation(origin = {-115, 117}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
-  Modelica.Fluid.Valves.ValveLinear valveLinear(redeclare package Medium = Modelica.Media.Air.DryAirNasa, dp_nominal = 10 * 100 * 1000, m_flow_nominal = 45)  annotation(
+  Modelica.Fluid.Valves.ValveLinear valveLinear(redeclare package Medium = Modelica.Media.Air.DryAirNasa, dp_nominal = 10 * 100 * 1000, m_flow_nominal = 35)  annotation(
     Placement(visible = true, transformation(origin = {-30, 106}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp ramp(duration = 10, height = -0.9, offset = 1, startTime = 30) annotation(
+  Modelica.Blocks.Sources.Ramp ramp(duration = 10, height = -0.6, offset = 1, startTime = 30) annotation(
     Placement(visible = true, transformation(origin = {-30, 150}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Fluid.Sensors.Pressure p5(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
     Placement(visible = true, transformation(origin = {44, -60}, extent = {{-6, -6}, {6, 6}}, rotation = 180)));
