@@ -1,6 +1,6 @@
 within WalkingInWorldOfThermoFluid.Trivial;
 
-model GasCompressor_and_GasTurbine_byPump_ex01
+model GasCompressor_and_GasTurbine_byPump_ex02
   extends Modelica.Icons.Example;
   
   //----------
@@ -18,8 +18,8 @@ model GasCompressor_and_GasTurbine_byPump_ex01
     Placement(visible = true, transformation(origin = {-28, 42}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Mechanics.Rotational.Sources.Speed speed1 annotation(
     Placement(visible = true, transformation(origin = {-90, 42}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Modelica.Fluid.Sources.Boundary_pT boundary1(redeclare package Medium = Modelica.Media.Air.DryAirNasa, T = 288.15, nPorts = 1, p = 101.325 * 1000) annotation(
-    Placement(visible = true, transformation(origin = {190, 106}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Fluid.Sources.Boundary_pT boundary1(redeclare package Medium = Modelica.Media.Air.DryAirNasa, T = 288.15, nPorts = 1, p = 101.325 * 1000, use_p_in = true) annotation(
+    Placement(visible = true, transformation(origin = {-40, 106}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp ramp_p1(duration = 10, height = 0 * 101.325 * 1000, offset =  101.325 * 1000, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-290, 126}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp ramp_T1(duration = 10, height = 0, offset = 288.15, startTime = 10) annotation(
@@ -56,10 +56,6 @@ model GasCompressor_and_GasTurbine_byPump_ex01
     Placement(visible = true, transformation(origin = {-215, 119}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
   Modelica.Fluid.Sensors.SpecificEnthalpy h3(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
     Placement(visible = true, transformation(origin = {-115, 117}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
-  Modelica.Fluid.Valves.ValveLinear valveLinear(redeclare package Medium = Modelica.Media.Air.DryAirNasa, dp_nominal = 10 * 100 * 1000, m_flow_nominal = 35)  annotation(
-    Placement(visible = true, transformation(origin = {-30, 106}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp ramp(duration = 10, height = -0.6, offset = 1, startTime = 10) annotation(
-    Placement(visible = true, transformation(origin = {-30, 150}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Fluid.Sensors.Pressure p5(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
     Placement(visible = true, transformation(origin = {44, -60}, extent = {{-6, -6}, {6, 6}}, rotation = 180)));
   Modelica.Blocks.Sources.RealExpression calc_Wc_Trb(y = 5.5 * (1 - exp(-(PRtrb.y - 1) / 0.11))) annotation(
@@ -69,10 +65,10 @@ model GasCompressor_and_GasTurbine_byPump_ex01
   Modelica.Blocks.Sources.Ramp rampT4(duration = 10, height = 400, offset = 800, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-150, -52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.Gain gain(k = -1) annotation(
-    Placement(visible = true, transformation(origin = {-5, -94}, extent = {{-6, -6}, {6, 6}}, rotation = 90)));
+    Placement(visible = true, transformation(origin = {-10, -94}, extent = {{-6, -6}, {6, 6}}, rotation = 90)));
   Modelica.Blocks.Sources.RealExpression calc_m_flow_Trb(y = calc_Wc_Trb.y * (p4.p / (101.325 * 1000)) / sqrt(T4.T / 288.15)) annotation(
     Placement(visible = true, transformation(origin = {-30, -114}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Machines.ControlledPump TrbbyPump(redeclare package Medium = Modelica.Media.Air.DryAirNasa, N_nominal = -1000, V = 0.01, control_m_flow = true, m_flow_nominal = -5, p_a_nominal = 500 * 1000, p_b_nominal = 100 * 1000, use_m_flow_set = true) annotation(
+  Modelica.Fluid.Machines.ControlledPump TrbByPump(redeclare package Medium = Modelica.Media.Air.DryAirNasa, N_nominal = -1000, V = 0.01, control_m_flow = true, m_flow_nominal = -5, p_a_nominal = 500 * 1000, p_b_nominal = 100 * 1000, use_m_flow_set = true) annotation(
     Placement(visible = true, transformation(origin = {-20, -42}, extent = {{20, 20}, {-20, -20}}, rotation = 0)));
   Modelica.Blocks.Math.Division PRtrb annotation(
     Placement(visible = true, transformation(origin = {-60, -92}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
@@ -83,11 +79,13 @@ model GasCompressor_and_GasTurbine_byPump_ex01
   Modelica.Fluid.Sources.Boundary_pT boundary_pT(redeclare package Medium = Modelica.Media.Air.DryAirNasa, T = 288.15, nPorts = 1, p = 100 * 1000) annotation(
     Placement(visible = true, transformation(origin = {120, -42}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.MassFlowRate m_flow_5(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
-    Placement(visible = true, transformation(origin = {66, -42}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {61, -42}, extent = {{-7, 7}, {7, -7}}, rotation = 0)));
   Modelica.Fluid.Sources.Boundary_pT boundary_pT1(redeclare package Medium = Modelica.Media.Air.DryAirNasa, T = 1000, nPorts = 1, p = 10 * 101.325 * 1000, use_T_in = true, use_p_in = true) annotation(
     Placement(visible = true, transformation(origin = {-110, -42}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.Pressure p4(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
     Placement(visible = true, transformation(origin = {-88, -63}, extent = {{7, -7}, {-7, 7}}, rotation = 180)));
+  Modelica.Blocks.Sources.Ramp ramp_p3(duration = 10, height = 5 * 100 * 1000, offset = 10 * 100 * 1000, startTime = 10) annotation(
+    Placement(visible = true, transformation(origin = {0, 126}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
 equation
   connect(ramp_p1.y, boundary.p_in) annotation(
     Line(points = {{-279, 126}, {-270, 126}, {-270, 114}, {-262, 114}}, color = {0, 0, 127}));
@@ -125,42 +123,40 @@ equation
     Line(points = {{-140, 106}, {-115, 106}, {-115, 112}}, color = {0, 127, 255}));
   connect(pwrSh.flange_a, speed1.flange) annotation(
     Line(points = {{-120, 42}, {-100, 42}}));
-  connect(CmpByPump.port_b, valveLinear.port_a) annotation(
-    Line(points = {{-140, 106}, {-40, 106}}, color = {0, 127, 255}));
-  connect(boundary1.ports[1], valveLinear.port_b) annotation(
-    Line(points = {{180, 106}, {-20, 106}}, color = {0, 127, 255}));
-  connect(ramp.y, valveLinear.opening) annotation(
-    Line(points = {{-30, 139}, {-30, 113}}, color = {0, 0, 127}));
-  connect(TrbbyPump.port_a, m_flow_5.port_a) annotation(
-    Line(points = {{0, -42}, {56, -42}}, color = {0, 127, 255}));
+  connect(TrbByPump.port_a, m_flow_5.port_a) annotation(
+    Line(points = {{0, -42}, {54, -42}}, color = {0, 127, 255}));
   connect(p4.p, PRtrb.u1) annotation(
     Line(points = {{-80.3, -63}, {-80.3, -80}, {-66.3, -80}}, color = {0, 0, 127}));
-  connect(TrbbyPump.port_a, T5.port) annotation(
+  connect(TrbByPump.port_a, T5.port) annotation(
     Line(points = {{0, -42}, {20, -42}, {20, -50}}, color = {0, 127, 255}));
   connect(ramp_p4.y, boundary_pT1.p_in) annotation(
     Line(points = {{-139, -22}, {-130, -22}, {-130, -34}, {-122, -34}}, color = {0, 0, 127}));
   connect(boundary_pT.ports[1], m_flow_5.port_b) annotation(
-    Line(points = {{110, -42}, {76, -42}}, color = {0, 127, 255}));
-  connect(TrbbyPump.port_b, p4.port) annotation(
+    Line(points = {{110, -42}, {68, -42}}, color = {0, 127, 255}));
+  connect(TrbByPump.port_b, p4.port) annotation(
     Line(points = {{-40, -42}, {-88, -42}, {-88, -56}}, color = {0, 127, 255}));
-  connect(TrbbyPump.port_b, boundary_pT1.ports[1]) annotation(
+  connect(TrbByPump.port_b, boundary_pT1.ports[1]) annotation(
     Line(points = {{-40, -42}, {-100, -42}}, color = {0, 127, 255}));
-  connect(TrbbyPump.port_a, p5.port) annotation(
+  connect(TrbByPump.port_a, p5.port) annotation(
     Line(points = {{0, -42}, {44, -42}, {44, -54}}, color = {0, 127, 255}));
-  connect(gain.y, TrbbyPump.m_flow_set) annotation(
-    Line(points = {{-5, -87.4}, {-5, -68.4}, {-11, -68.4}, {-11, -57.4}}, color = {0, 0, 127}));
+  connect(gain.y, TrbByPump.m_flow_set) annotation(
+    Line(points = {{-10, -87}, {-10, -58}}, color = {0, 0, 127}));
   connect(p5.p, PRtrb.u2) annotation(
     Line(points = {{37.4, -60}, {37.4, -80}, {-53.6, -80}}, color = {0, 0, 127}));
-  connect(TrbbyPump.port_b, T4.port) annotation(
+  connect(TrbByPump.port_b, T4.port) annotation(
     Line(points = {{-40, -42}, {-68, -42}, {-68, -50}}, color = {0, 127, 255}));
   connect(rampT4.y, boundary_pT1.T_in) annotation(
     Line(points = {{-139, -52}, {-133, -52}, {-133, -38}, {-123, -38}, {-123, -38}}, color = {0, 0, 127}));
   connect(calc_m_flow_Trb.y, gain.u) annotation(
-    Line(points = {{-19, -114}, {-6, -114}, {-6, -101}}, color = {0, 0, 127}));
+    Line(points = {{-19, -114}, {-10, -114}, {-10, -101}}, color = {0, 0, 127}));
+  connect(CmpByPump.port_b, boundary1.ports[1]) annotation(
+    Line(points = {{-140, 106}, {-50, 106}}, color = {0, 127, 255}));
+  connect(boundary1.p_in, ramp_p3.y) annotation(
+    Line(points = {{-28, 114}, {-16, 114}, {-16, 126}, {-11, 126}}, color = {0, 0, 127}));
   annotation(
     experiment(StartTime = 0, StopTime = 50, Tolerance = 1e-06, Interval = 0.1),
     __OpenModelica_simulationFlags(lv = "LOG_STATS", outputFormat = "mat", s = "dassl"),
     Diagram(coordinateSystem(extent = {{-300, -200}, {200, 200}}, initialScale = 0.1)),
     __OpenModelica_commandLineOptions = "");
 
-end GasCompressor_and_GasTurbine_byPump_ex01;
+end GasCompressor_and_GasTurbine_byPump_ex02;
