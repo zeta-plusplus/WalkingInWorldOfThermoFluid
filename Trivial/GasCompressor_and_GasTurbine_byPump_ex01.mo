@@ -6,8 +6,8 @@ model GasCompressor_and_GasTurbine_byPump_ex01
   //----------
   parameter Real kFlowCmp=1;
   parameter Real kHeadCmp=1;
-  parameter Real arrFlowCmp[2]={kFlowCmp*0.0, kFlowCmp*17.0};
-  parameter Real arrHeadCmp[2]={kHeadCmp*13000, kHeadCmp*0};
+  parameter Real arrFlowCmp[2]={kFlowCmp*0.0, kFlowCmp*35.0};
+  parameter Real arrHeadCmp[2]={kHeadCmp*12000, kHeadCmp*0};
   //---
   //----------
   inner Modelica.Fluid.System system annotation(
