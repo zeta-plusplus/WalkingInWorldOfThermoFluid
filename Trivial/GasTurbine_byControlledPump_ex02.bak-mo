@@ -41,7 +41,7 @@ model GasTurbine_byControlledPump_ex02
   Modelica.Fluid.Machines.ControlledPump Trb(redeclare package Medium = Modelica.Media.Air.DryAirNasa, redeclare function efficiencyCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal = 0.9), N_nominal = -1000, V = 0.01, control_m_flow = true, m_flow_nominal = -5, p_a_nominal = 500 * 1000, p_b_nominal = 100 * 1000, use_m_flow_set = true) annotation(
     Placement(visible = true, transformation(origin = {-10, -30}, extent = {{10, 10}, {-10, -10}}, rotation = 0)));
   Modelica.Blocks.Sources.RealExpression calc_Wc_Trb(y = 6 * (1 - exp(-(PR.y - 1) / 0.11))) annotation(
-    Placement(visible = true, transformation(origin = {-50, -120}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-50, -116}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.RealExpression calc_m_flow_Trb(y = calc_Wc_Trb.y * (p_upstream.p / (101.325 * 1000)) / sqrt(T_upstream.T / 288.15)) annotation(
     Placement(visible = true, transformation(origin = {-30, -102}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.Temperature T_downstream(redeclare package Medium = Modelica.Media.Air.DryAirNasa) annotation(
