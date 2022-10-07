@@ -90,13 +90,13 @@ model GasTurbineEngine_1sp_ByCtrldPump_ex01
   Modelica.Blocks.Continuous.PI ctrlHeatPI(T = 0.01, initType = Modelica.Blocks.Types.Init.SteadyState, k = 1000, x_start = 1000) annotation(
     Placement(visible = true, transformation(origin = {-121, 148}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Mechanics.Rotational.Sensors.SpeedSensor w_Trb annotation(
-    Placement(visible = true, transformation(origin = {54, -30}, extent = {{-6, -6}, {6, 6}}, rotation = 180)));
+    Placement(visible = true, transformation(origin = {54, -24}, extent = {{-6, -6}, {6, 6}}, rotation = 180)));
   Modelica.Mechanics.Rotational.Sensors.PowerSensor pwrTrb annotation(
     Placement(visible = true, transformation(origin = {74, -57}, extent = {{5, -5}, {-5, 5}}, rotation = 90)));
   Modelica.Blocks.Sources.RealExpression calc_Trb_trq(y = -TrbByPump.W_total / w_Trb.w) annotation(
     Placement(visible = true, transformation(origin = {48, -6}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Mechanics.Rotational.Sources.Torque torque_Trb annotation(
-    Placement(visible = true, transformation(origin = {74, -21}, extent = {{-7, -7}, {7, 7}}, rotation = -90)));
+    Placement(visible = true, transformation(origin = {74, -15}, extent = {{-7, -7}, {7, 7}}, rotation = -90)));
   Modelica.Mechanics.Rotational.Sensors.PowerSensor powerGen annotation(
     Placement(visible = true, transformation(origin = {98, -74}, extent = {{10, 10}, {-10, -10}}, rotation = 180)));
   Modelica.Blocks.Interaction.Show.RealValue realValue1(significantDigits = 6) annotation(
@@ -177,9 +177,9 @@ equation
   connect(temperatureSensor.T, feedback.u2) annotation(
     Line(points = {{-86, 174}, {-153, 174}, {-153, 156}}, color = {0, 0, 127}));
   connect(calc_Trb_trq.y, torque_Trb.tau) annotation(
-    Line(points = {{59, -6}, {73, -6}, {73, -12}}, color = {0, 0, 127}, pattern = LinePattern.Dash));
+    Line(points = {{59, -6}, {73, -6}}, color = {0, 0, 127}, pattern = LinePattern.Dash));
   connect(torque_Trb.flange, w_Trb.flange) annotation(
-    Line(points = {{74, -28}, {74, -30}, {60, -30}}));
+    Line(points = {{74, -22}, {74, -24}, {60, -24}}));
   connect(pwrCmp.flange_a, powerGen.flange_a) annotation(
     Line(points = {{-122, -74}, {88, -74}}, thickness = 1.5));
   connect(powerGen.flange_b, speed1.flange) annotation(
@@ -193,7 +193,7 @@ equation
   connect(heatAddedIntoEng.port_b, Brn.heatPort) annotation(
     Line(points = {{-66, 84}, {-66, 56}}, color = {191, 0, 0}, thickness = 1));
   connect(torque_Trb.flange, pwrTrb.flange_a) annotation(
-    Line(points = {{74, -28}, {74, -52}}, thickness = 1.5));
+    Line(points = {{74, -22}, {74, -52}}, thickness = 1.5));
   connect(pwrTrb.flange_b, powerGen.flange_a) annotation(
     Line(points = {{74, -62}, {74, -74}, {88, -74}}, thickness = 1.5));
   connect(calc_effThermal.u1, powerGen.power) annotation(
@@ -212,7 +212,7 @@ equation
     Line(points = {{-240, 76}, {-232, 76}, {-232, 68}}, color = {0, 127, 255}));
   annotation(
     experiment(StartTime = 0, StopTime = 50, Tolerance = 1e-06, Interval = 0.1),
-    __OpenModelica_simulationFlags(lv = "LOG_STATS", outputFormat = "mat", s = "dassl"),
-    Diagram(coordinateSystem(extent = {{-300, -120}, {240, 220}}, initialScale = 0.1), graphics = {Rectangle(origin = {73, 34}, extent = {{-47, 78}, {47, -78}}), Text(origin = {71, 124}, extent = {{-33, 6}, {33, -6}}, textString = "Turbine"), Rectangle(origin = {189, -74}, extent = {{-49, 22}, {49, -22}}), Text(origin = {167, -32}, extent = {{-27, 6}, {27, -6}}, textString = "generator"), Text(origin = {203, -44}, extent = {{-27, 6}, {27, -6}}, textString = "Speed governed"), Rectangle(origin = {-126, 157}, extent = {{-76, 29}, {76, -29}}), Text(origin = {-163, 208}, extent = {{-39, 6}, {39, -6}}, textString = "Heat flow control"), Text(origin = {-122, 196}, extent = {{-70, 4}, {70, -4}}, textString = "target: gas temperature at outlet of burner")}),
-    __OpenModelica_commandLineOptions = "");
+    __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl"),
+    Diagram(coordinateSystem(extent = {{-300, -120}, {240, 220}}, initialScale = 0.1), graphics = {Rectangle(origin = {73, 39}, extent = {{-47, 73}, {47, -73}}), Text(origin = {71, 124}, extent = {{-33, 6}, {33, -6}}, textString = "Turbine"), Rectangle(origin = {189, -74}, extent = {{-49, 22}, {49, -22}}), Text(origin = {167, -32}, extent = {{-27, 6}, {27, -6}}, textString = "generator"), Text(origin = {206, -42}, extent = {{-30, 4}, {30, -4}}, textString = "Speed governed"), Rectangle(origin = {-126, 164}, extent = {{-74, 34}, {74, -34}}), Text(origin = {-163, 208}, extent = {{-39, 6}, {39, -6}}, textString = "Heat flow control"), Text(origin = {-122, 196}, extent = {{-70, 4}, {70, -4}}, textString = "target: gas temperature at outlet of burner")}),
+    __OpenModelica_commandLineOptions = "--matchingAlgorithm=PFPlusExt --indexReductionMethod=dynamicStateSelection -d=initialization,NLSanalyticJacobian,nonewInst --maxMixedDeterminedIndex=10, --maxSizeLinearTearing=400, --maxSizeNonlinearTearing=600 ");
 end GasTurbineEngine_1sp_ByCtrldPump_ex01;
