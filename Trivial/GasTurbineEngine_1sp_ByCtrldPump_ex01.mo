@@ -2,6 +2,11 @@ within WalkingInWorldOfThermoFluid.Trivial;
 
 model GasTurbineEngine_1sp_ByCtrldPump_ex01
   extends Modelica.Icons.Example;
+  //--------------------
+  import units= Modelica.SIunits;
+  //--------------------
+  package engineFluid = Modelica.Media.Air.DryAirNasa;
+  //redeclare package Medium = fluid1
   //----------
   parameter Real kFlowCmp = 1;
   parameter Real kHeadCmp = 1;
@@ -10,7 +15,10 @@ model GasTurbineEngine_1sp_ByCtrldPump_ex01
   //---
   parameter Real kFlowTrb = 5.5;
   parameter Real kFlowChokeTrb = 0.11;
-  //----------
+  //--------------------
+  units.Pressure arr_p[5];
+  units.SpecificVolume arr_v[5];
+  //--------------------
   inner Modelica.Fluid.System system(energyDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, massDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, momentumDynamics = Modelica.Fluid.Types.Dynamics.SteadyState) annotation(
     Placement(visible = true, transformation(origin = {-272, 28}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sources.Boundary_pT boundary(redeclare package Medium = Modelica.Media.Air.DryAirNasa, T = 1000, nPorts = 4, p = 101.325 * 1000, use_T_in = true, use_p_in = true) annotation(
@@ -114,6 +122,19 @@ model GasTurbineEngine_1sp_ByCtrldPump_ex01
   Modelica.Blocks.Math.Division calcFAR annotation(
     Placement(visible = true, transformation(origin = {1, 116}, extent = {{-7, -7}, {7, 7}}, rotation = 0)));
 equation
+  arr_v[1] = 1.0/engineFluid.density_pTX(p = p1.p, T = T1.T, X = p1.port.Xi_outflow);
+  arr_v[2] = 1.0/engineFluid.density_pTX(p = p3.p, T = T3.T, X = p3.port.Xi_outflow);
+  arr_v[3] = 1.0/engineFluid.density_pTX(p = p4.p, T = T4.T, X = p4.port.Xi_outflow);
+  arr_v[4] = 1.0/engineFluid.density_pTX(p = p5.p, T = T5.T, X = p5.port.Xi_outflow);
+  arr_v[5] = arr_v[1];
+  
+  arr_p[1]= p1.p;
+  arr_p[2]= p3.p;
+  arr_p[3]= p4.p;
+  arr_p[4]= p5.p;
+  arr_p[5]= arr_p[1];
+  
+  //-----------
   connect(ramp_p1.y, boundary.p_in) annotation(
     Line(points = {{-279, 96}, {-270, 96}, {-270, 84}, {-262, 84}}, color = {0, 0, 127}));
   connect(ramp_T1.y, boundary.T_in) annotation(
