@@ -1,6 +1,6 @@
-within WalkingInWorldOfThermoFluid.Easy;
+within WalkingInWorldOfThermoFluid.Hard;
 
-model CoolingSystem_ex01
+model CoolingSystem_ex01_withColorTdisp
   extends Modelica.Icons.Example;
   //----------
   //replaceable package fluid1 = Modelica.Media.Water.StandardWaterOnePhase;
@@ -107,8 +107,8 @@ model CoolingSystem_ex01
     Placement(visible = true, transformation(origin = {32, -28}, extent = {{-12, -8}, {12, 8}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue2(significantDigits = 4, use_numberPort = true) annotation(
     Placement(visible = true, transformation(origin = {-22, -32}, extent = {{12, -8}, {-12, 8}}, rotation = 0)));
-  Modelica.Blocks.Interaction.Show.RealValue realValue1(significantDigits = 5, use_numberPort = true) annotation(
-    Placement(visible = true, transformation(origin = {-64, -28}, extent = {{-26, -8}, {26, 8}}, rotation = 0)));
+  FluidSystemComponents.InteractiveSimulation.Output.DispValAndColor01 disp(valMax = 273.15 + 100, valMin = 273.15)  annotation(
+    Placement(visible = true, transformation(origin = {-80, -48}, extent = {{-10, -8}, {10, 4}}, rotation = 0)));
 equation
   connect(volume1.ports[1], boundary3.ports[1]) annotation(
     Line(points = {{180, 110}, {210, 110}}, color = {0, 127, 255}, thickness = 0.5));
@@ -208,11 +208,11 @@ equation
     Line(points = {{30, -39}, {30, -34}, {18, -34}, {18, -28}}, color = {0, 0, 127}));
   connect(temperature1.T, realValue2.numberPort) annotation(
     Line(points = {{-20, -38}, {-8, -38}, {-8, -32}}, color = {0, 0, 127}));
-  connect(temperature.T, realValue1.numberPort) annotation(
-    Line(points = {{-80, -38}, {-80, -33}, {-94, -33}, {-94, -28}}, color = {0, 0, 127}));
+  connect(temperature.T, disp.u) annotation(
+    Line(points = {{-80, -38}, {-90, -38}, {-90, -44}}, color = {0, 0, 127}));
   annotation(
     experiment(StartTime = 0, StopTime = 260, Tolerance = 1e-06, Interval = 0.05),
     __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl"),
     Diagram(coordinateSystem(extent = {{-160, -140}, {240, 140}}, initialScale = 0.1), graphics = {Rectangle(origin = {110, 28}, extent = {{-62, 96}, {40, -101}}), Text(origin = {94, 128}, extent = {{-34, 4}, {34, -4}}, textString = "Heat Exchanger"), Text(origin = {2, 96}, extent = {{-34, 4}, {34, -4}}, textString = "coolant flow line")}),
     __OpenModelica_commandLineOptions = "");
-end CoolingSystem_ex01;
+end CoolingSystem_ex01_withColorTdisp;
