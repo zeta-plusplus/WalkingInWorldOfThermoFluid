@@ -67,17 +67,13 @@ model CoolingSystem_ex01_withColorTdisp
   Modelica.Fluid.Sensors.SpecificEnthalpy specificEnthalpy(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47) annotation(
     Placement(visible = true, transformation(origin = {110, -120}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
   Modelica.Fluid.Vessels.ClosedVolume volume1(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, T_start = 15 + 273.15, V = 1 * 0.001, nPorts = 2, use_HeatTransfer = false, use_portsData = false) annotation(
-    Placement(visible = true, transformation(origin = {180, 120}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {162, 120}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp ramp_m_flow_coolant(duration = 10, height = 0.2, offset = 2, startTime = 160) annotation(
     Placement(visible = true, transformation(origin = {-30, 120}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.Pressure pressure(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase) annotation(
     Placement(visible = true, transformation(origin = {4, -60}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue(significantDigits = 4, use_numberPort = true)  annotation(
     Placement(visible = true, transformation(origin = {-10, 27}, extent = {{-12, -9}, {12, 9}}, rotation = 0)));
-  Modelica.Blocks.Interaction.Show.RealValue realValue5(significantDigits = 4, use_numberPort = true) annotation(
-    Placement(visible = true, transformation(origin = {90, 100}, extent = {{-12, -8}, {12, 8}}, rotation = 0)));
-  Modelica.Blocks.Interaction.Show.RealValue realValue6(significantDigits = 4, use_numberPort = true) annotation(
-    Placement(visible = true, transformation(origin = {160, 100}, extent = {{-12, -8}, {12, 8}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant const_p_tank(k = 101.325 * 1000) annotation(
     Placement(visible = true, transformation(origin = {-140, -110}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.TemperatureTwoPort temperature(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47) annotation(
@@ -102,19 +98,23 @@ model CoolingSystem_ex01_withColorTdisp
     Placement(visible = true, transformation(origin = {2, -76}, extent = {{12, -7}, {-12, 7}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue3(significantDigits = 4, use_numberPort = true) annotation(
     Placement(visible = true, transformation(origin = {32, -28}, extent = {{-12, -8}, {12, 8}}, rotation = 0)));
-  FluidSystemComponents.InteractiveSimulation.Output.DispValAndColor01 disp_T(valMax = maxTcolor, valMin = minTcolor)  annotation(
+  FluidSystemComponents.InteractiveSimulation.Output.DispValAndColor01 disp_T(sigDigits = 4,valMax = maxTcolor, valMin = minTcolor)  annotation(
     Placement(visible = true, transformation(origin = {-80, -46}, extent = {{-10, -16}, {10, 8.00001}}, rotation = 0)));
-  FluidSystemComponents.InteractiveSimulation.Output.DispValAndColor01 disp_T1(valMax = maxTcolor, valMin = minTcolor) annotation(
+  FluidSystemComponents.InteractiveSimulation.Output.DispValAndColor01 disp_T1(sigDigits = 4,valMax = maxTcolor, valMin = minTcolor) annotation(
     Placement(visible = true, transformation(origin = {-20, -46}, extent = {{-10, -16}, {10, 8.00001}}, rotation = 0)));
-  FluidSystemComponents.InteractiveSimulation.Output.DispValAndColor01 disp_T2(valMax = maxTcolor, valMin = minTcolor) annotation(
+  FluidSystemComponents.InteractiveSimulation.Output.DispValAndColor01 disp_T2(sigDigits = 4,valMax = maxTcolor, valMin = minTcolor) annotation(
     Placement(visible = true, transformation(origin = {158, -46}, extent = {{-10, -16}, {10, 8.00001}}, rotation = 0)));
-  FluidSystemComponents.InteractiveSimulation.Output.DispValAndColor01 disp_T3(valMax = maxTcolor, valMin = minTcolor) annotation(
+  FluidSystemComponents.InteractiveSimulation.Output.DispValAndColor01 disp_T3(sigDigits = 4,valMax = maxTcolor, valMin = minTcolor) annotation(
     Placement(visible = true, transformation(origin = {200, -90}, extent = {{10, -16}, {-10, 8.00001}}, rotation = 0)));
-  FluidSystemComponents.InteractiveSimulation.Output.DispValAndColor01 disp_T4(valMax = maxTcolor, valMin = minTcolor) annotation(
-    Placement(visible = true, transformation(origin = {132, -104}, extent = {{-10, -16}, {10, 8.00001}}, rotation = 0)));
+  FluidSystemComponents.InteractiveSimulation.Output.DispValAndColor01 disp_T4(sigDigits = 4,valMax = maxTcolor, valMin = minTcolor) annotation(
+    Placement(visible = true, transformation(origin = {132, -106}, extent = {{-10, -16}, {10, 8.00001}}, rotation = 0)));
+  FluidSystemComponents.InteractiveSimulation.Output.DispValAndColor01 disp_T5(sigDigits = 4, valMax = maxTcolor, valMin = minTcolor) annotation(
+    Placement(visible = true, transformation(origin = {60, 100}, extent = {{10, -16}, {-10, 8.00001}}, rotation = 0)));
+  FluidSystemComponents.InteractiveSimulation.Output.DispValAndColor01 dispValAndColor01(sigDigits = 4, valMax = maxTcolor, valMin = minTcolor) annotation(
+    Placement(visible = true, transformation(origin = {128, 102}, extent = {{10, -16}, {-10, 8.00001}}, rotation = 0)));
 equation
   connect(volume1.ports[1], boundary3.ports[1]) annotation(
-    Line(points = {{180, 110}, {210, 110}}, color = {0, 127, 255}, thickness = 0.5));
+    Line(points = {{162, 110}, {210, 110}}, color = {0, 127, 255}, thickness = 0.5));
   connect(const.y, replicator1.u) annotation(
     Line(points = {{71, -10}, {73, -10}, {73, -30}, {78, -30}}, color = {0, 0, 127}));
   connect(const.y, replicator2.u) annotation(
@@ -183,16 +183,12 @@ equation
     Line(points = {{110, -110}, {120, -110}}, color = {0, 127, 255}));
   connect(boundary2.ports[1], temperature5.port_a) annotation(
     Line(points = {{20, 110}, {60, 110}}, color = {0, 127, 255}));
-  connect(temperature5.T, realValue5.numberPort) annotation(
-    Line(points = {{71, 100}, {75, 100}}, color = {0, 0, 127}));
   connect(temperature5.port_b, cooler_cside.port_a) annotation(
     Line(points = {{60, 90}, {60, 76}, {110, 76}}, color = {0, 127, 255}));
   connect(cooler_cside.port_b, temperature6.port_a) annotation(
     Line(points = {{130, 76}, {130, 90}}, color = {0, 127, 255}));
   connect(temperature6.port_b, volume1.ports[2]) annotation(
-    Line(points = {{130, 110}, {180, 110}}, color = {0, 127, 255}));
-  connect(temperature6.T, realValue6.numberPort) annotation(
-    Line(points = {{141, 100}, {145, 100}}, color = {0, 0, 127}));
+    Line(points = {{130, 110}, {162, 110}}, color = {0, 127, 255}));
   connect(heatFlowSensor.port_b, cooler_cside.heatPorts) annotation(
     Line(points = {{120, 60}, {120, 72}}, color = {191, 0, 0}, thickness = 0.5));
   connect(heatFlowSensor.port_a, convection2.fluid) annotation(
@@ -212,7 +208,11 @@ equation
   connect(temperature3.T, disp_T3.u) annotation(
     Line(points = {{212, -100}, {216, -100}, {216, -84}, {210, -84}}, color = {0, 0, 127}));
   connect(temperature4.T, disp_T4.u) annotation(
-    Line(points = {{130, -98}, {130, -90}, {121.5, -90}, {121.5, -98}}, color = {0, 0, 127}));
+    Line(points = {{130, -98}, {130, -90}, {121.5, -90}, {121.5, -100}}, color = {0, 0, 127}));
+  connect(temperature5.T, disp_T5.u) annotation(
+    Line(points = {{72, 100}, {76, 100}, {76, 106}, {70, 106}}, color = {0, 0, 127}));
+  connect(temperature6.T, dispValAndColor01.u) annotation(
+    Line(points = {{142, 100}, {146, 100}, {146, 108}, {138.5, 108}}, color = {0, 0, 127}));
   annotation(
     experiment(StartTime = 0, StopTime = 260, Tolerance = 1e-06, Interval = 0.05),
     __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl"),
