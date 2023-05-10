@@ -1,6 +1,6 @@
 package WalkingInWorldOfThermoFluid
   extends Modelica.Icons.Package;
-  //uses(Modelica(version = "3.2.3"))
+  //uses(Modelica(version = "4.0.0"))
 
 
 
@@ -14,5 +14,5 @@ package WalkingInWorldOfThermoFluid
 
 
   annotation(
-    uses(Modelica(version = "3.2.3")));
+    uses(Modelica(version = "4.0.0")));
 end WalkingInWorldOfThermoFluid;
