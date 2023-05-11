@@ -12,11 +12,11 @@ model CoolingSystem_ex01_withColorTdisp
   //redeclare package Medium = fluid2
   //----------
   parameter Real minTcolor= 273.15;
-  parameter Real maxTcolor= 273.15+50;
+  parameter Real maxTcolor= 273.15+80;
   //----------
   inner Modelica.Fluid.System system annotation(
     Placement(visible = true, transformation(origin = {-90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp ramp_pump_N(duration = 10, height = 0, offset = 500, startTime = 30) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_pump_N(duration = 10, height = 100, offset = 500, startTime = 140) annotation(
     Placement(visible = true, transformation(origin = {-130, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.UnitConversions.From_rpm from_rpm1 annotation(
     Placement(visible = true, transformation(origin = {-100, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -54,7 +54,7 @@ model CoolingSystem_ex01_withColorTdisp
     Placement(visible = true, transformation(origin = {210, -70}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow1 annotation(
     Placement(visible = true, transformation(origin = {210, -38}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  Modelica.Blocks.Sources.Ramp ramp_heat_generation(duration = 10, height = 10 * 1000, offset = 100 * 1000, startTime = 100) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_heat_generation(duration = 5, height = 50* 1000, offset = 100 * 1000, startTime = 80) annotation(
     Placement(visible = true, transformation(origin = {198, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Pipes.DynamicPipe pipe1(redeclare package Medium = Modelica.Media.Incompressible.Examples.Glycol47, diameter = 0.02, length = 2, modelStructure = Modelica.Fluid.Types.ModelStructure.a_vb, nNodes = 2, use_HeatTransfer = false) annotation(
     Placement(visible = true, transformation(origin = {170, -110}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
@@ -68,7 +68,7 @@ model CoolingSystem_ex01_withColorTdisp
     Placement(visible = true, transformation(origin = {110, -120}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
   Modelica.Fluid.Vessels.ClosedVolume volume1(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, T_start = 15 + 273.15, V = 1 * 0.001, nPorts = 2, use_HeatTransfer = false, use_portsData = false) annotation(
     Placement(visible = true, transformation(origin = {162, 120}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp ramp_m_flow_coolant(duration = 10, height = 0.2, offset = 2, startTime = 160) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_m_flow_coolant(duration = 10, height = 1, offset = 2, startTime = 200) annotation(
     Placement(visible = true, transformation(origin = {-30, 120}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.Pressure pressure(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase) annotation(
     Placement(visible = true, transformation(origin = {4, -60}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
