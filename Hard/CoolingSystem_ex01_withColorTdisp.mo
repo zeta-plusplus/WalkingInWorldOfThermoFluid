@@ -109,7 +109,7 @@ model CoolingSystem_ex01_withColorTdisp
   FluidSystemComponents.InteractiveSimulation.Output.DispValAndColor01 disp_T4(sigDigits = 4,valMax = maxTcolor, valMin = minTcolor) annotation(
     Placement(visible = true, transformation(origin = {132, -106}, extent = {{-10, -16}, {10, 8.00001}}, rotation = 0)));
   FluidSystemComponents.InteractiveSimulation.Output.DispValAndColor01 disp_T5(sigDigits = 4, valMax = maxTcolor, valMin = minTcolor) annotation(
-    Placement(visible = true, transformation(origin = {60, 100}, extent = {{10, -16}, {-10, 8.00001}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {54, 100}, extent = {{10, -16}, {-10, 8.00001}}, rotation = 0)));
   FluidSystemComponents.InteractiveSimulation.Output.DispValAndColor01 dispValAndColor01(sigDigits = 4, valMax = maxTcolor, valMin = minTcolor) annotation(
     Placement(visible = true, transformation(origin = {128, 102}, extent = {{10, -16}, {-10, 8.00001}}, rotation = 0)));
 equation
@@ -210,7 +210,7 @@ equation
   connect(temperature4.T, disp_T4.u) annotation(
     Line(points = {{130, -98}, {130, -90}, {121.5, -90}, {121.5, -100}}, color = {0, 0, 127}));
   connect(temperature5.T, disp_T5.u) annotation(
-    Line(points = {{72, 100}, {76, 100}, {76, 106}, {70, 106}}, color = {0, 0, 127}));
+    Line(points = {{72, 100}, {76, 100}, {76, 106}, {64.5, 106}}, color = {0, 0, 127}));
   connect(temperature6.T, dispValAndColor01.u) annotation(
     Line(points = {{142, 100}, {146, 100}, {146, 108}, {138.5, 108}}, color = {0, 0, 127}));
   annotation(
