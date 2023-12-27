@@ -14,11 +14,11 @@ model S6GSteamGen_Smpld_test01
     Placement(visible = true, transformation(origin = {120, -50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Pipes.DynamicPipe pipe(redeclare package Medium = ThTrspt1, T_start = 275 + 273.15, diameter = 0.1, length = 2, modelStructure = Modelica.Fluid.Types.ModelStructure.a_vb, nNodes = 2, nParallel = 100, p_a_start = 150*100*1000, use_HeatTransfer = false) annotation(
     Placement(visible = true, transformation(origin = {184, -50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Sources.MassFlowSource_T boundary2(redeclare package Medium = ThTrspt2, T = 15 + 273.15, m_flow = 5, nPorts = 1, use_m_flow_in = true) annotation(
+  Modelica.Fluid.Sources.MassFlowSource_T boundary_coolantSply(redeclare package Medium = ThTrspt2, T = 15 + 273.15, m_flow = 5, nPorts = 1, use_m_flow_in = true) annotation(
     Placement(visible = true, transformation(origin = {10, 110}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Pipes.DynamicPipe cooler_cside(redeclare package Medium = ThTrspt2, T_start = 15 + 273.15, diameter = 0.1, length = 2, modelStructure = Modelica.Fluid.Types.ModelStructure.a_vb, nNodes = cooler_hside.nNodes, nParallel = 1000, p_a_start = 100*1000, use_HeatTransfer = true) annotation(
     Placement(visible = true, transformation(origin = {120, 76}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
-  Modelica.Fluid.Sources.Boundary_pT boundary3(redeclare package Medium = ThTrspt2, nPorts = 1) annotation(
+  Modelica.Fluid.Sources.Boundary_pT boundary_coolantSnk(redeclare package Medium = ThTrspt2, nPorts = 1) annotation(
     Placement(visible = true, transformation(origin = {220, 110}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Thermal.HeatTransfer.Components.Convection convection1[cooler_hside.nNodes] annotation(
     Placement(visible = true, transformation(origin = {120, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
@@ -30,27 +30,27 @@ model S6GSteamGen_Smpld_test01
     Placement(visible = true, transformation(origin = {90, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Routing.Replicator replicator2(nout = cooler_cside.nNodes) annotation(
     Placement(visible = true, transformation(origin = {90, 18}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Constant const(k = 10*10000) annotation(
-    Placement(visible = true, transformation(origin = {60, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Constant hConv_HX(k = 10000) annotation(
+    Placement(transformation(origin = {10, 46}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Fluid.Vessels.ClosedVolume volume(redeclare package Medium = ThTrspt1, T_start = 275 + 273.15, V = 1, nPorts = 2, p_start = 150*100*1000, use_HeatTransfer = true, use_portsData = false) annotation(
     Placement(visible = true, transformation(origin = {210, -70}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow1 annotation(
     Placement(visible = true, transformation(origin = {210, -38}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  Modelica.Blocks.Sources.Ramp ramp_heat_generation(duration = 10, height = 0*1e6, offset = 0*165*1e6, startTime = 100) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_heat_generation(duration = 10, height = 0*1e6, offset = 165*1e6, startTime = 100) annotation(
     Placement(visible = true, transformation(origin = {198, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Pipes.DynamicPipe pipe1(redeclare package Medium = ThTrspt1, T_start = 275 + 273.15, diameter = 0.1, length = 2, modelStructure = Modelica.Fluid.Types.ModelStructure.a_vb, nNodes = 2, nParallel = 100, p_a_start = 150*100*1000, use_HeatTransfer = false) annotation(
     Placement(visible = true, transformation(origin = {170, -110}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Modelica.Fluid.Sources.Boundary_ph boundary(redeclare package Medium = ThTrspt1, nPorts = 1, p = 101.325*1000, use_h_in = true, use_p_in = true) annotation(
+  Modelica.Fluid.Sources.Boundary_ph boundary_tank_pReg(redeclare package Medium = ThTrspt1, nPorts = 1, p = 101.325*1000, use_h_in = true, use_p_in = true) annotation(
     Placement(visible = true, transformation(origin = {-110, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
   Modelica.Fluid.Vessels.ClosedVolume tank(redeclare package Medium = ThTrspt1, T_start = 275 + 273.15, V = 1, nPorts = 2, p_start = 150*100*1000, use_HeatTransfer = false, use_portsData = false) annotation(
     Placement(visible = true, transformation(origin = {-110, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Sources.Boundary_pT boundary1(redeclare package Medium = ThTrspt1, nPorts = 1, p = 101.325*1000, use_p_in = true) annotation(
+  Modelica.Fluid.Sources.Boundary_pT boundary_SnkTank(redeclare package Medium = ThTrspt1, nPorts = 1, p = 101.325*1000, use_p_in = true) annotation(
     Placement(visible = true, transformation(origin = {70, -100}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.SpecificEnthalpy specificEnthalpy(redeclare package Medium = ThTrspt1) annotation(
     Placement(visible = true, transformation(origin = {110, -120}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
   Modelica.Fluid.Vessels.ClosedVolume volume1(redeclare package Medium = ThTrspt2, T_start = 15 + 273.15, V = 1*0.001, nPorts = 2, p_start = 100*1000, use_HeatTransfer = false, use_portsData = false) annotation(
     Placement(visible = true, transformation(origin = {180, 120}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp ramp_m_flow_coolant(duration = 10, height = 0, offset = 9800, startTime = 160) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_m_flow_coolant(duration = 10, height = 0, offset = 2000, startTime = 160) annotation(
     Placement(visible = true, transformation(origin = {-30, 120}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.Pressure pressure(redeclare package Medium = ThTrspt2) annotation(
     Placement(visible = true, transformation(origin = {4, -60}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
@@ -92,17 +92,17 @@ model S6GSteamGen_Smpld_test01
     Placement(visible = true, transformation(origin = {-22, -32}, extent = {{12, -8}, {-12, 8}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue1(significantDigits = 5, use_numberPort = true) annotation(
     Placement(visible = true, transformation(origin = {-78, -29}, extent = {{-12, -7}, {12, 7}}, rotation = 0)));
-  Modelica.Fluid.Machines.ControlledPump pump(redeclare package Medium = ThTrspt1, T_start = 275 + 273.15, control_m_flow = true, m_flow_nominal = 980, m_flow_start = 980, p_a_nominal = 100*100*1000, p_a_start = 150*100*1000, p_b_nominal = 150*100*1000, p_b_start = 150*100*1000)  annotation(
+  Modelica.Fluid.Machines.ControlledPump pump(redeclare package Medium = ThTrspt1, T_start = 275 + 273.15, control_m_flow = true, m_flow_nominal = 980, m_flow_start = 980, p_a_nominal = 100*100*1000, p_a_start = 150*100*1000, p_b_nominal = 150*100*1000, p_b_start = 150*100*1000, use_m_flow_set = true)  annotation(
     Placement(visible = true, transformation(origin = {-50, -50}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp ramp_m_flow_reactorFluid(duration = 10, height = 0, offset = 980, startTime = 160) annotation(
     Placement(visible = true, transformation(origin = {-86, 22}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Constant A_HX(k = 20) annotation(
+    Placement(transformation(origin = {10, 14}, extent = {{-10, -10}, {10, 10}})));
+  Modelica.Blocks.Math.Product product annotation(
+    Placement(transformation(origin = {35, 31}, extent = {{-7, -7}, {7, 7}})));
 equation
-  connect(volume1.ports[1], boundary3.ports[1]) annotation(
+  connect(volume1.ports[1], boundary_coolantSnk.ports[1]) annotation(
     Line(points = {{180, 110}, {210, 110}}, color = {0, 127, 255}, thickness = 0.5));
-  connect(const.y, replicator1.u) annotation(
-    Line(points = {{71, -10}, {73, -10}, {73, -30}, {78, -30}}, color = {0, 0, 127}));
-  connect(const.y, replicator2.u) annotation(
-    Line(points = {{71, -10}, {73, -10}, {73, 18}, {78, 18}}, color = {0, 0, 127}));
   connect(replicator2.y, convection2.Gc) annotation(
     Line(points = {{101, 18}, {110, 18}}, color = {0, 0, 127}, thickness = 0.5));
   connect(heatCapacitor1.port, convection2.solid) annotation(
@@ -119,21 +119,21 @@ equation
     Line(points = {{210, -48}, {210, -60}}, color = {191, 0, 0}));
   connect(pipe.port_b, volume.ports[1]) annotation(
     Line(points = {{194, -50}, {200, -50}, {200, -70}}, color = {0, 127, 255}));
-  connect(boundary.ports[1], tank.ports[1]) annotation(
+  connect(boundary_tank_pReg.ports[1], tank.ports[1]) annotation(
     Line(points = {{-110, -70}, {-110, -50}}, color = {0, 127, 255}, thickness = 0.5));
-  connect(boundary1.ports[1], specificEnthalpy.port) annotation(
+  connect(boundary_SnkTank.ports[1], specificEnthalpy.port) annotation(
     Line(points = {{80, -100}, {95, -100}, {95, -110}, {110, -110}}, color = {0, 127, 255}));
   connect(volumeFlowRate1.port_b, cooler_hside.port_a) annotation(
     Line(points = {{40, -50}, {110, -50}}, color = {0, 127, 255}));
-  connect(ramp_m_flow_coolant.y, boundary2.m_flow_in) annotation(
+  connect(ramp_m_flow_coolant.y, boundary_coolantSply.m_flow_in) annotation(
     Line(points = {{-19, 120}, {-17, 120}, {-17, 118}, {-1, 118}}, color = {0, 0, 127}));
   connect(pressure.port, volumeFlowRate1.port_a) annotation(
     Line(points = {{4, -50}, {20, -50}}, color = {0, 127, 255}));
-  connect(const_p_tank.y, boundary1.p_in) annotation(
+  connect(const_p_tank.y, boundary_SnkTank.p_in) annotation(
     Line(points = {{-129, -110}, {-33.5, -110}, {-33.5, -92}, {58, -92}}, color = {0, 0, 127}));
-  connect(const_p_tank.y, boundary.p_in) annotation(
+  connect(const_p_tank.y, boundary_tank_pReg.p_in) annotation(
     Line(points = {{-128, -110}, {-118, -110}, {-118, -92}}, color = {0, 0, 127}));
-  connect(specificEnthalpy.h_out, boundary.h_in) annotation(
+  connect(specificEnthalpy.h_out, boundary_tank_pReg.h_in) annotation(
     Line(points = {{100, -120}, {-114, -120}, {-114, -92}}, color = {0, 0, 127}));
   connect(tank.ports[2], temperature.port_a) annotation(
     Line(points = {{-110, -50}, {-90, -50}}, color = {0, 127, 255}));
@@ -157,7 +157,7 @@ equation
     Line(points = {{110, -110}, {120, -110}}, color = {0, 127, 255}));
   connect(temperature4.T, realValue9.numberPort) annotation(
     Line(points = {{130, -98}, {130, -92}}, color = {0, 0, 127}));
-  connect(boundary2.ports[1], temperature5.port_a) annotation(
+  connect(boundary_coolantSply.ports[1], temperature5.port_a) annotation(
     Line(points = {{20, 110}, {60, 110}}, color = {0, 127, 255}));
   connect(temperature5.T, realValue5.numberPort) annotation(
     Line(points = {{71, 100}, {75, 100}}, color = {0, 0, 127}));
@@ -189,8 +189,16 @@ equation
     Line(points = {{-36, -50}, {-24, -50}}, color = {0, 127, 255}));
   connect(ramp_m_flow_reactorFluid.y, pump.m_flow_set) annotation(
     Line(points = {{-74, 22}, {-57, 22}, {-57, -39}}, color = {0, 0, 127}));
+  connect(hConv_HX.y, product.u1) annotation(
+    Line(points = {{22, 46}, {27, 46}, {27, 35}}, color = {0, 0, 127}));
+  connect(A_HX.y, product.u2) annotation(
+    Line(points = {{21, 14}, {27, 14}, {27, 27}}, color = {0, 0, 127}));
+  connect(product.y, replicator2.u) annotation(
+    Line(points = {{43, 31}, {54, 31}, {54, 18}, {78, 18}}, color = {0, 0, 127}));
+  connect(product.y, replicator1.u) annotation(
+    Line(points = {{43, 31}, {56, 31}, {56, -30}, {78, -30}}, color = {0, 0, 127}));
   annotation(
-    experiment(StartTime = 0, StopTime = 260, Tolerance = 1e-06, Interval = 0.05),
+    experiment(StartTime = 0, StopTime = 50, Tolerance = 1e-06, Interval = 0.02),
     __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl"),
     Diagram(coordinateSystem(extent = {{-160, -140}, {240, 140}}, initialScale = 0.1), graphics = {Rectangle(origin = {110, 28}, extent = {{-62, 96}, {40, -101}}), Text(origin = {94, 128}, extent = {{-34, 4}, {34, -4}}, textString = "Heat Exchanger"), Text(origin = {2, 96}, extent = {{-34, 4}, {34, -4}}, textString = "coolant flow line")}),
     __OpenModelica_commandLineOptions = "");
