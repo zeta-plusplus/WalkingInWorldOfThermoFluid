@@ -187,6 +187,6 @@ equation
     Line(points = {{-150, -86}, {64, -86}, {64, -74}}, color = {0, 0, 127}));
   annotation(
     Diagram(coordinateSystem(extent = {{-240, -100}, {240, 100}})),
-    experiment(StartTime = 0, StopTime = 50, Tolerance = 1e-06, Interval = 0.1),
+    experiment(StartTime = 0, StopTime = 200, Tolerance = 1e-06, Interval = 0.1),
     Icon(coordinateSystem(extent = {{-240, -100}, {240, 100}})));
 end SteamGenerator_test01;
