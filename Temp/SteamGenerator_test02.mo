@@ -7,91 +7,137 @@ model SteamGenerator_test02
   Modelica.Fluid.Sources.Boundary_pT boundary(redeclare package Medium = fluid1, T = 110 + 273.15, nPorts = 1, p = 100*1000) annotation(
     Placement(visible = true, transformation(origin = {138, 52}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Fluid.Sources.MassFlowSource_T boundary1(redeclare package Medium = fluid1, T = 100 + 273.15, m_flow = 2, nPorts = 1) annotation(
-    Placement(transformation(origin = {-190, 8}, extent = {{-10, -10}, {10, 10}})));
-  Modelica.Fluid.Pipes.StaticPipe pipe(redeclare package Medium = fluid1, diameter = 0.01, length = 1) annotation(
+    Placement(visible = true, transformation(origin = {-178, 8}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Fluid.Pipes.StaticPipe pipe(redeclare package Medium = fluid1, diameter = 0.1, length = 5) annotation(
     Placement(transformation(origin = {88, 52}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Fluid.Sensors.MassFlowRate massFlowRate(redeclare package Medium = fluid1) annotation(
-    Placement(transformation(origin = {-158, 8}, extent = {{-6, -6}, {6, 6}})));
+    Placement(visible = true, transformation(origin = {-146, 8}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
   Modelica.Fluid.Sensors.MassFlowRate massFlowRate2(redeclare package Medium = fluid1) annotation(
-    Placement(transformation(origin = {54, 52}, extent = {{-6, -6}, {6, 6}})));
+    Placement(visible = true, transformation(origin = {-2, 52}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue annotation(
-    Placement(transformation(origin = {-171, 37}, extent = {{9, -9}, {-9, 9}})));
+    Placement(visible = true, transformation(origin = {-159, 37}, extent = {{9, -9}, {-9, 9}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue2 annotation(
-    Placement(transformation(origin = {69, 72}, extent = {{-9, -9}, {9, 9}})));
+    Placement(visible = true, transformation(origin = {13, 72}, extent = {{-9, -9}, {9, 9}}, rotation = 0)));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow annotation(
-    Placement(transformation(origin = {-92, -44}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
-  Modelica.Blocks.Sources.Ramp ramp(duration = 1, height = 0, offset = 1000*1000, startTime = 2) annotation(
-    Placement(transformation(origin = {-112, -70}, extent = {{-10, -10}, {10, 10}})));
+    Placement(visible = true, transformation(origin = {-130, -25}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Ramp ramp(duration = 1, height = 1*1000, offset = 1000*1000, startTime = 2) annotation(
+    Placement(visible = true, transformation(origin = {-162, -25}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   inner Modelica.Fluid.System system annotation(
     Placement(visible = true, transformation(origin = {-166, 76}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue3 annotation(
-    Placement(transformation(origin = {-9, -11}, extent = {{-9, -9}, {9, 9}})));
+    Placement(visible = true, transformation(origin = {-16, -34}, extent = {{9, -7}, {-9, 7}}, rotation = 0)));
   Modelica.Fluid.Sensors.MassFlowRate massFlowRate3(redeclare package Medium = fluid1) annotation(
-    Placement(visible = true, transformation(origin = {-26, 8}, extent = {{-6, 6}, {6, -6}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {8, -34}, extent = {{-6, 6}, {6, -6}}, rotation = -90)));
   Modelica.Fluid.Examples.DrumBoiler.BaseClasses.EquilibriumDrumBoiler equilibriumDrumBoiler(redeclare package Medium = fluid1, V_t = 0.1, cp_D = 0.1, m_D = 0.001, p(start = 100*1000), p_start = 2*100*1000) annotation(
-    Placement(transformation(origin = {-82, 26}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
+    Placement(visible = true, transformation(origin = {-62, 26}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
   Modelica.Blocks.Interaction.Show.RealValue realValue5(significantDigits = 3) annotation(
-    Placement(transformation(origin = {-53, 30}, extent = {{-11, -9}, {11, 9}})));
-  Modelica.Fluid.Vessels.ClosedVolume volume1(redeclare package Medium = fluid1, T_start = 110 + 273.15, V = 0.02, nPorts = 3, p_start = 100*1000, use_portsData = false) annotation(
-    Placement(transformation(origin = {27, 59}, extent = {{-7, -7}, {7, 7}})));
+    Placement(visible = true, transformation(origin = {-33, 30}, extent = {{-11, -9}, {11, 9}}, rotation = 0)));
+  Modelica.Fluid.Vessels.ClosedVolume volume1(redeclare package Medium = fluid1, T_start = 110 + 273.15, V = 0.02, nPorts = 4, p_start = 100*1000, use_portsData = false) annotation(
+    Placement(visible = true, transformation(origin = {-42, 58}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
   Modelica.Fluid.Sensors.Density density(redeclare package Medium = fluid1) annotation(
-    Placement(transformation(origin = {39, 86}, extent = {{-5, -5}, {5, 5}})));
+    Placement(visible = true, transformation(origin = {-12, 89}, extent = {{5, -5}, {-5, 5}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue7(significantDigits = 4) annotation(
-    Placement(transformation(origin = {68, 86}, extent = {{-12, -9}, {12, 9}})));
-  Modelica.Fluid.Pipes.StaticPipe pipe1(redeclare package Medium = fluid1, diameter = 0.01, length = 1) annotation(
-    Placement(visible = true, transformation(origin = {14, 8}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-35, 89}, extent = {{11, -7}, {-11, 7}}, rotation = 0)));
+  Modelica.Fluid.Pipes.StaticPipe pipe1(redeclare package Medium = fluid1, diameter = 0.1, length = 0.5) annotation(
+    Placement(visible = true, transformation(origin = {8, -12}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Fluid.Sensors.Pressure pressure(redeclare package Medium = fluid1) annotation(
-    Placement(visible = true, transformation(origin = {-82, -11}, extent = {{7, -7}, {-7, 7}}, rotation = -180)));
-  Modelica.Fluid.Vessels.ClosedVolume volume(redeclare package Medium = fluid1, T_start = 110 + 273.15, V = 0.02, massDynamics = Modelica.Fluid.Types.Dynamics.FixedInitial, nPorts = 4, p_start = 2*100*1000, use_portsData = false) annotation(
-    Placement(visible = true, transformation(origin = {-127, 15}, extent = {{-7, -7}, {7, 7}}, rotation = 0)));
-  Modelica.Fluid.Vessels.ClosedVolume volume2(redeclare package Medium = fluid1, T_start = 110 + 273.15, V = 0.02, nPorts = 2, p_start = 100*1000, use_portsData = false) annotation(
-    Placement(visible = true, transformation(origin = {54, -19}, extent = {{-7, -7}, {7, 7}}, rotation = 0)));
-  Modelica.Fluid.Machines.ControlledPump pump(redeclare package Medium = fluid1, control_m_flow = false, use_m_flow_set = false, use_p_set = false)  annotation(
-    Placement(visible = true, transformation(origin = {-31, -34}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-62, -1}, extent = {{7, -7}, {-7, 7}}, rotation = -180)));
+  Modelica.Fluid.Vessels.ClosedVolume volume(redeclare package Medium = fluid1, T_start = 110 + 273.15, V = 0.02, nPorts = 5, p_start = 2*100*1000, use_portsData = false) annotation(
+    Placement(visible = true, transformation(origin = {-100, 14}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
+  Modelica.Fluid.Vessels.ClosedVolume volume2(redeclare package Medium = fluid1, T_start = 110 + 273.15, V = 0.02, nPorts = 3, p_start = 100*1000, use_portsData = false) annotation(
+    Placement(visible = true, transformation(origin = {8, -63}, extent = {{-7, -7}, {7, 7}}, rotation = 0)));
+  Modelica.Fluid.Machines.ControlledPump pump(redeclare package Medium = fluid1, control_m_flow = true, m_flow_nominal = 0.1, p_a_nominal = 100*1000, p_b_nominal = 5*100*1000, use_m_flow_set = true, use_p_set = false)  annotation(
+    Placement(visible = true, transformation(origin = {-100, -44}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
+  Modelica.Blocks.Interaction.Show.RealValue realValue1(significantDigits = 5)  annotation(
+    Placement(visible = true, transformation(origin = {-54, -19}, extent = {{10, -7}, {-10, 7}}, rotation = 0)));
+  Modelica.Blocks.Math.Gain gain(k = 1/1000)  annotation(
+    Placement(visible = true, transformation(origin = {-42, -6}, extent = {{-4, -4}, {4, 4}}, rotation = -90)));
+  Modelica.Blocks.Math.Gain gain1(k = 1/1000) annotation(
+    Placement(visible = true, transformation(origin = {43, -72}, extent = {{-4, 4}, {4, -4}}, rotation = 90)));
+  Modelica.Blocks.Interaction.Show.RealValue realValue11(significantDigits = 5) annotation(
+    Placement(visible = true, transformation(origin = {31, -60}, extent = {{10, -7}, {-10, 7}}, rotation = 0)));
+  Modelica.Fluid.Sensors.Pressure pressure1(redeclare package Medium = fluid1) annotation(
+    Placement(visible = true, transformation(origin = {24, -77}, extent = {{7, -7}, {-7, 7}}, rotation = -180)));
+  Modelica.Fluid.Sensors.Temperature temperature(redeclare package Medium = fluid1) annotation(
+    Placement(visible = true, transformation(origin = {-28, 66}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
+  Modelica.Blocks.Interaction.Show.RealValue realValue10(significantDigits = 4) annotation(
+    Placement(visible = true, transformation(origin = {-32, 79}, extent = {{12, -7}, {-12, 7}}, rotation = 0)));
+  Modelica.Blocks.Interaction.Show.RealValue realValue101(significantDigits = 4) annotation(
+    Placement(visible = true, transformation(origin = {-100, 45}, extent = {{12, -7}, {-12, 7}}, rotation = 0)));
+  Modelica.Fluid.Sensors.Temperature temperature1(redeclare package Medium = fluid1) annotation(
+    Placement(visible = true, transformation(origin = {-90, 32}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
+  Modelica.Fluid.Sensors.Density density1(redeclare package Medium = fluid1) annotation(
+    Placement(visible = true, transformation(origin = {-82, 55}, extent = {{5, -5}, {-5, 5}}, rotation = 0)));
+  Modelica.Blocks.Interaction.Show.RealValue realValue71(significantDigits = 4) annotation(
+    Placement(visible = true, transformation(origin = {-105, 55}, extent = {{11, -7}, {-11, 7}}, rotation = 0)));
 equation
   connect(boundary1.ports[1], massFlowRate.port_a) annotation(
-    Line(points = {{-180, 8}, {-164, 8}}, color = {0, 127, 255}));
+    Line(points = {{-168, 8}, {-152, 8}}, color = {0, 127, 255}));
   connect(pipe.port_b, boundary.ports[1]) annotation(
     Line(points = {{98, 52}, {128, 52}}, color = {0, 127, 255}));
   connect(massFlowRate2.port_b, pipe.port_a) annotation(
-    Line(points = {{60, 52}, {78, 52}}, color = {0, 127, 255}));
+    Line(points = {{4, 52}, {78, 52}}, color = {0, 127, 255}));
   connect(realValue.numberPort, massFlowRate.m_flow) annotation(
-    Line(points = {{-160.65, 37}, {-157.65, 37}, {-157.65, 14}}, color = {0, 0, 127}));
+    Line(points = {{-148.65, 37}, {-145.65, 37}, {-145.65, 14}}, color = {0, 0, 127}));
   connect(realValue2.numberPort, massFlowRate2.m_flow) annotation(
-    Line(points = {{59, 72}, {53.65, 72}, {53.65, 59}}, color = {0, 0, 127}));
+    Line(points = {{2.65, 72}, {-2.35, 72}, {-2.35, 59}}, color = {0, 0, 127}));
   connect(ramp.y, prescribedHeatFlow.Q_flow) annotation(
-    Line(points = {{-101, -70}, {-92, -70}, {-92, -54}}, color = {0, 0, 127}));
+    Line(points = {{-151, -25}, {-140, -25}}, color = {0, 0, 127}));
   connect(realValue3.numberPort, massFlowRate3.m_flow) annotation(
-    Line(points = {{-19.35, -11}, {-26.35, -11}, {-26.35, 2}}, color = {0, 0, 127}));
+    Line(points = {{-5.65, -34}, {1.7, -34}}, color = {0, 0, 127}));
   connect(equilibriumDrumBoiler.V, realValue5.numberPort) annotation(
-    Line(points = {{-71, 30}, {-66, 30}}, color = {0, 0, 127}));
+    Line(points = {{-51, 30}, {-46, 30}}, color = {0, 0, 127}));
   connect(equilibriumDrumBoiler.heatPort, prescribedHeatFlow.port) annotation(
-    Line(points = {{-92, 26}, {-92, -34}}, color = {191, 0, 0}));
+    Line(points = {{-72, 26}, {-72, -25}, {-120, -25}}, color = {191, 0, 0}));
   connect(volume1.ports[1], massFlowRate2.port_a) annotation(
-    Line(points = {{27, 52}, {47, 52}}, color = {0, 127, 255}));
+    Line(points = {{-42, 52}, {-8, 52}}, color = {0, 127, 255}));
   connect(volume1.ports[2], equilibriumDrumBoiler.port_b) annotation(
-    Line(points = {{28, 52}, {-82, 52}, {-82, 36}}, color = {0, 127, 255}));
-  connect(volume1.ports[3], density.port) annotation(
-    Line(points = {{28, 52}, {39, 52}, {39, 81}}, color = {0, 127, 255}));
+    Line(points = {{-42, 52}, {-62, 52}, {-62, 36}}, color = {0, 127, 255}));
   connect(density.d, realValue7.numberPort) annotation(
-    Line(points = {{44.5, 86}, {54, 86}}, color = {0, 0, 127}));
-  connect(pipe1.port_a, massFlowRate3.port_b) annotation(
-    Line(points = {{4, 8}, {-20, 8}}, color = {0, 127, 255}));
-  connect(massFlowRate3.port_a, equilibriumDrumBoiler.port_a) annotation(
-    Line(points = {{-32, 8}, {-82, 8}, {-82, 16}}, color = {0, 127, 255}));
+    Line(points = {{-17.5, 89}, {-22, 89}}, color = {0, 0, 127}));
   connect(pressure.port, equilibriumDrumBoiler.port_a) annotation(
-    Line(points = {{-82, -4}, {-82, 16}}, color = {0, 127, 255}));
+    Line(points = {{-62, 6}, {-62, 16}}, color = {0, 127, 255}));
   connect(massFlowRate.port_b, volume.ports[1]) annotation(
-    Line(points = {{-152, 8}, {-127, 8}}, color = {0, 127, 255}));
+    Line(points = {{-140, 8}, {-100, 8}}, color = {0, 127, 255}));
   connect(volume.ports[2], equilibriumDrumBoiler.port_a) annotation(
-    Line(points = {{-127, 8}, {-82, 8}, {-82, 16}}, color = {0, 127, 255}));
-  connect(pipe1.port_b, volume2.ports[1]) annotation(
-    Line(points = {{24, 8}, {54, 8}, {54, -26}}, color = {0, 127, 255}));
-  connect(pump.port_a, volume2.ports[2]) annotation(
-    Line(points = {{-20, -34}, {54, -34}, {54, -26}}, color = {0, 127, 255}));
+    Line(points = {{-100, 8}, {-62, 8}, {-62, 16}}, color = {0, 127, 255}));
   connect(pump.port_b, volume.ports[3]) annotation(
-    Line(points = {{-40, -34}, {-127, -34}, {-127, 8}}, color = {0, 127, 255}));
+    Line(points = {{-100, -34}, {-100, 8}}, color = {0, 127, 255}));
+  connect(pressure.p, gain.u) annotation(
+    Line(points = {{-54.3, -1}, {-42.3, -1}}, color = {0, 0, 127}));
+  connect(gain.y, realValue1.numberPort) annotation(
+    Line(points = {{-42, -10.4}, {-42, -12.4}, {-42.5, -12.4}, {-42.5, -19.4}}, color = {0, 0, 127}));
+  connect(pressure1.port, volume2.ports[1]) annotation(
+    Line(points = {{24, -70}, {8, -70}}, color = {0, 127, 255}));
+  connect(realValue11.numberPort, gain1.y) annotation(
+    Line(points = {{42.5, -60}, {43, -60}, {43, -68}}, color = {0, 0, 127}));
+  connect(temperature.port, volume1.ports[3]) annotation(
+    Line(points = {{-28, 60}, {-28, 52}, {-42, 52}}, color = {0, 127, 255}));
+  connect(temperature.T, realValue10.numberPort) annotation(
+    Line(points = {{-23.8, 66}, {-17.8, 66}, {-17.8, 79}}, color = {0, 0, 127}));
+  connect(density.port, volume1.ports[4]) annotation(
+    Line(points = {{-12, 84}, {-12, 52}, {-42, 52}}, color = {0, 127, 255}));
+  connect(temperature1.T, realValue101.numberPort) annotation(
+    Line(points = {{-85.8, 32}, {-85.8, 45}}, color = {0, 0, 127}));
+  connect(temperature1.port, volume.ports[4]) annotation(
+    Line(points = {{-90, 26}, {-90, 8}, {-100, 8}}, color = {0, 127, 255}));
+  connect(pressure1.p, gain1.u) annotation(
+    Line(points = {{31.7, -77}, {42.7, -77}}, color = {0, 0, 127}));
+  connect(pipe1.port_a, equilibriumDrumBoiler.port_a) annotation(
+    Line(points = {{8, -2}, {8, 12}, {-62, 12}, {-62, 16}}, color = {0, 127, 255}));
+  connect(pipe1.port_b, massFlowRate3.port_a) annotation(
+    Line(points = {{8, -22}, {8, -28}}, color = {0, 127, 255}));
+  connect(massFlowRate3.port_b, volume2.ports[2]) annotation(
+    Line(points = {{8, -40}, {8, -70}}, color = {0, 127, 255}));
+  connect(pump.port_a, volume2.ports[3]) annotation(
+    Line(points = {{-100, -54}, {-100, -70}, {8, -70}}, color = {0, 127, 255}));
+  connect(massFlowRate3.m_flow, pump.m_flow_set) annotation(
+    Line(points = {{1.4, -34}, {1.4, -49}, {-91.6, -49}}, color = {0, 0, 127}));
+  connect(density1.d, realValue71.numberPort) annotation(
+    Line(points = {{-87.5, 55}, {-92, 55}}, color = {0, 0, 127}));
+  connect(density1.port, volume.ports[5]) annotation(
+    Line(points = {{-82, 50}, {-82, 8}, {-100, 8}}, color = {0, 127, 255}));
   annotation(
     Diagram(coordinateSystem(extent = {{-200, -100}, {200, 100}})),
-    experiment(StartTime = 0, StopTime = 5, Tolerance = 1e-06, Interval = 0.05));
+    experiment(StartTime = 0, StopTime = 20, Tolerance = 1e-06, Interval = 0.1));
 end SteamGenerator_test02;
