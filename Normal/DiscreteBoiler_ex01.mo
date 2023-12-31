@@ -6,19 +6,19 @@ model DiscreteBoiler_ex01
   package fluid1 = Modelica.Media.Water.StandardWater "";
   //----------
   Modelica.Fluid.Sources.Boundary_pT boundary(redeclare package Medium = fluid1, T = 102 + 273.15, nPorts = 1, p = 100*1000) annotation(
-    Placement(visible = true, transformation(origin = {222, 48}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {226, 48}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Fluid.Sources.MassFlowSource_T boundary1(redeclare package Medium = fluid1, T = 90 + 273.15, m_flow = 2, nPorts = 1) annotation(
     Placement(visible = true, transformation(origin = {-226, 8}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Pipes.StaticPipe pipe(redeclare package Medium = fluid1, diameter = 0.05, length = 1) annotation(
-    Placement(visible = true, transformation(origin = {192, 48}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {194, 48}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.MassFlowRate massFlowRate(redeclare package Medium = fluid1) annotation(
     Placement(visible = true, transformation(origin = {-168, 8}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
   Modelica.Fluid.Sensors.MassFlowRate massFlowRate2(redeclare package Medium = fluid1) annotation(
-    Placement(visible = true, transformation(origin = {170, 48}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {164, 48}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue annotation(
     Placement(visible = true, transformation(origin = {-181, 37}, extent = {{9, -9}, {-9, 9}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue2 annotation(
-    Placement(visible = true, transformation(origin = {187, 66}, extent = {{-11, -9}, {11, 9}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {179, 62}, extent = {{-11, -9}, {11, 9}}, rotation = 0)));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow annotation(
     Placement(visible = true, transformation(origin = {-134, -48}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
   Modelica.Blocks.Sources.Ramp ramp(duration = 1, height = 0.1*400*1000, offset = 300*1000, startTime = 10) annotation(
@@ -26,13 +26,13 @@ model DiscreteBoiler_ex01
   inner Modelica.Fluid.System system annotation(
     Placement(visible = true, transformation(origin = {-172, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Pipes.StaticPipe pipe1(redeclare package Medium = fluid1, diameter = 0.05, length = 0.1) annotation(
-    Placement(visible = true, transformation(origin = {-104, 8}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-109, 8}, extent = {{-5, -10}, {5, 10}}, rotation = 0)));
   Modelica.Fluid.Sources.Boundary_pT boundary3(redeclare package Medium = fluid1, T = 15 + 273.15, nPorts = 1, p = 100*1000) annotation(
     Placement(visible = true, transformation(origin = {224, -54}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue3 annotation(
     Placement(visible = true, transformation(origin = {-81, -11}, extent = {{-9, -9}, {9, 9}}, rotation = 0)));
   Modelica.Fluid.Sensors.MassFlowRate massFlowRate3(redeclare package Medium = fluid1) annotation(
-    Placement(visible = true, transformation(origin = {-81, 8}, extent = {{-6, 6}, {6, -6}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-85, 8}, extent = {{-6, 6}, {6, -6}}, rotation = 0)));
   Modelica.Fluid.Examples.DrumBoiler.BaseClasses.EquilibriumDrumBoiler equilibriumDrumBoiler(redeclare package Medium = fluid1, V_t = 1, cp_D = 0.1, m_D = 0.001, p(start = 2.2*100*1000), p_start = 2.2*100*1000) annotation(
     Placement(visible = true, transformation(origin = {-124, 26}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
   Modelica.Blocks.Interaction.Show.RealValue realValue4 annotation(
@@ -66,7 +66,7 @@ model DiscreteBoiler_ex01
   Modelica.Blocks.Math.Gain gain1(k = 1/1000) annotation(
     Placement(visible = true, transformation(origin = {-40, -16}, extent = {{-4, -4}, {4, 4}}, rotation = -90)));
   Modelica.Fluid.Pipes.StaticPipe pipe3(redeclare package Medium = fluid1, diameter = 0.05, length = 0.1) annotation(
-    Placement(visible = true, transformation(origin = {-74, 48}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-79, 48}, extent = {{-5, -9}, {5, 9}}, rotation = 0)));
   Modelica.Fluid.Vessels.ClosedVolume volume2(redeclare package Medium = fluid1, T_start = 100 + 273.15, V = 0.5, nPorts = 4, p_start = 2.1*100*1000, use_HeatTransfer = false, use_portsData = false) annotation(
     Placement(visible = true, transformation(origin = {-18, 54}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue8 annotation(
@@ -84,13 +84,13 @@ model DiscreteBoiler_ex01
   Modelica.Fluid.Vessels.ClosedVolume closedVolume1(redeclare package Medium = fluid1, T_start = 80 + 273.15, V = 0.5, nPorts = 4, p_start = 2*100*1000, use_portsData = false) annotation(
     Placement(visible = true, transformation(origin = {48, 14}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
   Modelica.Fluid.Pipes.StaticPipe pipe4(redeclare package Medium = fluid1, diameter = 0.05, length = 0.1) annotation(
-    Placement(visible = true, transformation(origin = {14, 48}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {5, 48}, extent = {{-5, -10}, {5, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.MassFlowRate massFlowRate31(redeclare package Medium = fluid1) annotation(
-    Placement(visible = true, transformation(origin = {23, 8}, extent = {{-6, 6}, {6, -6}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {19, 8}, extent = {{-6, 6}, {6, -6}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue31 annotation(
     Placement(visible = true, transformation(origin = {21, -9}, extent = {{-9, -9}, {9, 9}}, rotation = 0)));
   Modelica.Fluid.Pipes.StaticPipe staticPipe(redeclare package Medium = fluid1, diameter = 0.05, length = 0.1) annotation(
-    Placement(visible = true, transformation(origin = {-4, 8}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-9, 8}, extent = {{-5, -9}, {5, 9}}, rotation = 0)));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow2 annotation(
     Placement(visible = true, transformation(origin = {64, -46}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow21 annotation(
@@ -110,52 +110,52 @@ model DiscreteBoiler_ex01
   Modelica.Blocks.Math.Gain gain3(k = 1/3) annotation(
     Placement(visible = true, transformation(origin = {-184, -70}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
   Modelica.Fluid.Pipes.StaticPipe pipe5(redeclare package Medium = fluid1, diameter = 0.05, length = 0.1) annotation(
-    Placement(visible = true, transformation(origin = {118, 48}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {107, 48}, extent = {{-5, -10}, {5, 10}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue102(significantDigits = 4) annotation(
-    Placement(visible = true, transformation(origin = {148, 85}, extent = {{14, -9}, {-14, 9}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {154, 85}, extent = {{14, -9}, {-14, 9}}, rotation = 0)));
   Modelica.Fluid.Sensors.Temperature temperature2(redeclare package Medium = fluid1) annotation(
     Placement(visible = true, transformation(origin = {156, 68}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
   Modelica.Fluid.Vessels.ClosedVolume volume3(redeclare package Medium = fluid1, T_start = 100 + 273.15, V = 0.5, nPorts = 4, p_start = 2*100*1000, use_HeatTransfer = true, use_portsData = false) annotation(
     Placement(visible = true, transformation(origin = {142, 54}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
 equation
   connect(pipe.port_b, boundary.ports[1]) annotation(
-    Line(points = {{202, 48}, {212, 48}}, color = {0, 127, 255}));
+    Line(points = {{204, 48}, {216, 48}}, color = {0, 127, 255}, thickness = 1));
   connect(massFlowRate2.port_b, pipe.port_a) annotation(
-    Line(points = {{176, 48}, {182, 48}}, color = {0, 127, 255}));
+    Line(points = {{170, 48}, {184, 48}}, color = {0, 127, 255}, thickness = 1));
   connect(realValue.numberPort, massFlowRate.m_flow) annotation(
     Line(points = {{-170.65, 37}, {-167.65, 37}, {-167.65, 14}}, color = {0, 0, 127}));
   connect(realValue2.numberPort, massFlowRate2.m_flow) annotation(
-    Line(points = {{174, 66}, {170, 66}, {170, 55}}, color = {0, 0, 127}));
+    Line(points = {{166.35, 62}, {164.35, 62}, {164.35, 55}}, color = {0, 0, 127}));
   connect(realValue3.numberPort, massFlowRate3.m_flow) annotation(
-    Line(points = {{-91.35, -11}, {-91.35, -5}, {-81.35, -5}, {-81.35, 1}}, color = {0, 0, 127}));
+    Line(points = {{-91.35, -11}, {-91.35, -5}, {-85, -5}, {-85, 1}}, color = {0, 0, 127}));
   connect(pipe1.port_b, massFlowRate3.port_a) annotation(
-    Line(points = {{-94, 8}, {-87, 8}}, color = {0, 127, 255}));
+    Line(points = {{-104, 8}, {-91, 8}}, color = {0, 127, 255}, thickness = 1));
   connect(realValue4.numberPort, massFlowRate4.m_flow) annotation(
     Line(points = {{184.5, -35}, {184.5, -22}, {183.65, -22}}, color = {0, 0, 127}));
   connect(pipe2.port_b, massFlowRate4.port_a) annotation(
     Line(points = {{172, -16}, {178, -16}}, color = {0, 127, 255}));
   connect(massFlowRate4.port_b, boundary3.ports[1]) annotation(
-    Line(points = {{190, -16}, {200, -16}, {200, -54}, {214, -54}}, color = {0, 127, 255}));
+    Line(points = {{190, -16}, {200, -16}, {200, -54}, {214, -54}}, color = {0, 127, 255}, thickness = 1));
   connect(equilibriumDrumBoiler.V, realValue5.numberPort) annotation(
     Line(points = {{-113, 30}, {-108, 30}}, color = {0, 0, 127}));
   connect(equilibriumDrumBoiler1.V, realValue6.numberPort) annotation(
     Line(points = {{-15, 30}, {-8, 30}}, color = {0, 0, 127}));
   connect(equilibriumDrumBoiler.heatPort, prescribedHeatFlow.port) annotation(
-    Line(points = {{-134, 26}, {-134, -38}}, color = {191, 0, 0}));
+    Line(points = {{-134, 26}, {-134, -38}}, color = {191, 0, 0}, thickness = 1));
   connect(equilibriumDrumBoiler1.heatPort, prescribedHeatFlow1.port) annotation(
-    Line(points = {{-36, 26}, {-36, -40}}, color = {191, 0, 0}));
+    Line(points = {{-36, 26}, {-36, -40}}, color = {191, 0, 0}, thickness = 1));
   connect(massFlowRate3.port_b, volume1.ports[1]) annotation(
-    Line(points = {{-75, 8}, {-52, 8}}, color = {0, 127, 255}));
+    Line(points = {{-79, 8}, {-52, 8}}, color = {0, 127, 255}, thickness = 1));
   connect(volume1.ports[2], equilibriumDrumBoiler1.port_a) annotation(
-    Line(points = {{-52, 8}, {-26, 8}, {-26, 16}}, color = {0, 127, 255}));
+    Line(points = {{-52, 8}, {-26, 8}, {-26, 16}}, color = {0, 127, 255}, thickness = 1));
   connect(volume1.ports[3], pressure.port) annotation(
     Line(points = {{-52, 8}, {-52, 2}}, color = {0, 127, 255}));
   connect(pressure1.port, volume.ports[1]) annotation(
     Line(points = {{-150, 2}, {-150, 8}}, color = {0, 127, 255}));
   connect(equilibriumDrumBoiler.port_a, volume.ports[2]) annotation(
-    Line(points = {{-124, 16}, {-124, 8}, {-150, 8}}, color = {0, 127, 255}));
+    Line(points = {{-124, 16}, {-124, 8}, {-150, 8}}, color = {0, 127, 255}, thickness = 1));
   connect(volume.ports[3], pipe1.port_a) annotation(
-    Line(points = {{-150, 8}, {-114, 8}}, color = {0, 127, 255}));
+    Line(points = {{-150, 8}, {-114, 8}}, color = {0, 127, 255}, thickness = 1));
   connect(pressure1.p, gain.u) annotation(
     Line(points = {{-142.3, -5}, {-140.3, -5}, {-140.3, -14}}, color = {0, 0, 127}));
   connect(realValue1.numberPort, gain.y) annotation(
@@ -167,31 +167,31 @@ equation
   connect(massFlowRate.port_b, volume.ports[4]) annotation(
     Line(points = {{-162, 8}, {-150, 8}}, color = {0, 127, 255}));
   connect(massFlowRate.port_a, boundary1.ports[1]) annotation(
-    Line(points = {{-174, 8}, {-216, 8}}, color = {0, 127, 255}));
+    Line(points = {{-174, 8}, {-216, 8}}, color = {0, 127, 255}, thickness = 1));
   connect(equilibriumDrumBoiler.port_b, pipe3.port_a) annotation(
-    Line(points = {{-124, 36}, {-124, 48}, {-84, 48}}, color = {0, 127, 255}));
+    Line(points = {{-124, 36}, {-124, 48}, {-84, 48}}, color = {0, 127, 255}, thickness = 1));
   connect(pipe3.port_b, volume2.ports[1]) annotation(
-    Line(points = {{-64, 48}, {-18, 48}}, color = {0, 127, 255}));
+    Line(points = {{-74, 48}, {-18, 48}}, color = {0, 127, 255}, thickness = 1));
   connect(equilibriumDrumBoiler1.port_b, volume2.ports[2]) annotation(
-    Line(points = {{-26, 36}, {-26, 48}, {-18, 48}}, color = {0, 127, 255}));
+    Line(points = {{-26, 36}, {-26, 48}, {-18, 48}}, color = {0, 127, 255}, thickness = 1));
   connect(pipe4.port_a, volume2.ports[3]) annotation(
-    Line(points = {{4, 48}, {-18, 48}}, color = {0, 127, 255}));
+    Line(points = {{0, 48}, {-18, 48}}, color = {0, 127, 255}, thickness = 1));
   connect(pipe4.port_b, closedVolume.ports[1]) annotation(
-    Line(points = {{24, 48}, {84, 48}}, color = {0, 127, 255}));
+    Line(points = {{10, 48}, {84, 48}}, color = {0, 127, 255}, thickness = 1));
   connect(staticPipe.port_a, volume1.ports[4]) annotation(
-    Line(points = {{-14, 8}, {-52, 8}}, color = {0, 127, 255}));
+    Line(points = {{-14, 8}, {-52, 8}}, color = {0, 127, 255}, thickness = 1));
   connect(staticPipe.port_b, massFlowRate31.port_a) annotation(
-    Line(points = {{6, 8}, {18, 8}}, color = {0, 127, 255}));
+    Line(points = {{-4, 8}, {13, 8}}, color = {0, 127, 255}, thickness = 1));
   connect(equilibriumDrumBoiler2.port_b, closedVolume.ports[2]) annotation(
-    Line(points = {{74, 36}, {74, 48}, {84, 48}}, color = {0, 127, 255}));
+    Line(points = {{74, 36}, {74, 48}, {84, 48}}, color = {0, 127, 255}, thickness = 1));
   connect(equilibriumDrumBoiler2.V, realValue8.numberPort) annotation(
     Line(points = {{85, 30}, {90, 30}}, color = {0, 0, 127}));
   connect(massFlowRate31.m_flow, realValue31.numberPort) annotation(
-    Line(points = {{24, 2}, {24, -2}, {11, -2}, {11, -9}}, color = {0, 0, 127}));
+    Line(points = {{19, 1}, {19, -2}, {11, -2}, {11, -9}}, color = {0, 0, 127}));
   connect(massFlowRate31.port_b, closedVolume1.ports[1]) annotation(
-    Line(points = {{30, 8}, {48, 8}}, color = {0, 127, 255}));
+    Line(points = {{25, 8}, {48, 8}}, color = {0, 127, 255}, thickness = 1));
   connect(equilibriumDrumBoiler2.port_a, closedVolume1.ports[2]) annotation(
-    Line(points = {{74, 16}, {74, 8}, {48, 8}}, color = {0, 127, 255}));
+    Line(points = {{74, 16}, {74, 8}, {48, 8}}, color = {0, 127, 255}, thickness = 1));
   connect(pressure2.port, closedVolume1.ports[3]) annotation(
     Line(points = {{48, 2}, {48, 8}}));
   connect(pressure2.p, gain2.u) annotation(
@@ -199,9 +199,9 @@ equation
   connect(realValue9.numberPort, gain2.y) annotation(
     Line(points = {{56, -24}, {59.5, -24}, {59.5, -20}, {60, -20}}, color = {0, 0, 127}));
   connect(pipe2.port_a, closedVolume1.ports[4]) annotation(
-    Line(points = {{146, -16}, {120, -16}, {120, 8}, {48, 8}}, color = {0, 127, 255}));
+    Line(points = {{146, -16}, {120, -16}, {120, 8}, {48, 8}}, color = {0, 127, 255}, thickness = 1));
   connect(equilibriumDrumBoiler2.heatPort, prescribedHeatFlow2.port) annotation(
-    Line(points = {{64, 26}, {64, -36}}, color = {191, 0, 0}));
+    Line(points = {{64, 26}, {64, -36}}, color = {191, 0, 0}, thickness = 1));
   connect(temperature.port, closedVolume.ports[3]) annotation(
     Line(points = {{94, 64}, {94, 48}, {84, 48}}, color = {0, 127, 255}));
   connect(temperature.T, realValue10.numberPort) annotation(
@@ -223,17 +223,17 @@ equation
   connect(ramp1.y, prescribedHeatFlow21.Q_flow) annotation(
     Line(points = {{107, 118}, {136, 118}}, color = {0, 0, 127}));
   connect(pipe5.port_a, closedVolume.ports[4]) annotation(
-    Line(points = {{108, 48}, {84, 48}}, color = {0, 127, 255}));
+    Line(points = {{102, 48}, {84, 48}}, color = {0, 127, 255}, thickness = 1));
   connect(pipe5.port_b, volume3.ports[1]) annotation(
-    Line(points = {{128, 48}, {142, 48}}, color = {0, 127, 255}));
+    Line(points = {{112, 48}, {142, 48}}, color = {0, 127, 255}, thickness = 1));
   connect(massFlowRate2.port_a, volume3.ports[2]) annotation(
-    Line(points = {{164, 48}, {142, 48}}, color = {0, 127, 255}));
+    Line(points = {{158, 48}, {142, 48}}, color = {0, 127, 255}, thickness = 1));
   connect(temperature2.port, volume3.ports[3]) annotation(
     Line(points = {{156, 62}, {156, 48}, {142, 48}}, color = {0, 127, 255}));
   connect(realValue102.numberPort, temperature2.T) annotation(
-    Line(points = {{164, 86}, {164, 68}, {160, 68}}, color = {0, 0, 127}));
+    Line(points = {{170, 85}, {170, 68}, {160, 68}}, color = {0, 0, 127}));
   connect(prescribedHeatFlow21.port, volume3.heatPort) annotation(
-    Line(points = {{136, 98}, {136, 54}}, color = {191, 0, 0}));
+    Line(points = {{136, 98}, {136, 54}}, color = {191, 0, 0}, thickness = 1));
   annotation(
     Diagram(coordinateSystem(extent = {{-240, -100}, {240, 140}})),
     experiment(StartTime = 0, StopTime = 300, Tolerance = 1e-06, Interval = 0.1),
