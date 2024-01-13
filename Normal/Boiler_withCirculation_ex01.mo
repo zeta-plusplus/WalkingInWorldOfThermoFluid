@@ -39,7 +39,7 @@ model Boiler_withCirculation_ex01
     Placement(visible = true, transformation(origin = {-14, 89}, extent = {{5, -5}, {-5, 5}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue7(significantDigits = 4) annotation(
     Placement(visible = true, transformation(origin = {-37, 89}, extent = {{11, -7}, {-11, 7}}, rotation = 0)));
-  Modelica.Fluid.Pipes.StaticPipe pipe1(redeclare package Medium = fluid1, diameter = 0.05, length = 0.5) annotation(
+  Modelica.Fluid.Pipes.StaticPipe pipe1(redeclare package Medium = fluid1, diameter = 0.01, length = 0.5) annotation(
     Placement(visible = true, transformation(origin = {-12, -12}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Fluid.Sensors.Pressure pressure(redeclare package Medium = fluid1) annotation(
     Placement(visible = true, transformation(origin = {-62, -3}, extent = {{7, -7}, {-7, 7}}, rotation = -180)));
@@ -47,7 +47,7 @@ model Boiler_withCirculation_ex01
     Placement(visible = true, transformation(origin = {-100, 14}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
   Modelica.Fluid.Vessels.ClosedVolume volume2(redeclare package Medium = fluid1, T_start = 110 + 273.15, V = 0.02, nPorts = 3, p_start = 100*1000, use_portsData = false) annotation(
     Placement(visible = true, transformation(origin = {-12, -73}, extent = {{-7, -7}, {7, 7}}, rotation = 0)));
-  Modelica.Fluid.Machines.ControlledPump pump(redeclare package Medium = fluid1, control_m_flow = true, m_flow_nominal = 1, p_a_nominal = 100*1000, p_b_nominal = 5*100*1000, use_m_flow_set = true, use_p_set = false) annotation(
+  Modelica.Fluid.Machines.ControlledPump pump(redeclare package Medium = fluid1, control_m_flow = true, m_flow_nominal = 0.05, p_a_nominal = 100*1000, p_b_nominal = 1.1*100*1000, use_m_flow_set = true, use_p_set = false) annotation(
     Placement(visible = true, transformation(origin = {-100, -44}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
   Modelica.Blocks.Interaction.Show.RealValue realValue1(significantDigits = 5) annotation(
     Placement(visible = true, transformation(origin = {-54, -21}, extent = {{10, -7}, {-10, 7}}, rotation = 0)));
