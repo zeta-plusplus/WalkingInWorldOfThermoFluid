@@ -1,25 +1,23 @@
 within WalkingInWorldOfThermoFluid.Temp;
 
-model S6GSteamGen_Smpld_test01
+model S6GSteamGen_Smpld_test02
   extends Modelica.Icons.Example;
   //----------
   package ThTrspt1 = Modelica.Media.Water.StandardWater "thermo transport fluid, 1st loop(reactor side)";
   package ThTrspt2 = Modelica.Media.Water.StandardWater "thermo transport fluid, 2nd loop(steam generator side)";
   //----------
   inner Modelica.Fluid.System system annotation(
-    Placement(visible = true, transformation(origin = {-90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(transformation(origin = {-126, 60}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Fluid.Sensors.VolumeFlowRate volumeFlowRate1(redeclare package Medium = ThTrspt1) annotation(
-    Placement(visible = true, transformation(origin = {30, -50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(transformation(origin = {30, -50}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Fluid.Pipes.DynamicPipe cooler_hside(redeclare package Medium = ThTrspt1, T_start = 275 + 273.15, diameter = 0.1, length = 2, modelStructure = Modelica.Fluid.Types.ModelStructure.a_vb, nNodes = 10, nParallel = 100, p_a_start = 150*100*1000, use_HeatTransfer = true) annotation(
     Placement(visible = true, transformation(origin = {120, -50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Pipes.DynamicPipe pipe(redeclare package Medium = ThTrspt1, T_start = 275 + 273.15, diameter = 0.1, length = 2, modelStructure = Modelica.Fluid.Types.ModelStructure.a_vb, nNodes = 2, nParallel = 100, p_a_start = 150*100*1000, use_HeatTransfer = false) annotation(
     Placement(visible = true, transformation(origin = {184, -50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Sources.MassFlowSource_T boundary_coolantSply(redeclare package Medium = ThTrspt2, T = 15 + 273.15, m_flow = 5, nPorts = 1, use_m_flow_in = true) annotation(
-    Placement(visible = true, transformation(origin = {10, 110}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Pipes.DynamicPipe cooler_cside(redeclare package Medium = ThTrspt2, T_start = 15 + 273.15, diameter = 0.1, length = 2, modelStructure = Modelica.Fluid.Types.ModelStructure.a_vb, nNodes = cooler_hside.nNodes, nParallel = 1000, p_a_start = 100*1000, use_HeatTransfer = true) annotation(
-    Placement(visible = true, transformation(origin = {120, 76}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
-  Modelica.Fluid.Sources.Boundary_pT boundary_coolantSnk(redeclare package Medium = ThTrspt2, nPorts = 1) annotation(
-    Placement(visible = true, transformation(origin = {220, 110}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Fluid.Sources.MassFlowSource_T CoolantSply(redeclare package Medium = ThTrspt2, T = 90 + 273.15, m_flow = 5, nPorts = 1, use_m_flow_in = true) annotation(
+    Placement(transformation(origin = {-72, 132}, extent = {{-10, -10}, {10, 10}})));
+  Modelica.Fluid.Sources.Boundary_pT vaporExit(redeclare package Medium = ThTrspt2, nPorts = 1, p = 100*1000, T = 99 + 273.15) annotation(
+    Placement(transformation(origin = {290, 96}, extent = {{10, -10}, {-10, 10}})));
   Modelica.Thermal.HeatTransfer.Components.Convection convection1[cooler_hside.nNodes] annotation(
     Placement(visible = true, transformation(origin = {120, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
   Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor1[cooler_hside.nNodes](each C = 10) annotation(
@@ -28,7 +26,7 @@ model S6GSteamGen_Smpld_test01
     Placement(visible = true, transformation(origin = {120, 18}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
   Modelica.Blocks.Routing.Replicator replicator1(nout = cooler_hside.nNodes) annotation(
     Placement(visible = true, transformation(origin = {90, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Routing.Replicator replicator2(nout = cooler_cside.nNodes) annotation(
+  Modelica.Blocks.Routing.Replicator replicator2(nout = cooler_hside.nNodes) annotation(
     Placement(visible = true, transformation(origin = {90, 18}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant hConv_HX(k = 10000) annotation(
     Placement(transformation(origin = {10, 46}, extent = {{-10, -10}, {10, 10}})));
@@ -36,7 +34,7 @@ model S6GSteamGen_Smpld_test01
     Placement(visible = true, transformation(origin = {210, -70}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow prescribedHeatFlow1 annotation(
     Placement(transformation(origin = {210, -38}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  Modelica.Blocks.Sources.Ramp ramp_heat_generation(duration = 1, height = 0.01*165*1e6, offset = 0.01*165*1e6, startTime = 10) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_heat_generation(duration = 1, height = 0*165*1e6, offset = 1*165*1e6, startTime = 10) annotation(
     Placement(transformation(origin = {194, -10}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Fluid.Pipes.DynamicPipe pipe1(redeclare package Medium = ThTrspt1, T_start = 275 + 273.15, diameter = 0.1, length = 2, modelStructure = Modelica.Fluid.Types.ModelStructure.a_vb, nNodes = 2, nParallel = 100, p_a_start = 150*100*1000, use_HeatTransfer = false) annotation(
     Placement(visible = true, transformation(origin = {170, -110}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
@@ -48,16 +46,14 @@ model S6GSteamGen_Smpld_test01
     Placement(visible = true, transformation(origin = {70, -100}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.SpecificEnthalpy specificEnthalpy(redeclare package Medium = ThTrspt1) annotation(
     Placement(visible = true, transformation(origin = {110, -120}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
-  Modelica.Fluid.Vessels.ClosedVolume volume1(redeclare package Medium = ThTrspt2, T_start = 15 + 273.15, V = 1*0.001, nPorts = 2, p_start = 100*1000, use_HeatTransfer = false, use_portsData = false) annotation(
-    Placement(visible = true, transformation(origin = {180, 120}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp ramp_m_flow_coolant(duration = 10, height = 0, offset = 100, startTime = 160) annotation(
-    Placement(visible = true, transformation(origin = {-30, 120}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Ramp ramp_m_flow_coolant(duration = 10, height = 0, offset = 80, startTime = 160) annotation(
+    Placement(transformation(origin = {-112, 140}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Fluid.Sensors.Pressure pressure(redeclare package Medium = ThTrspt2) annotation(
     Placement(visible = true, transformation(origin = {4, -60}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue5(significantDigits = 4, use_numberPort = true) annotation(
-    Placement(visible = true, transformation(origin = {90, 100}, extent = {{-12, -8}, {12, 8}}, rotation = 0)));
+    Placement(transformation(origin = {-32, 138}, extent = {{12, -8}, {-12, 8}})));
   Modelica.Blocks.Interaction.Show.RealValue realValue6(significantDigits = 4, use_numberPort = true) annotation(
-    Placement(visible = true, transformation(origin = {160, 100}, extent = {{-12, -8}, {12, 8}}, rotation = 0)));
+    Placement(transformation(origin = {224, 116}, extent = {{12, -8}, {-12, 8}})));
   Modelica.Blocks.Interaction.Show.RealValue realValue7(significantDigits = 4, use_numberPort = true) annotation(
     Placement(visible = true, transformation(origin = {156, -30}, extent = {{12, -8}, {-12, 8}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue8(significantDigits = 4, use_numberPort = true) annotation(
@@ -77,13 +73,13 @@ model S6GSteamGen_Smpld_test01
   Modelica.Fluid.Sensors.TemperatureTwoPort temperature4(redeclare package Medium = ThTrspt1) annotation(
     Placement(visible = true, transformation(origin = {130, -110}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Fluid.Sensors.TemperatureTwoPort temperature5(redeclare package Medium = ThTrspt2) annotation(
-    Placement(visible = true, transformation(origin = {60, 100}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+    Placement(transformation(origin = {-35, 125}, extent = {{-7, -6}, {7, 6}}, rotation = -90)));
   Modelica.Fluid.Sensors.TemperatureTwoPort temperature6(redeclare package Medium = ThTrspt2) annotation(
-    Placement(visible = true, transformation(origin = {130, 100}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
+    Placement(transformation(origin = {229.188, 103.056}, extent = {{6.94444, 6.8125}, {-6.94444, -6.8125}}, rotation = 90)));
   Modelica.Thermal.HeatTransfer.Sensors.HeatFlowSensor heatFlowSensor[cooler_hside.nNodes] annotation(
-    Placement(visible = true, transformation(origin = {120, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
+    Placement(transformation(origin = {120, 50}, extent = {{-6, -6}, {6, 6}}, rotation = 90)));
   Modelica.Blocks.Math.Sum sum1(nin = cooler_hside.nNodes) annotation(
-    Placement(visible = true, transformation(origin = {150, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(transformation(origin = {140, 50}, extent = {{-6, -6}, {6, 6}})));
   Modelica.Blocks.Interaction.Show.RealValue realValue4(significantDigits = 4, use_numberPort = true) annotation(
     Placement(visible = true, transformation(origin = {2, -76}, extent = {{12, -7}, {-12, 7}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue3(significantDigits = 4, use_numberPort = true) annotation(
@@ -102,9 +98,41 @@ model S6GSteamGen_Smpld_test01
     Placement(transformation(origin = {35, 31}, extent = {{-7, -7}, {7, 7}})));
   Modelica.Blocks.Interaction.Show.RealValue realValue81(significantDigits = 4, use_numberPort = true) annotation(
     Placement(transformation(origin = {229, -10}, extent = {{-11, -7}, {11, 7}})));
+  Modelica.Fluid.Examples.DrumBoiler.BaseClasses.EquilibriumDrumBoiler SteamGen(redeclare package Medium = ThTrspt2, m_D = 0.001, cp_D = 1, V_t = 10, V_l(start = 0.5*SteamGen.V_t, fixed = true), p_start = 5*100*1000, V_l_start = 0.5*SteamGen.V_t, energyDynamics = Modelica.Fluid.Types.Dynamics.FixedInitial, massDynamics = Modelica.Fluid.Types.Dynamics.FixedInitial, p(fixed = true))  annotation(
+    Placement(transformation(origin = {108.303, 118.886}, extent = {{13.6758, -15.9113}, {-13.6758, 15.9113}}, rotation = -90)));
+  Modelica.Thermal.HeatTransfer.Components.ThermalCollector thermalCollector(m = cooler_hside.nNodes)  annotation(
+    Placement(transformation(origin = {120, 72}, extent = {{-6, -6}, {6, 6}}, rotation = 180)));
+  Modelica.Blocks.Interaction.Show.RealValue realValue811(significantDigits = 4, use_numberPort = true) annotation(
+    Placement(transformation(origin = {167, 50}, extent = {{-11, -7}, {11, 7}})));
+  Modelica.Fluid.Sensors.MassFlowRate massFlowSteam(redeclare package Medium = ThTrspt2)  annotation(
+    Placement(transformation(origin = {191, 133}, extent = {{-6, -6}, {6, 6}})));
+  Modelica.Blocks.Interaction.Show.RealValue realValue61(significantDigits = 4, use_numberPort = true) annotation(
+    Placement(transformation(origin = {194, 119}, extent = {{-12, -8}, {12, 8}})));
+  Modelica.Fluid.Valves.ValveLinear VaporValve(redeclare package Medium = ThTrspt2, dp_nominal = 5*100*1000, m_flow_nominal = 100) annotation(
+    Placement(transformation(origin = {196, 116}, extent = {{50, -10}, {70, -30}})));
+  Modelica.Blocks.Sources.Ramp ramp_valveopen(duration = 10, height = -0.0, offset = 1, startTime = 300) annotation(
+    Placement(transformation(origin = {236, 74}, extent = {{-10, -10}, {10, 10}})));
+  Modelica.Fluid.Sensors.MassFlowRate massFlowWaterSupply(redeclare package Medium = ThTrspt2)  annotation(
+    Placement(transformation(origin = {24, 105}, extent = {{-7, -7}, {7, 7}})));
+  Modelica.Blocks.Interaction.Show.RealValue realValue611(significantDigits = 4)  annotation(
+    Placement(transformation(origin = {32, 88}, extent = {{-12, -8}, {12, 8}})));
+  Modelica.Fluid.Sources.Boundary_pT OverflowLineSink(redeclare package Medium = ThTrspt2, T = 99 + 273.15, nPorts = 1, p = 100*1000) annotation(
+    Placement(transformation(origin = {-26, 216}, extent = {{-10, -10}, {10, 10}})));
+  Modelica.Fluid.Valves.ValveLinear OverflowLineValve(redeclare package Medium = ThTrspt2, dp_nominal = 5*100*1000, m_flow_nominal = 100) annotation(
+    Placement(transformation(origin = {-12, 136}, extent = {{50, -10}, {70, -30}}, rotation = 90)));
+  Modelica.Blocks.Continuous.PI ctrl_pi(T = 0.002, initType = Modelica.Blocks.Types.Init.InitialOutput, y_start = 0, k = 1/1000000) annotation(
+    Placement(transformation(origin = {129, 196}, extent = {{10, -10}, {-10, 10}})));
+  Modelica.Blocks.Interaction.Show.RealValue realValue6111(significantDigits = 4) annotation(
+    Placement(transformation(origin = {86, 206}, extent = {{12, -8}, {-12, 8}})));
+  Modelica.Blocks.Math.Feedback feedback1 annotation(
+    Placement(transformation(origin = {158, 173}, extent = {{-7, -7}, {7, 7}}, rotation = 90)));
+  Modelica.Fluid.Sensors.MassFlowRate massFlowOverFlowLine(redeclare package Medium = ThTrspt2) annotation(
+    Placement(transformation(origin = {8, 151}, extent = {{7, -7}, {-7, 7}}, rotation = -90)));
+  Modelica.Blocks.Interaction.Show.RealValue realValue51(significantDigits = 4, use_numberPort = true) annotation(
+    Placement(transformation(origin = {-13, 161}, extent = {{12, -8}, {-12, 8}})));
+  Modelica.Blocks.Math.Feedback feedback11 annotation(
+    Placement(transformation(origin = {30, 151}, extent = {{7, -7}, {-7, 7}}, rotation = -90)));
 equation
-  connect(volume1.ports[1], boundary_coolantSnk.ports[1]) annotation(
-    Line(points = {{180, 110}, {210, 110}}, color = {0, 127, 255}, thickness = 0.5));
   connect(replicator2.y, convection2.Gc) annotation(
     Line(points = {{101, 18}, {110, 18}}, color = {0, 0, 127}, thickness = 0.5));
   connect(heatCapacitor1.port, convection2.solid) annotation(
@@ -127,8 +155,8 @@ equation
     Line(points = {{80, -100}, {95, -100}, {95, -110}, {110, -110}}, color = {0, 127, 255}));
   connect(volumeFlowRate1.port_b, cooler_hside.port_a) annotation(
     Line(points = {{40, -50}, {110, -50}}, color = {0, 127, 255}));
-  connect(ramp_m_flow_coolant.y, boundary_coolantSply.m_flow_in) annotation(
-    Line(points = {{-19, 120}, {-17, 120}, {-17, 118}, {-1, 118}}, color = {0, 0, 127}));
+  connect(ramp_m_flow_coolant.y, CoolantSply.m_flow_in) annotation(
+    Line(points = {{-101, 140}, {-83, 140}}, color = {0, 0, 127}));
   connect(pressure.port, volumeFlowRate1.port_a) annotation(
     Line(points = {{4, -50}, {20, -50}}, color = {0, 127, 255}));
   connect(const_p_tank.y, boundary_SnkTank.p_in) annotation(
@@ -159,24 +187,16 @@ equation
     Line(points = {{110, -110}, {120, -110}}, color = {0, 127, 255}));
   connect(temperature4.T, realValue9.numberPort) annotation(
     Line(points = {{130, -98}, {130, -92}}, color = {0, 0, 127}));
-  connect(boundary_coolantSply.ports[1], temperature5.port_a) annotation(
-    Line(points = {{20, 110}, {60, 110}}, color = {0, 127, 255}));
+  connect(CoolantSply.ports[1], temperature5.port_a) annotation(
+    Line(points = {{-62, 132}, {-35, 132}}, color = {0, 127, 255}));
   connect(temperature5.T, realValue5.numberPort) annotation(
-    Line(points = {{71, 100}, {75, 100}}, color = {0, 0, 127}));
-  connect(temperature5.port_b, cooler_cside.port_a) annotation(
-    Line(points = {{60, 90}, {60, 76}, {110, 76}}, color = {0, 127, 255}));
-  connect(cooler_cside.port_b, temperature6.port_a) annotation(
-    Line(points = {{130, 76}, {130, 90}}, color = {0, 127, 255}));
-  connect(temperature6.port_b, volume1.ports[2]) annotation(
-    Line(points = {{130, 110}, {180, 110}}, color = {0, 127, 255}));
+    Line(points = {{-28.4, 125}, {-15.9, 125}, {-15.9, 138}, {-18.4, 138}}, color = {0, 0, 127}));
   connect(temperature6.T, realValue6.numberPort) annotation(
-    Line(points = {{141, 100}, {145, 100}}, color = {0, 0, 127}));
-  connect(heatFlowSensor.port_b, cooler_cside.heatPorts) annotation(
-    Line(points = {{120, 60}, {120, 72}}, color = {191, 0, 0}, thickness = 0.5));
+    Line(points = {{237, 103}, {234.281, 103}, {234.281, 116}, {238, 116}}, color = {0, 0, 127}));
   connect(heatFlowSensor.port_a, convection2.fluid) annotation(
-    Line(points = {{120, 40}, {120, 28}}, color = {191, 0, 0}, thickness = 0.5));
+    Line(points = {{120, 44}, {120, 28}}, color = {191, 0, 0}, thickness = 0.5));
   connect(heatFlowSensor.Q_flow, sum1.u) annotation(
-    Line(points = {{130, 50}, {138, 50}}, color = {0, 0, 127}, thickness = 0.5));
+    Line(points = {{127, 50}, {133, 50}}, color = {0, 0, 127}, thickness = 0.5));
   connect(pressure.p, realValue4.numberPort) annotation(
     Line(points = {{15, -60}, {15, -76}}, color = {0, 0, 127}));
   connect(volumeFlowRate1.V_flow, realValue3.numberPort) annotation(
@@ -201,9 +221,55 @@ equation
     Line(points = {{43, 31}, {56, 31}, {56, -30}, {78, -30}}, color = {0, 0, 127}));
   connect(ramp_heat_generation.y, realValue81.numberPort) annotation(
     Line(points = {{206, -10}, {216, -10}}, color = {0, 0, 127}));
+  connect(heatFlowSensor.port_b, thermalCollector.port_a) annotation(
+    Line(points = {{120, 56}, {120, 66}}, color = {191, 0, 0}, thickness = 0.5));
+  connect(sum1.y, realValue811.numberPort) annotation(
+    Line(points = {{147, 50}, {154, 50}}, color = {0, 0, 127}));
+  connect(massFlowSteam.port_b, temperature6.port_a) annotation(
+    Line(points = {{197, 133}, {229, 133}, {229, 110}}, color = {0, 127, 255}));
+  connect(massFlowSteam.m_flow, realValue61.numberPort) annotation(
+    Line(points = {{191, 140}, {181, 140}, {181, 118.6}, {180, 118.6}}, color = {0, 0, 127}));
+  connect(temperature6.port_b, VaporValve.port_a) annotation(
+    Line(points = {{229, 96}, {237.688, 96}, {237.688, 96.1111}, {246.188, 96.1111}}, color = {0, 127, 255}));
+  connect(VaporValve.port_b, vaporExit.ports[1]) annotation(
+    Line(points = {{266, 96}, {280, 96}}, color = {0, 127, 255}));
+  connect(ramp_valveopen.y, VaporValve.opening) annotation(
+    Line(points = {{247, 74}, {255, 74}, {255, 88}}, color = {0, 0, 127}));
+  connect(temperature5.port_b, massFlowWaterSupply.port_a) annotation(
+    Line(points = {{-35, 118}, {-35, 105}, {17, 105}}, color = {0, 127, 255}));
+  connect(massFlowSteam.port_a, SteamGen.port_b) annotation(
+    Line(points = {{185, 133}, {108, 133}}, color = {0, 127, 255}));
+  connect(thermalCollector.port_b, SteamGen.heatPort) annotation(
+    Line(points = {{120, 78}, {120, 88}, {92, 88}, {92, 119}}, color = {191, 0, 0}));
+  connect(ctrl_pi.y, OverflowLineValve.opening) annotation(
+    Line(points = {{118, 196}, {16, 196}}, color = {0, 0, 127}));
+  connect(realValue6111.numberPort, ctrl_pi.y) annotation(
+    Line(points = {{99.8, 206}, {107.8, 206}, {107.8, 196}, {118, 196}}, color = {0, 0, 127}));
+  connect(massFlowWaterSupply.m_flow, realValue611.numberPort) annotation(
+    Line(points = {{24, 112.7}, {12, 112.7}, {12, 87.7}, {18, 87.7}}, color = {0, 0, 127}));
+  connect(feedback1.u2, massFlowSteam.m_flow) annotation(
+    Line(points = {{164, 173}, {191, 173}, {191, 140}}, color = {0, 0, 127}));
+  connect(massFlowWaterSupply.port_b, SteamGen.port_a) annotation(
+    Line(points = {{31, 105}, {108, 105}}, color = {0, 127, 255}));
+  connect(ctrl_pi.u, feedback1.y) annotation(
+    Line(points = {{141, 196}, {158, 196}, {158, 179}}, color = {0, 0, 127}));
+  connect(SteamGen.port_a, massFlowOverFlowLine.port_a) annotation(
+    Line(points = {{108, 106}, {8, 106}, {8, 144}}, color = {0, 127, 255}));
+  connect(massFlowOverFlowLine.port_b, OverflowLineValve.port_a) annotation(
+    Line(points = {{8, 158}, {8, 186}}, color = {0, 127, 255}));
+  connect(realValue51.numberPort, massFlowOverFlowLine.m_flow) annotation(
+    Line(points = {{0.8, 161}, {16, 161}, {16, 152}}, color = {0, 0, 127}));
+  connect(massFlowOverFlowLine.m_flow, feedback11.u2) annotation(
+    Line(points = {{15.7, 151}, {22.7, 151}, {22.7, 150}, {23.7, 150}}, color = {0, 0, 127}));
+  connect(massFlowWaterSupply.m_flow, feedback11.u1) annotation(
+    Line(points = {{24, 112.7}, {30, 112.7}, {30, 145.7}}, color = {0, 0, 127}));
+  connect(feedback11.y, feedback1.u1) annotation(
+    Line(points = {{30, 157}, {30, 168}, {158, 168}}, color = {0, 0, 127}));
+  connect(OverflowLineSink.ports[1], OverflowLineValve.port_b) annotation(
+    Line(points = {{-16, 216}, {8, 216}, {8, 206}}, color = {0, 127, 255}));
   annotation(
-    experiment(StartTime = 0, StopTime = 200, Tolerance = 1e-06, Interval = 0.08),
+    experiment(StartTime = 0, StopTime = 400, Tolerance = 1e-06, Interval = 0.2),
     __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl"),
-    Diagram(coordinateSystem(extent = {{-160, -140}, {240, 140}}, initialScale = 0.1), graphics = {Rectangle(origin = {110, 28}, extent = {{-62, 96}, {40, -101}}), Text(origin = {94, 128}, extent = {{-34, 4}, {34, -4}}, textString = "Heat Exchanger"), Text(origin = {2, 96}, extent = {{-34, 4}, {34, -4}}, textString = "coolant flow line")}),
+    Diagram(coordinateSystem(extent = {{-160, -140}, {300, 240}}, initialScale = 0.1), graphics = {Rectangle(origin = {110, 35}, extent = {{-62, 103}, {40, -108}}), Text(origin = {112, 149}, extent = {{-34, 7}, {34, -7}}, textString = "Heat Exchanger"), Text(origin = {-94, 104}, extent = {{-34, 4}, {34, -4}}, textString = "coolant flow line")}),
     __OpenModelica_commandLineOptions = "");
-end S6GSteamGen_Smpld_test01;
+end S6GSteamGen_Smpld_test02;
