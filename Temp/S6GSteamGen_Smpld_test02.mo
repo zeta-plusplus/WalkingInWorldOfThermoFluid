@@ -14,7 +14,7 @@ model S6GSteamGen_Smpld_test02
     Placement(visible = true, transformation(origin = {120, -50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Pipes.DynamicPipe pipe(redeclare package Medium = ThTrspt1, T_start = 275 + 273.15, diameter = 0.1, length = 2, modelStructure = Modelica.Fluid.Types.ModelStructure.a_vb, nNodes = 2, nParallel = 100, p_a_start = 150*100*1000, use_HeatTransfer = false) annotation(
     Placement(visible = true, transformation(origin = {184, -50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Sources.MassFlowSource_T CoolantSply(redeclare package Medium = ThTrspt2, T = 90 + 273.15, m_flow = 5, nPorts = 1, use_m_flow_in = true) annotation(
+  Modelica.Fluid.Sources.MassFlowSource_T WorkingWaterSply(redeclare package Medium = ThTrspt2, T = 30 + 273.15, m_flow = 5, nPorts = 1, use_m_flow_in = true) annotation(
     Placement(transformation(origin = {-72, 132}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Fluid.Sources.Boundary_pT vaporExit(redeclare package Medium = ThTrspt2, nPorts = 1, p = 100*1000, T = 99 + 273.15) annotation(
     Placement(transformation(origin = {290, 96}, extent = {{10, -10}, {-10, 10}})));
@@ -155,7 +155,7 @@ equation
     Line(points = {{80, -100}, {95, -100}, {95, -110}, {107, -110}}, color = {0, 127, 255}, thickness = 1));
   connect(volumeFlowRate1.port_b, cooler_hside.port_a) annotation(
     Line(points = {{40, -50}, {110, -50}}, color = {0, 127, 255}, thickness = 1));
-  connect(ramp_m_flow_coolant.y, CoolantSply.m_flow_in) annotation(
+  connect(ramp_m_flow_coolant.y, WorkingWaterSply.m_flow_in) annotation(
     Line(points = {{-101, 140}, {-83, 140}}, color = {0, 0, 127}));
   connect(pressure.port, volumeFlowRate1.port_a) annotation(
     Line(points = {{1, -50}, {20, -50}}, color = {0, 127, 255}, thickness = 1));
@@ -183,7 +183,7 @@ equation
     Line(points = {{107, -110}, {120, -110}}, color = {0, 127, 255}, thickness = 1));
   connect(temperature4.T, realValue9.numberPort) annotation(
     Line(points = {{127, -102}, {127, -95}, {130, -95}}, color = {0, 0, 127}));
-  connect(CoolantSply.ports[1], temperature5.port_a) annotation(
+  connect(WorkingWaterSply.ports[1], temperature5.port_a) annotation(
     Line(points = {{-62, 132}, {-35, 132}}, color = {0, 127, 255}, thickness = 1));
   connect(temperature5.T, realValue5.numberPort) annotation(
     Line(points = {{-28.4, 125}, {-15.9, 125}, {-15.9, 138}, {-18.4, 138}}, color = {0, 0, 127}));
@@ -270,6 +270,7 @@ equation
   annotation(
     experiment(StartTime = 0, StopTime = 400, Tolerance = 1e-06, Interval = 0.2),
     __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl"),
-    Diagram(coordinateSystem(extent = {{-160, -140}, {300, 240}}, initialScale = 0.1), graphics = {Rectangle(origin = {110, 35}, lineThickness = 1, extent = {{-62, 103}, {40, -108}}), Text(origin = {112, 149}, extent = {{-34, 7}, {34, -7}}, textString = "Heat Exchanger"), Text(origin = {-84, 106}, extent = {{-34, 6}, {34, -6}}, textString = "coolant flow line")}),
+    Diagram(coordinateSystem(extent = {{-160, -140}, {300, 240}}, initialScale = 0.1), graphics = {Rectangle(origin = {110, 35}, lineThickness = 1, extent = {{-62, 103}, {40, -108}}), Text(origin = {112, 149}, extent = {{-34, 7}, {34, -7}}, textString = "Heat Exchanger"), Text(origin = {-94, 178}, extent = {{-48, 24}, {48, -24}}, textString = "Flow line of
+working fluid (water)")}),
     __OpenModelica_commandLineOptions = "");
 end S6GSteamGen_Smpld_test02;
