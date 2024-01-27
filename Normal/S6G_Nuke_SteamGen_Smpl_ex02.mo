@@ -1,6 +1,6 @@
-within WalkingInWorldOfThermoFluid.Temp;
+within WalkingInWorldOfThermoFluid.Normal;
 
-model S6GSteamGen_Smpld_test02
+model S6G_Nuke_SteamGen_Smpl_ex02
   extends Modelica.Icons.Example;
   //----------
   package ThTrspt1 = Modelica.Media.Water.StandardWater "thermo transport fluid, 1st loop(reactor side)";
@@ -88,7 +88,7 @@ model S6GSteamGen_Smpld_test02
     Placement(visible = true, transformation(origin = {-22, -32}, extent = {{12, -8}, {-12, 8}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue1(significantDigits = 5, use_numberPort = true) annotation(
     Placement(visible = true, transformation(origin = {-78, -29}, extent = {{-12, -7}, {12, 7}}, rotation = 0)));
-  Modelica.Fluid.Machines.ControlledPump pump(redeclare package Medium = ThTrspt1, T_start = 275 + 273.15, control_m_flow = true, m_flow_nominal = 980, m_flow_start = 980, p_a_nominal = 100*100*1000, p_a_start = 150*100*1000, p_b_nominal = 150*100*1000, p_b_start = 150*100*1000, use_m_flow_set = true)  annotation(
+  Modelica.Fluid.Machines.ControlledPump pump(redeclare package Medium = ThTrspt1, T_start = 275 + 273.15, control_m_flow = true, m_flow_nominal = 980, m_flow_start = 980, p_a_nominal = 100*100*1000, p_a_start = 150*100*1000, p_b_nominal = 150*100*1000, p_b_start = 150*100*1000, use_m_flow_set = true) annotation(
     Placement(visible = true, transformation(origin = {-50, -50}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp ramp_m_flow_reactorFluid(duration = 10, height = 0, offset = 980, startTime = 160) annotation(
     Placement(visible = true, transformation(origin = {-86, 22}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -98,13 +98,13 @@ model S6GSteamGen_Smpld_test02
     Placement(transformation(origin = {35, 31}, extent = {{-7, -7}, {7, 7}})));
   Modelica.Blocks.Interaction.Show.RealValue realValue81(significantDigits = 4, use_numberPort = true) annotation(
     Placement(transformation(origin = {257, -10}, extent = {{-11, -7}, {11, 7}})));
-  Modelica.Fluid.Examples.DrumBoiler.BaseClasses.EquilibriumDrumBoiler SteamGen(redeclare package Medium = ThTrspt2, m_D = 0.001, cp_D = 1, V_t = 10, V_l(start = 0.5*SteamGen.V_t, fixed = true), p_start = 6*100*1000, V_l_start = 0.5*SteamGen.V_t, energyDynamics = Modelica.Fluid.Types.Dynamics.FixedInitial, massDynamics = Modelica.Fluid.Types.Dynamics.FixedInitial, p(fixed = true))  annotation(
+  Modelica.Fluid.Examples.DrumBoiler.BaseClasses.EquilibriumDrumBoiler SteamGen(redeclare package Medium = ThTrspt2, m_D = 0.001, cp_D = 1, V_t = 10, V_l(start = 0.5*SteamGen.V_t, fixed = true), p_start = 6*100*1000, V_l_start = 0.5*SteamGen.V_t, energyDynamics = Modelica.Fluid.Types.Dynamics.FixedInitial, massDynamics = Modelica.Fluid.Types.Dynamics.FixedInitial, p(fixed = true)) annotation(
     Placement(transformation(origin = {108.303, 118.886}, extent = {{13.6758, -15.9113}, {-13.6758, 15.9113}}, rotation = -90)));
-  Modelica.Thermal.HeatTransfer.Components.ThermalCollector thermalCollector(m = cooler_hside.nNodes)  annotation(
+  Modelica.Thermal.HeatTransfer.Components.ThermalCollector thermalCollector(m = cooler_hside.nNodes) annotation(
     Placement(transformation(origin = {120, 72}, extent = {{-6, -6}, {6, 6}}, rotation = 180)));
   Modelica.Blocks.Interaction.Show.RealValue realValue811(significantDigits = 4, use_numberPort = true) annotation(
     Placement(transformation(origin = {167, 50}, extent = {{-11, -7}, {11, 7}})));
-  Modelica.Fluid.Sensors.MassFlowRate massFlowSteam(redeclare package Medium = ThTrspt2)  annotation(
+  Modelica.Fluid.Sensors.MassFlowRate massFlowSteam(redeclare package Medium = ThTrspt2) annotation(
     Placement(transformation(origin = {175, 133}, extent = {{-6, -6}, {6, 6}})));
   Modelica.Blocks.Interaction.Show.RealValue realValue61(significantDigits = 4, use_numberPort = true) annotation(
     Placement(transformation(origin = {178, 117}, extent = {{-12, -8}, {12, 8}})));
@@ -112,9 +112,9 @@ model S6GSteamGen_Smpld_test02
     Placement(transformation(origin = {202, 116}, extent = {{50, -10}, {70, -30}})));
   Modelica.Blocks.Sources.Ramp ramp_valveopen(duration = 10, height = -0.0, offset = 1, startTime = 300) annotation(
     Placement(transformation(origin = {242, 74}, extent = {{-10, -10}, {10, 10}})));
-  Modelica.Fluid.Sensors.MassFlowRate massFlowWaterSupply(redeclare package Medium = ThTrspt2)  annotation(
+  Modelica.Fluid.Sensors.MassFlowRate massFlowWaterSupply(redeclare package Medium = ThTrspt2) annotation(
     Placement(transformation(origin = {26, 105}, extent = {{-7, -7}, {7, 7}})));
-  Modelica.Blocks.Interaction.Show.RealValue realValue611(significantDigits = 4)  annotation(
+  Modelica.Blocks.Interaction.Show.RealValue realValue611(significantDigits = 4) annotation(
     Placement(transformation(origin = {32, 88}, extent = {{-12, -8}, {12, 8}})));
   Modelica.Fluid.Sources.Boundary_pT OverflowLineSink(redeclare package Medium = ThTrspt2, T = 99 + 273.15, nPorts = 1, p = 100*1000) annotation(
     Placement(transformation(origin = {-90, 218}, extent = {{-10, -10}, {10, 10}})));
@@ -130,7 +130,7 @@ model S6GSteamGen_Smpld_test02
     Placement(transformation(origin = {8, 151}, extent = {{7, -7}, {-7, 7}}, rotation = -90)));
   Modelica.Blocks.Interaction.Show.RealValue realValue51(significantDigits = 4, use_numberPort = true) annotation(
     Placement(transformation(origin = {-13, 161}, extent = {{12, -8}, {-12, 8}})));
-  Modelica.Fluid.Sensors.Density densityWaterSply(redeclare package Medium = ThTrspt2)  annotation(
+  Modelica.Fluid.Sensors.Density densityWaterSply(redeclare package Medium = ThTrspt2) annotation(
     Placement(transformation(origin = {-6, 95}, extent = {{-6, -6}, {6, 6}}, rotation = 180)));
   Modelica.Blocks.Interaction.Show.RealValue realValue6112(significantDigits = 4) annotation(
     Placement(transformation(origin = {-10, 82}, extent = {{-12, -8}, {12, 8}})));
@@ -287,4 +287,4 @@ working fluid (water)"), Text(origin = {1, 230}, extent = {{-39, 6}, {39, -6}}, 
 used for power generation"), Text(origin = {264, 20}, extent = {{-50, 10}, {50, -10}}, textString = "Reactor core
 (just heat source)")}),
     __OpenModelica_commandLineOptions = "");
-end S6GSteamGen_Smpld_test02;
+end S6G_Nuke_SteamGen_Smpl_ex02;
