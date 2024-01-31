@@ -13,7 +13,7 @@ model ControlledPump_ex01
     Placement(visible = true, transformation(origin = {82, 18}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Fluid.Pipes.StaticPipe pipe(redeclare package Medium = fluid1, diameter = 0.01, length = 1) annotation(
     Placement(visible = true, transformation(origin = {18, 18}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Vessels.ClosedVolume volume(redeclare package Medium = fluid1, T_start = 15 + 273.15, V = 0.001, nPorts = 4, p_start = 2*100*1000, use_portsData = false) annotation(
+  Modelica.Fluid.Vessels.ClosedVolume volume(redeclare package Medium = fluid1, T_start = 15 + 273.15, V = 0.001, nPorts = 4, p_start = 3*100*1000, use_portsData = false) annotation(
     Placement(visible = true, transformation(origin = {-11, 25}, extent = {{-7, -7}, {7, 7}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue1(significantDigits = 5) annotation(
     Placement(visible = true, transformation(origin = {-8, 75}, extent = {{10, -7}, {-10, 7}}, rotation = 0)));
@@ -25,6 +25,8 @@ model ControlledPump_ex01
     Placement(visible = true, transformation(origin = {46, 18}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
   Modelica.Blocks.Interaction.Show.RealValue realValue11(significantDigits = 5) annotation(
     Placement(visible = true, transformation(origin = {30, 33}, extent = {{10, -7}, {-10, 7}}, rotation = 0)));
+  inner Modelica.Fluid.System system annotation(
+    Placement(transformation(origin = {-80, 88}, extent = {{-10, -10}, {10, 10}})));
 equation
   connect(boundary.ports[1], pump.port_a) annotation(
     Line(points = {{-76, 18}, {-49, 18}}, color = {0, 127, 255}));

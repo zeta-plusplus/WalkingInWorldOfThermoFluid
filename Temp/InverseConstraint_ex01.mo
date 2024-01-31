@@ -19,7 +19,6 @@ equation
     Line(points = {{-19, 30}, {3, 30}}, color = {0, 0, 127}));
   connect(inverseBlockConstraints.y2, product.u1) annotation(
     Line(points = {{44, 30}, {42, 30}, {42, 10}, {10, 10}, {10, -4}}, color = {0, 0, 127}));
-
-annotation(
-    experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-6, Interval = 0.002));
+  annotation(
+    experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.002));
 end InverseConstraint_ex01;
