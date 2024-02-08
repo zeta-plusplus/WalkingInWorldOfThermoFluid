@@ -3,7 +3,8 @@ FuelSupplySys_ex01
 HotWaterSplySys_ex01
 CoolingSystem_ex02
 InverseConstraint_ex01
-AdiabaticExpansion_ex01
 AddHeat_inverse_ex01
 Boiler_SpecifiedT_ex01
 Boiler_SpecifiedQ_ex01
+IsentropicExpansion_ex01
+AdiabaticExpansion_ex01
