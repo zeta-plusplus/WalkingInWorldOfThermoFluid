@@ -1,6 +1,6 @@
 within WalkingInWorldOfThermoFluid.Easy;
 
-model AdiabaticExpansion_ex01
+model AdiabaticCompression_ex01
   extends Modelica.Icons.Example;
   //--------------------
   replaceable package fluid1 = Modelica.Media.Air.DryAirNasa(Temperature(final min = 210, final max = 5900, start = 500, nominal = 500));
@@ -8,7 +8,7 @@ model AdiabaticExpansion_ex01
   //--------------------
   inner Modelica.Fluid.System system(energyDynamics = Modelica.Fluid.Types.Dynamics.FixedInitial, massDynamics = Modelica.Fluid.Types.Dynamics.FixedInitial, m_flow_start = 10, p_start = 10*100*1000, T_start = 1273.15) annotation(
     Placement(transformation(origin = {-200, 52}, extent = {{-10, -10}, {10, 10}})));
-  Modelica.Fluid.Sources.MassFlowSource_T boundary(nPorts = 1, redeclare package Medium = fluid1, use_m_flow_in = false, m_flow = 10, T = 1273.15) annotation(
+  Modelica.Fluid.Sources.MassFlowSource_T boundary(nPorts = 1, redeclare package Medium = fluid1, use_m_flow_in = false, m_flow = 10, T = 288.15) annotation(
     Placement(transformation(origin = {-210, -48}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Fluid.Sources.Boundary_pT boundary1(redeclare package Medium = fluid1, use_p_in = true, nPorts = 1) annotation(
     Placement(transformation(origin = {-48, -48}, extent = {{10, -10}, {-10, 10}})));
@@ -18,9 +18,9 @@ model AdiabaticExpansion_ex01
     Placement(transformation(origin = {-72, -48}, extent = {{-6, 6}, {6, -6}})));
   Modelica.Fluid.Sensors.SpecificEnthalpy specificEnthalpy1(redeclare package Medium = fluid1) annotation(
     Placement(transformation(origin = {126, 40}, extent = {{-6, 6}, {6, -6}}, rotation = -90)));
-  Modelica.Blocks.Sources.Constant const_p1(k = 10*100*1000) annotation(
-    Placement(transformation(origin = {-18, -40}, extent = {{6, -6}, {-6, 6}})));
-  Modelica.Fluid.Sources.Boundary_pT boundary3(nPorts = 1, redeclare package Medium = fluid1, p = 1*100*1000, use_p_in = false, use_T_in = false) annotation(
+  Modelica.Blocks.Sources.Constant const_p1(k = 100*1000) annotation(
+    Placement(transformation(origin = {-22, -40}, extent = {{6, -6}, {-6, 6}})));
+  Modelica.Fluid.Sources.Boundary_pT boundary3(nPorts = 1, redeclare package Medium = fluid1, p = 10*100*1000, use_p_in = false, use_T_in = false) annotation(
     Placement(transformation(origin = {210, -54}, extent = {{10, -10}, {-10, 10}})));
   Modelica.Blocks.Math.Gain gain1(k = 1/1000) annotation(
     Placement(transformation(origin = {-120, -14}, extent = {{-4, -4}, {4, 4}}, rotation = 90)));
@@ -73,13 +73,9 @@ model AdiabaticExpansion_ex01
   Modelica.Blocks.Interaction.Show.RealValue realValue4(significantDigits = 4) annotation(
     Placement(transformation(origin = {92, -30}, extent = {{12, -7}, {-12, 7}})));
   Modelica.Blocks.Math.Feedback dh_is annotation(
-    Placement(transformation(origin = {6, 16}, extent = {{-8, 8}, {8, -8}})));
-  Modelica.Blocks.Math.Product dh annotation(
-    Placement(transformation(origin = {28, 12}, extent = {{-6, -6}, {6, 6}})));
-  Modelica.Blocks.Sources.Constant effAdiab(k = 0.9)  annotation(
-    Placement(transformation(origin = {4, -4}, extent = {{-6, -6}, {6, 6}})));
-  Modelica.Blocks.Math.Feedback h2 annotation(
-    Placement(transformation(origin = {53, -17}, extent = {{8, -8}, {-8, 8}}, rotation = -180)));
+    Placement(transformation(origin = {4, 16}, extent = {{-8, 8}, {8, -8}})));
+  Modelica.Blocks.Sources.Constant effAdiab(k = 1)  annotation(
+    Placement(transformation(origin = {0, -4}, extent = {{-6, -6}, {6, 6}})));
   Modelica.Fluid.Sensors.Temperature temperature2(redeclare package Medium = fluid1) annotation(
     Placement(transformation(origin = {124, -80}, extent = {{-6, -6}, {6, 6}}, rotation = 180)));
   Modelica.Blocks.Interaction.Show.RealValue realValue5(significantDigits = 4) annotation(
@@ -91,16 +87,18 @@ model AdiabaticExpansion_ex01
   Modelica.Blocks.Interaction.Show.RealValue realValue6(significantDigits = 4) annotation(
     Placement(transformation(origin = {124, -102}, extent = {{12, -7}, {-12, 7}})));
   Modelica.Blocks.Math.Product pwr annotation(
-    Placement(transformation(origin = {34, -108}, extent = {{-6, -6}, {6, 6}}, rotation = -90)));
-  Modelica.Blocks.Math.Gain gain3(k = -1) annotation(
-    Placement(transformation(origin = {38, -80}, extent = {{-6, -6}, {6, 6}}, rotation = -90)));
+    Placement(transformation(origin = {50, -116}, extent = {{-6, -6}, {6, 6}}, rotation = -90)));
   Modelica.Blocks.Interaction.Show.RealValue realValue_pwr(significantDigits = 4) annotation(
-    Placement(transformation(origin = {60, -120}, extent = {{-12, -7}, {12, 7}})));
+    Placement(transformation(origin = {76, -128}, extent = {{-12, -7}, {12, 7}})));
+  Modelica.Blocks.Math.Division dh annotation(
+    Placement(transformation(origin = {26, 12}, extent = {{-6, -6}, {6, 6}})));
+  Modelica.Blocks.Math.Add h2 annotation(
+    Placement(transformation(origin = {38, -35}, extent = {{-6, -6}, {6, 6}}, rotation = -90)));
 equation
   connect(massFlowRate.port_b, boundary1.ports[1]) annotation(
     Line(points = {{-66, -48}, {-58, -48}}, color = {0, 127, 255}));
   connect(const_p1.y, boundary1.p_in) annotation(
-    Line(points = {{-24.6, -40}, {-36.4, -40}}, color = {0, 0, 127}));
+    Line(points = {{-29, -40}, {-36.4, -40}}, color = {0, 0, 127}));
   connect(gain1.u, specificEnthalpy.h_out) annotation(
     Line(points = {{-120, -19}, {-120, -29.5}}, color = {0, 0, 127}));
   connect(gain11.u, specificEnthalpy1.h_out) annotation(
@@ -166,19 +164,9 @@ equation
   connect(realValue1.numberPort, gain11.y) annotation(
     Line(points = {{119.8, 6}, {125.8, 6}, {125.8, 10}}, color = {0, 0, 127}));
   connect(specificEnthalpy.h_out, dh_is.u1) annotation(
-    Line(points = {{-120, -30}, {-120, -24}, {-108, -24}, {-108, 16}, {0, 16}}, color = {0, 0, 127}));
+    Line(points = {{-120, -30}, {-120, -24}, {-108, -24}, {-110, 16}, {-2, 16}}, color = {0, 0, 127}));
   connect(specificEnthalpy1.h_out, dh_is.u2) annotation(
-    Line(points = {{126, 34}, {126, 30}, {6, 30}, {6, 22}}, color = {0, 0, 127}));
-  connect(effAdiab.y, dh.u2) annotation(
-    Line(points = {{11, -4}, {16, -4}, {16, 8}, {21, 8}}, color = {0, 0, 127}));
-  connect(dh_is.y, dh.u1) annotation(
-    Line(points = {{13, 16}, {21, 16}}, color = {0, 0, 127}));
-  connect(specificEnthalpy.h_out, h2.u1) annotation(
-    Line(points = {{-120, -30}, {-120, -24}, {-108, -24}, {-108, -17}, {47, -17}}, color = {0, 0, 127}));
-  connect(dh.y, h2.u2) annotation(
-    Line(points = {{35, 12}, {53, 12}, {53, -11}}, color = {0, 0, 127}));
-  connect(h2.y, boundary5.h_in) annotation(
-    Line(points = {{60, -17}, {64, -17}, {64, -50}, {72, -50}}, color = {0, 0, 127}));
+    Line(points = {{126, 34}, {126, 30}, {4, 30}, {4, 22}}, color = {0, 0, 127}));
   connect(realValue5.numberPort, temperature2.T) annotation(
     Line(points = {{112, -80}, {120, -80}}, color = {0, 0, 127}));
   connect(specificEntropy2.port_b, temperature2.port) annotation(
@@ -190,14 +178,22 @@ equation
   connect(realValue6.numberPort, gain2.y) annotation(
     Line(points = {{138, -102}, {144, -102}, {144, -98}}, color = {0, 0, 127}));
   connect(gain.y, pwr.u2) annotation(
-    Line(points = {{-10, -66}, {10, -66}, {10, -101}, {30, -101}}, color = {0, 0, 127}));
-  connect(dh.y, gain3.u) annotation(
-    Line(points = {{34, 12}, {38, 12}, {38, -73}}, color = {0, 0, 127}));
-  connect(gain3.y, pwr.u1) annotation(
-    Line(points = {{38, -87}, {38, -101}}, color = {0, 0, 127}));
+    Line(points = {{-10, -66}, {10, -66}, {10, -109}, {46, -109}}, color = {0, 0, 127}));
   connect(pwr.y, realValue_pwr.numberPort) annotation(
-    Line(points = {{34, -114}, {34, -120}, {46, -120}}, color = {0, 0, 127}));
+    Line(points = {{50, -122.6}, {50, -128.6}, {62, -128.6}}, color = {0, 0, 127}));
+  connect(dh_is.y, dh.u1) annotation(
+    Line(points = {{11, 16}, {19, 16}}, color = {0, 0, 127}));
+  connect(effAdiab.y, dh.u2) annotation(
+    Line(points = {{7, -4}, {12, -4}, {12, 8}, {19, 8}}, color = {0, 0, 127}));
+  connect(specificEnthalpy.h_out, h2.u2) annotation(
+    Line(points = {{-120, -30}, {-120, -24}, {34, -24}, {34, -28}}, color = {0, 0, 127}));
+  connect(dh.y, h2.u1) annotation(
+    Line(points = {{32, 12}, {42, 12}, {42, -28}}, color = {0, 0, 127}));
+  connect(dh.y, pwr.u1) annotation(
+    Line(points = {{32, 12}, {54, 12}, {54, -108}}, color = {0, 0, 127}));
+  connect(dh_is.y, boundary5.h_in) annotation(
+    Line(points = {{12, 16}, {12, 24}, {64, 24}, {64, -50}, {72, -50}}, color = {0, 0, 127}));
   annotation(
     Diagram(coordinateSystem(extent = {{-220, -140}, {220, 140}})),
     experiment(StartTime = 0, StopTime = 200, Tolerance = 1e-06, Interval = 0.01));
-end AdiabaticExpansion_ex01;
+end AdiabaticCompression_ex01;
