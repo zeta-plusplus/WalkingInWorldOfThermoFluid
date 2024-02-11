@@ -23,19 +23,17 @@ model AdiabaticCompression_ex01
   Modelica.Fluid.Sources.Boundary_pT boundary3(nPorts = 1, redeclare package Medium = fluid1, p = 10*100*1000, use_p_in = false, use_T_in = false) annotation(
     Placement(transformation(origin = {210, -46}, extent = {{10, -10}, {-10, 10}})));
   Modelica.Blocks.Math.Gain gain1(k = 1/1000) annotation(
-    Placement(transformation(origin = {-111, -13}, extent = {{-4, -4}, {4, 4}}, rotation = 90)));
+    Placement(transformation(origin = {-111, 3}, extent = {{-4, -4}, {4, 4}}, rotation = 90)));
   Modelica.Blocks.Math.Gain gain11(k = 1/1000) annotation(
     Placement(transformation(origin = {127, -84}, extent = {{-4, 4}, {4, -4}}, rotation = -90)));
   Modelica.Blocks.Interaction.Show.RealValue realValue(significantDigits = 4) annotation(
-    Placement(transformation(origin = {-131, -5}, extent = {{12, -7}, {-12, 7}})));
+    Placement(transformation(origin = {-131, 11}, extent = {{12, -7}, {-12, 7}})));
   Modelica.Blocks.Interaction.Show.RealValue realValue1(significantDigits = 4) annotation(
     Placement(transformation(origin = {113, -96}, extent = {{12, -7}, {-12, 7}})));
   Modelica.Blocks.Interaction.Show.RealValue realValue2(significantDigits = 4) annotation(
-    Placement(transformation(origin = {-110, 5}, extent = {{12, -7}, {-12, 7}})));
+    Placement(transformation(origin = {-116, 37}, extent = {{12, -7}, {-12, 7}})));
   Modelica.Blocks.Interaction.Show.RealValue realValue11(significantDigits = 4) annotation(
     Placement(transformation(origin = {68, -22}, extent = {{12, -7}, {-12, 7}})));
-  Modelica.Fluid.Sources.MassFlowSource_T boundary2(redeclare package Medium = fluid1, T = 1000, m_flow = 10, nPorts = 1, use_m_flow_in = true, use_T_in = true) annotation(
-    Placement(transformation(origin = {52, -46}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Blocks.Math.Gain gain(k = 1) annotation(
     Placement(transformation(origin = {-10, -78}, extent = {{-6, -6}, {6, 6}})));
   Modelica.Blocks.Math.InverseBlockConstraints inverseBlockConstraints annotation(
@@ -82,33 +80,37 @@ model AdiabaticCompression_ex01
     Placement(transformation(origin = {88, 50}, extent = {{12, -7}, {-12, 7}})));
   Modelica.Fluid.Sources.Boundary_pT boundary4(redeclare package Medium = fluid1, nPorts = 1, p = 1*100*1000, use_T_in = false, use_p_in = true) annotation(
     Placement(transformation(origin = {174, 72}, extent = {{10, -10}, {-10, 10}})));
+  Modelica.Blocks.Math.Feedback dh_is annotation(
+    Placement(transformation(origin = {-56, 18}, extent = {{8, 8}, {-8, -8}}, rotation = 90)));
+  Modelica.Blocks.Sources.Constant effAdiab(k = 0.9) annotation(
+    Placement(transformation(origin = {-48, -6}, extent = {{-6, -6}, {6, 6}})));
+  Modelica.Blocks.Math.Division dh annotation(
+    Placement(transformation(origin = {-25, 2}, extent = {{-7, -7}, {7, 7}})));
+  Modelica.Blocks.Math.Add h2 annotation(
+    Placement(transformation(origin = {15, -2}, extent = {{-7, -7}, {7, 7}})));
+  Modelica.Fluid.Sources.MassFlowSource_h boundary51(redeclare package Medium = fluid1, nPorts = 1, use_h_in = true, use_m_flow_in = true) annotation(
+    Placement(transformation(origin = {50, -46}, extent = {{-10, -10}, {10, 10}})));
 equation
   connect(massFlowRate.port_b, boundary1.ports[1]) annotation(
     Line(points = {{-66, -46}, {-58, -46}}, color = {0, 127, 255}));
   connect(const_p1.y, boundary1.p_in) annotation(
     Line(points = {{-24.6, -38}, {-36.4, -38}}, color = {0, 0, 127}));
   connect(gain1.u, specificEnthalpy.h_out) annotation(
-    Line(points = {{-111, -18}, {-111, -27.5}}, color = {0, 0, 127}));
+    Line(points = {{-111, -2}, {-111, -27.5}}, color = {0, 0, 127}));
   connect(gain11.u, specificEnthalpy1.h_out) annotation(
     Line(points = {{127, -79}, {127, -63}}, color = {0, 0, 127}));
   connect(realValue.numberPort, gain1.y) annotation(
-    Line(points = {{-117, -5}, {-110.4, -5}, {-110.4, -9}, {-111, -9}}, color = {0, 0, 127}));
+    Line(points = {{-117.2, 11}, {-110.6, 11}, {-110.6, 7}, {-111.2, 7}}, color = {0, 0, 127}));
   connect(realValue1.numberPort, gain11.y) annotation(
     Line(points = {{127, -96}, {127, -88}}, color = {0, 0, 127}));
   connect(massFlowRate.m_flow, gain.u) annotation(
     Line(points = {{-72, -52.6}, {-72, -78.6}, {-17, -78.6}}, color = {0, 0, 127}));
-  connect(gain.y, boundary2.m_flow_in) annotation(
-    Line(points = {{-3.4, -78}, {8.6, -78}, {8.6, -38}, {42.6, -38}}, color = {0, 0, 127}));
-  connect(inverseBlockConstraints.y2, boundary2.T_in) annotation(
-    Line(points = {{33, 124}, {26, 124}, {26, -42}, {40, -42}}, color = {0, 0, 127}));
-  connect(boundary2.ports[1], specificEntropy1.port_a) annotation(
-    Line(points = {{62, -46}, {81, -46}}, color = {0, 127, 255}));
   connect(realValue11.numberPort, specificEntropy1.s) annotation(
     Line(points = {{82, -22}, {88, -22}, {88, -38}}, color = {0, 0, 127}));
   connect(specificEntropy11.port_b, massFlowRate.port_a) annotation(
     Line(points = {{-84, -46}, {-78, -46}}, color = {0, 127, 255}));
   connect(realValue2.numberPort, specificEntropy11.s) annotation(
-    Line(points = {{-96, 5}, {-91, 5}, {-91, -38}}, color = {0, 0, 127}));
+    Line(points = {{-102, 37}, {-91, 37}, {-91, -38}}, color = {0, 0, 127}));
   connect(inverseBlockConstraints.u1, specificEntropy11.s) annotation(
     Line(points = {{-6, 124}, {-6, 96}, {-91, 96}, {-91, -38}}, color = {0, 0, 127}));
   connect(realValue3.numberPort, temperature.T) annotation(
@@ -163,6 +165,24 @@ equation
     Line(points = {{34, 124}, {26, 124}, {26, 76}, {46, 76}}, color = {0, 0, 127}));
   connect(realValue311.numberPort, temperature11.T) annotation(
     Line(points = {{102, 50}, {110, 50}}, color = {0, 0, 127}));
+  connect(effAdiab.y, dh.u2) annotation(
+    Line(points = {{-42, -6}, {-38, -6}, {-38, -2}, {-33, -2}}, color = {0, 0, 127}));
+  connect(dh.y, h2.u1) annotation(
+    Line(points = {{-17.3, 2}, {6.7, 2}}, color = {0, 0, 127}));
+  connect(boundary51.ports[1], specificEntropy1.port_a) annotation(
+    Line(points = {{60, -46}, {82, -46}}, color = {0, 127, 255}));
+  connect(gain.y, boundary51.m_flow_in) annotation(
+    Line(points = {{-4, -78}, {4, -78}, {4, -38}, {40, -38}}, color = {0, 0, 127}));
+  connect(dh_is.y, dh.u1) annotation(
+    Line(points = {{-56, 11}, {-56, 6}, {-33, 6}}, color = {0, 0, 127}));
+  connect(specificEnthalpy.h_out, h2.u2) annotation(
+    Line(points = {{-110, -28}, {-110, -22}, {-12, -22}, {-12, -6}, {6, -6}}, color = {0, 0, 127}));
+  connect(specificEnthalpy11.h_out, dh_is.u1) annotation(
+    Line(points = {{132, 38}, {132, 32}, {-56, 32}, {-56, 24}}, color = {0, 0, 127}));
+  connect(specificEnthalpy.h_out, dh_is.u2) annotation(
+    Line(points = {{-110, -28}, {-110, -14}, {-74, -14}, {-74, 18}, {-62, 18}}, color = {0, 0, 127}));
+  connect(h2.y, boundary51.h_in) annotation(
+    Line(points = {{22, -2}, {28, -2}, {28, -42}, {38, -42}}, color = {0, 0, 127}));
   annotation(
     Diagram(coordinateSystem(extent = {{-220, -140}, {220, 140}})),
     experiment(StartTime = 0, StopTime = 200, Tolerance = 1e-06, Interval = 0.01));
