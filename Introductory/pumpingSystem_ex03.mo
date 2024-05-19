@@ -8,7 +8,7 @@ model pumpingSystem_ex03
   //----------
   inner Modelica.Fluid.System system annotation(
 	Placement(visible = true, transformation(origin = {-50, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Fluid.Sources.Boundary_pT boundary(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, T = 288.15, nPorts = 1, p = 101.325 * 1000) annotation(
+  Modelica.Fluid.Sources.Boundary_pT boundary(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, T = 288.15, nPorts = 1, p = 101.325 * 1000, use_p_in = false) annotation(
 	Placement(visible = true, transformation(origin = {-110, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Fluid.Pipes.StaticPipe pipe(redeclare package Medium = Modelica.Media.Water.StandardWaterOnePhase, diameter = 0.05, length = 0.5, nParallel = 1) annotation(
 	Placement(visible = true, transformation(origin = {60, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -82,7 +82,7 @@ equation
   connect(ramp_pump_N.y, from_rpm1.u) annotation(
 	Line(points = {{-99, 50}, {-93, 50}}, color = {0, 0, 127}));
   annotation(
-	experiment(StartTime = 0, StopTime = 60, Tolerance = 1e-06, Interval = 0.12),
+	experiment(StartTime = 0, StopTime = 60, Tolerance = 1e-06, Interval = 0.05),
 	__OpenModelica_simulationFlags(lv = "LOG_STATS", outputFormat = "mat", s = "dassl"),
   Diagram(coordinateSystem(extent = {{-140, -120}, {140, 100}})),
   __OpenModelica_commandLineOptions = "");
