@@ -1,0 +1,66 @@
+2025-11-20 06:05:59: Server: SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.14
+2025-11-20 06:05:59: Server KEXes: sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-s,kex-strict-s-v00@openssh.com
+2025-11-20 06:05:59: Server Host Keys: rsa-sha2-512,rsa-sha2-256,ecdsa-sha2-nistp256,ssh-ed25519
+2025-11-20 06:05:59: Chosen Host Key: ssh-ed25519
+2025-11-20 06:05:59: Ciphers: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+2025-11-20 06:05:59: MACs: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+2025-11-20 06:06:00: Auth: start: publickey
+2025-11-20 06:06:00: Auth: publickey: no keys available
+2025-11-20 06:06:00: Auth: start: password
+2025-11-20 06:06:01: -- Analysis Started by On File Change, After Delay
+2025-11-20 06:06:01: Changes: 17, Conflicts: 0, CopyTime: 0, FixState: 0, Errors: 0, All: 2246
+2025-11-20 06:06:01: Left to Right: Copy File: 17 
+2025-11-20 06:06:01: == Sync Started by On File Change, After Delay
+2025-11-20 06:06:01: ConnectCloned connected to file:///~grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid
+2025-11-20 06:06:01: ConnectCloned connected to file:///~grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid
+2025-11-20 06:06:01: ConnectCloned connected to file:///~grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid
+2025-11-20 06:06:01: Server: SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.14
+2025-11-20 06:06:01: Server: SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.14
+2025-11-20 06:06:01: Server: SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.14
+2025-11-20 06:06:01: Server KEXes: sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-s,kex-strict-s-v00@openssh.com
+2025-11-20 06:06:01: Server Host Keys: rsa-sha2-512,rsa-sha2-256,ecdsa-sha2-nistp256,ssh-ed25519
+2025-11-20 06:06:01: Chosen Host Key: ssh-ed25519
+2025-11-20 06:06:01: Ciphers: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+2025-11-20 06:06:01: MACs: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+2025-11-20 06:06:01: Server KEXes: sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-s,kex-strict-s-v00@openssh.com
+2025-11-20 06:06:01: Server KEXes: sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-s,kex-strict-s-v00@openssh.com
+2025-11-20 06:06:01: Server Host Keys: rsa-sha2-512,rsa-sha2-256,ecdsa-sha2-nistp256,ssh-ed25519
+2025-11-20 06:06:01: Chosen Host Key: ssh-ed25519
+2025-11-20 06:06:01: Ciphers: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+2025-11-20 06:06:01: Server Host Keys: rsa-sha2-512,rsa-sha2-256,ecdsa-sha2-nistp256,ssh-ed25519
+2025-11-20 06:06:01: Chosen Host Key: ssh-ed25519
+2025-11-20 06:06:01: Ciphers: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+2025-11-20 06:06:01: MACs: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+2025-11-20 06:06:01: MACs: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+2025-11-20 06:06:01: Auth: start: publickey
+2025-11-20 06:06:01: Auth: publickey: no keys available
+2025-11-20 06:06:01: Auth: start: password
+2025-11-20 06:06:01: Auth: start: publickey
+2025-11-20 06:06:01: Auth: start: publickey
+2025-11-20 06:06:01: Auth: publickey: no keys available
+2025-11-20 06:06:01: Auth: start: password
+2025-11-20 06:06:01: Auth: publickey: no keys available
+2025-11-20 06:06:01: Auth: start: password
+2025-11-20 06:06:02: GsConnectAndSetRoot1 connected to sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid
+2025-11-20 06:06:02: GsConnectAndSetRoot1 connected to sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid
+2025-11-20 06:06:02: GsConnectAndSetRoot1 connected to sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid
+2025-11-20 06:06:03: Copy Over 'C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/index' -> 'sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/index' (56,549)
+2025-11-20 06:06:03: Copy Over 'C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/logs/HEAD' -> 'sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/logs/HEAD' (28,389)
+2025-11-20 06:06:03: Copy Over 'C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/COMMIT_EDITMSG' -> 'sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/COMMIT_EDITMSG' (11)
+2025-11-20 06:06:03: Copy New 'C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/32/52d69511ea202d93fb55e9d7deb96a41b052f4' -> 'sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/32/52d69511ea202d93fb55e9d7deb96a41b052f4' (340)
+2025-11-20 06:06:03: Copy New 'C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/6a/c090fe16c38c78b9356401bfc94e9ab4e4e00f' -> 'sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/6a/c090fe16c38c78b9356401bfc94e9ab4e4e00f' (793)
+2025-11-20 06:06:03: Copy New 'C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/35/3776ff7ce084e9d91a2a393fbad6786fe782ae' -> 'sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/35/3776ff7ce084e9d91a2a393fbad6786fe782ae' (1,976)
+2025-11-20 06:06:03: Copy New 'C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/8b/67865ce3d59eba3a471970ea63c1a85fea2321' -> 'sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/8b/67865ce3d59eba3a471970ea63c1a85fea2321' (1,961)
+2025-11-20 06:06:03: Copy New 'C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/a2/a6932f66b63fdb4e03a2870aef97c7b0757ffd' -> 'sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/a2/a6932f66b63fdb4e03a2870aef97c7b0757ffd' (1,048)
+2025-11-20 06:06:04: Copy New 'C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/a2/cdd881f6491c7ee1c17661ac842b771f9ac12b' -> 'sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/a2/cdd881f6491c7ee1c17661ac842b771f9ac12b' (176)
+2025-11-20 06:06:04: Copy New 'C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/d3/3ec44a8e4e4d4b4fb0bfeb320d262341906963' -> 'sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/d3/3ec44a8e4e4d4b4fb0bfeb320d262341906963' (74,104)
+2025-11-20 06:06:04: Copy New 'C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/e0/d404a1cc03bdbe058ae697e5f3c0ae52a80a53' -> 'sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/e0/d404a1cc03bdbe058ae697e5f3c0ae52a80a53' (179)
+2025-11-20 06:06:04: Copy New 'C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/e6/311f3a65098a97dd7f04a2da03c653cd9301e4' -> 'sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/e6/311f3a65098a97dd7f04a2da03c653cd9301e4' (485)
+2025-11-20 06:06:04: Copy Over 'C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/f2/457b1e48bd629745a7b01000f1e8f7896ea8a1' -> 'sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/f2/457b1e48bd629745a7b01000f1e8f7896ea8a1' (252)
+2025-11-20 06:06:04: Copy Over 'C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/f5/591e260bfefa96403bc2924cc984c09bb8a118' -> 'sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/objects/f5/591e260bfefa96403bc2924cc984c09bb8a118' (524)
+2025-11-20 06:06:04: Copy Over 'C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/logs/refs/heads/master' -> 'sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/logs/refs/heads/master' (28,389)
+2025-11-20 06:06:04: Copy Over 'C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/refs/heads/master' -> 'sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/refs/heads/master' (41)
+2025-11-20 06:06:04: Copy Over 'C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/sourcetreeconfig.json' -> 'sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/sourcetreeconfig.json' (868)
+2025-11-20 06:06:04: Save State File C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_file_state_v4._gs
+2025-11-20 06:06:05: Save State File sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_file_state_v4._gs
+2025-11-20 06:06:13: == Sync Complete. Time: 00:00:12, Speed: 80.23 KB/s, OK: 17, Errors: 0
