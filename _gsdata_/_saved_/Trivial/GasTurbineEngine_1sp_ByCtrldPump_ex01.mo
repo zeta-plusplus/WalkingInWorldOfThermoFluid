@@ -92,7 +92,7 @@ model GasTurbineEngine_1sp_ByCtrldPump_ex01
   Modelica.Blocks.Sources.Ramp ramp_TbrnOut_tgt(duration = 5, height = 1000, offset = 500, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-183, 148}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Thermal.HeatTransfer.Sensors.TemperatureSensor temperatureSensor annotation(
-    Placement(transformation(origin = {-76, 174}, extent = {{10, -10}, {-10, 10}})));
+    Placement(visible = true, transformation(origin = {-76, 174}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.Feedback feedback annotation(
     Placement(visible = true, transformation(origin = {-153, 148}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   Modelica.Blocks.Continuous.PI ctrlHeatPI(T = 0.01, initType = Modelica.Blocks.Types.Init.SteadyState, k = 1000, x_start = 1000) annotation(
@@ -133,7 +133,8 @@ equation
   arr_p[3]= p4.p;
   arr_p[4]= p5.p;
   arr_p[5]= arr_p[1];
-//-----------
+  
+  //-----------
   connect(ramp_p1.y, boundary.p_in) annotation(
     Line(points = {{-279, 96}, {-270, 96}, {-270, 84}, {-262, 84}}, color = {0, 0, 127}));
   connect(ramp_T1.y, boundary.T_in) annotation(
@@ -141,9 +142,9 @@ equation
   connect(CmpByPump.port_b, p3.port) annotation(
     Line(points = {{-140, 76}, {-129, 76}}, color = {0, 127, 255}));
   connect(m_flow_1.port_b, CmpByPump.port_a) annotation(
-    Line(points = {{-200, 76}, {-180, 76}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{-200, 76}, {-180, 76}}, color = {0, 127, 255}, thickness = 1));
   connect(CmpByPump.shaft, pwrCmp.flange_b) annotation(
-    Line(points = {{-160, 56}, {-160, -74}, {-134, -74}}, thickness = 3));
+    Line(points = {{-160, 56}, {-160, -74}, {-134, -74}}, thickness = 1.5));
   connect(from_rpm1.y, speed1.w_ref) annotation(
     Line(points = {{179, -74}, {170, -74}}, color = {0, 0, 127}));
   connect(ramp_N.y, from_rpm1.u) annotation(
@@ -165,13 +166,13 @@ equation
   connect(CmpByPump.port_b, h3.port) annotation(
     Line(points = {{-140, 76}, {-107, 76}, {-107, 82}}, color = {0, 127, 255}));
   connect(TrbByPump.port_a, m_flow_5.port_a) annotation(
-    Line(points = {{96, 76}, {142, 76}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{96, 76}, {142, 76}}, color = {0, 127, 255}, thickness = 1));
   connect(p4.p, PRtrb.u1) annotation(
     Line(points = {{45, 60}, {45, 45}, {56, 45}}, color = {0, 0, 127}, pattern = LinePattern.Dash));
   connect(TrbByPump.port_a, T5.port) annotation(
     Line(points = {{96, 76}, {132, 76}, {132, 68}}, color = {0, 127, 255}));
   connect(boundary_pT.ports[1], m_flow_5.port_b) annotation(
-    Line(points = {{178, 76}, {152, 76}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{178, 76}, {152, 76}}, color = {0, 127, 255}, thickness = 1));
   connect(TrbByPump.port_b, p4.port) annotation(
     Line(points = {{56, 76}, {41, 76}, {41, 64}}, color = {0, 127, 255}));
   connect(TrbByPump.port_a, p5.port) annotation(
@@ -185,9 +186,9 @@ equation
   connect(calc_m_flow_Trb.y, gain.u) annotation(
     Line(points = {{77, 18}, {86, 18}, {86, 27}}, color = {0, 0, 127}, pattern = LinePattern.Dash));
   connect(Brn.ports[1], CmpByPump.port_b) annotation(
-    Line(points = {{-46, 76}, {-140, 76}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{-46, 76}, {-140, 76}}, color = {0, 127, 255}, thickness = 1));
   connect(Brn.ports[2], TrbByPump.port_b) annotation(
-    Line(points = {{-46, 76}, {56, 76}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{-46, 76}, {56, 76}}, color = {0, 127, 255}, thickness = 1));
   connect(ramp_TbrnOut_tgt.y, feedback.u1) annotation(
     Line(points = {{-172, 148}, {-161, 148}}, color = {0, 0, 127}));
   connect(ctrlHeatPI.y, prescribedHeatFlow.Q_flow) annotation(
@@ -195,25 +196,25 @@ equation
   connect(feedback.y, ctrlHeatPI.u) annotation(
     Line(points = {{-144, 148}, {-133, 148}}, color = {0, 0, 127}));
   connect(temperatureSensor.T, feedback.u2) annotation(
-    Line(points = {{-87, 174}, {-154, 174}, {-154, 156}, {-153, 156}}, color = {0, 0, 127}));
+    Line(points = {{-86, 174}, {-153, 174}, {-153, 156}}, color = {0, 0, 127}));
   connect(calc_Trb_trq.y, torque_Trb.tau) annotation(
     Line(points = {{59, -6}, {73, -6}}, color = {0, 0, 127}, pattern = LinePattern.Dash));
   connect(torque_Trb.flange, w_Trb.flange) annotation(
     Line(points = {{74, -22}, {74, -24}, {60, -24}}));
   connect(pwrCmp.flange_a, powerGen.flange_a) annotation(
-    Line(points = {{-122, -74}, {88, -74}}, thickness = 3));
+    Line(points = {{-122, -74}, {88, -74}}, thickness = 1.5));
   connect(powerGen.flange_b, speed1.flange) annotation(
-    Line(points = {{108, -74}, {148, -74}}, thickness = 3));
+    Line(points = {{108, -74}, {148, -74}}, thickness = 1.5));
   connect(temperatureSensor.port, Brn.heatPort) annotation(
-    Line(points = {{-66, 174}, {-66, 56}}, color = {191, 0, 0}, thickness = 3));
+    Line(points = {{-66, 174}, {-66, 56}}, color = {191, 0, 0}, thickness = 1));
   connect(realValue1.numberPort, powerGen.power) annotation(
     Line(points = {{97, -94}, {90, -94}, {90, -85}}, color = {0, 0, 127}));
   connect(prescribedHeatFlow.port, heatAddedIntoEng.port_a) annotation(
-    Line(points = {{-66, 148}, {-66, 96}}, color = {191, 0, 0}, thickness = 3));
+    Line(points = {{-66, 148}, {-66, 96}}, color = {191, 0, 0}, thickness = 1));
   connect(heatAddedIntoEng.port_b, Brn.heatPort) annotation(
-    Line(points = {{-66, 84}, {-66, 56}}, color = {191, 0, 0}, thickness = 3));
+    Line(points = {{-66, 84}, {-66, 56}}, color = {191, 0, 0}, thickness = 1));
   connect(torque_Trb.flange, pwrTrb.flange_a) annotation(
-    Line(points = {{74, -22}, {74, -52}}, thickness = 3));
+    Line(points = {{74, -22}, {74, -52}}, thickness = 1.5));
   connect(pwrTrb.flange_b, powerGen.flange_a) annotation(
     Line(points = {{74, -62}, {74, -74}, {88, -74}}, thickness = 1.5));
   connect(calc_effThermal.u1, powerGen.power) annotation(
@@ -227,7 +228,7 @@ equation
   connect(m_flow_1.m_flow, calcFAR.u2) annotation(
     Line(points = {{-205, 70.5}, {-194, 70.5}, {-194, 112}, {-7, 112}}, color = {0, 0, 127}, pattern = LinePattern.Dash));
   connect(boundary.ports[3], m_flow_1.port_a) annotation(
-    Line(points = {{-240, 76}, {-210, 76}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{-240, 76}, {-210, 76}}, color = {0, 127, 255}, thickness = 1));
   connect(boundary.ports[4], p1.port) annotation(
     Line(points = {{-240, 76}, {-232, 76}, {-232, 68}}, color = {0, 127, 255}));
   annotation(

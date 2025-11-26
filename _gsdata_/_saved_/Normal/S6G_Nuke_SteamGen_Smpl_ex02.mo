@@ -142,61 +142,61 @@ equation
   connect(replicator2.y, convection2.Gc) annotation(
     Line(points = {{101, 17}, {112, 17}}, color = {0, 0, 127}, thickness = 0.5));
   connect(heatCapacitor1.port, convection2.solid) annotation(
-    Line(points = {{120, -6}, {120, 9}}, color = {191, 0, 0}, thickness = 3));
+    Line(points = {{120, -6}, {120, 9}}, color = {191, 0, 0}, thickness = 1));
   connect(replicator1.y, convection1.Gc) annotation(
     Line(points = {{101, -28}, {112, -28}}, color = {0, 0, 127}, thickness = 0.5));
   connect(heatCapacitor1.port, convection1.solid) annotation(
-    Line(points = {{120, -6}, {120, -20}}, color = {191, 0, 0}, thickness = 3));
+    Line(points = {{120, -6}, {120, -20}}, color = {191, 0, 0}, thickness = 1));
   connect(convection1.fluid, cooler_hside.heatPorts) annotation(
-    Line(points = {{120, -36}, {120, -46}}, color = {191, 0, 0}, thickness = 3));
+    Line(points = {{120, -36}, {120, -46}}, color = {191, 0, 0}, thickness = 1));
   connect(ramp_heat_generation.y, prescribedHeatFlow1.Q_flow) annotation(
     Line(points = {{233, -10}, {238, -10}, {238, -28}}, color = {0, 0, 127}));
   connect(prescribedHeatFlow1.port, volume.heatPort) annotation(
-    Line(points = {{238, -48}, {238, -54}, {210, -54}, {210, -60}}, color = {191, 0, 0}, thickness = 3));
+    Line(points = {{238, -48}, {238, -54}, {210, -54}, {210, -60}}, color = {191, 0, 0}, thickness = 1));
   connect(pipe.port_b, volume.ports[1]) annotation(
-    Line(points = {{194, -50}, {200, -50}, {200, -70}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{194, -50}, {200, -50}, {200, -70}}, color = {0, 127, 255}, thickness = 1));
   connect(boundary_tank_pReg.ports[1], tank.ports[1]) annotation(
-    Line(points = {{-110, -70}, {-110, -50}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{-110, -70}, {-110, -50}}, color = {0, 127, 255}, thickness = 1));
   connect(boundary_SnkTank.ports[1], specificEnthalpy.port) annotation(
-    Line(points = {{-68, -110}, {-41, -110}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{-68, -110}, {-41, -110}}, color = {0, 127, 255}, thickness = 1));
   connect(volumeFlowRate1.port_b, cooler_hside.port_a) annotation(
-    Line(points = {{40, -50}, {110, -50}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{40, -50}, {110, -50}}, color = {0, 127, 255}, thickness = 1));
   connect(ramp_m_flow_coolant.y, WorkingWaterSply.m_flow_in) annotation(
     Line(points = {{-101, 140}, {-83, 140}}, color = {0, 0, 127}));
   connect(pressure.port, volumeFlowRate1.port_a) annotation(
-    Line(points = {{1, -50}, {20, -50}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{1, -50}, {20, -50}}, color = {0, 127, 255}, thickness = 1));
   connect(const_p_tank.y, boundary_SnkTank.p_in) annotation(
     Line(points = {{-129, -110}, {-97.5, -110}, {-97.5, -102}, {-90, -102}}, color = {0, 0, 127}));
   connect(const_p_tank.y, boundary_tank_pReg.p_in) annotation(
     Line(points = {{-128, -110}, {-118, -110}, {-118, -92}}, color = {0, 0, 127}));
   connect(tank.ports[2], temperature.port_a) annotation(
-    Line(points = {{-110, -50}, {-90, -50}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{-110, -50}, {-90, -50}}, color = {0, 127, 255}, thickness = 1));
   connect(temperature1.port_b, pressure.port) annotation(
-    Line(points = {{-10, -50}, {1, -50}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{-10, -50}, {1, -50}}, color = {0, 127, 255}, thickness = 1));
   connect(cooler_hside.port_b, temperature2.port_a) annotation(
-    Line(points = {{130, -50}, {148, -50}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{130, -50}, {148, -50}}, color = {0, 127, 255}, thickness = 1));
   connect(temperature2.port_b, pipe.port_a) annotation(
-    Line(points = {{162, -50}, {174, -50}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{162, -50}, {174, -50}}, color = {0, 127, 255}, thickness = 1));
   connect(temperature2.T, realValue7.numberPort) annotation(
     Line(points = {{155, -42}, {155, -38}, {170, -38}, {170, -30}}, color = {0, 0, 127}));
   connect(pipe1.port_a, temperature3.port_b) annotation(
-    Line(points = {{180, -110}, {200, -110}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{180, -110}, {200, -110}}, color = {0, 127, 255}, thickness = 1));
   connect(volume.ports[2], temperature3.port_a) annotation(
-    Line(points = {{200, -70}, {200, -94}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{200, -70}, {200, -94}}, color = {0, 127, 255}, thickness = 1));
   connect(temperature4.port_a, pipe1.port_b) annotation(
-    Line(points = {{-14, -110}, {160, -110}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{-14, -110}, {160, -110}}, color = {0, 127, 255}, thickness = 1));
   connect(specificEnthalpy.port, temperature4.port_b) annotation(
-    Line(points = {{-41, -110}, {-28, -110}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{-41, -110}, {-28, -110}}, color = {0, 127, 255}, thickness = 1));
   connect(temperature4.T, realValue9.numberPort) annotation(
     Line(points = {{-21, -102.3}, {-21, -95.3}, {-18, -95.3}}, color = {0, 0, 127}));
   connect(WorkingWaterSply.ports[1], temperature5.port_a) annotation(
-    Line(points = {{-62, 132}, {-35, 132}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{-62, 132}, {-35, 132}}, color = {0, 127, 255}, thickness = 1));
   connect(temperature5.T, realValue5.numberPort) annotation(
     Line(points = {{-28.4, 125}, {-15.9, 125}, {-15.9, 138}, {-18.4, 138}}, color = {0, 0, 127}));
   connect(temperature6.T, realValue6.numberPort) annotation(
     Line(points = {{228.682, 103.056}, {225.963, 103.056}, {225.963, 118.056}, {223.682, 118.056}}, color = {0, 0, 127}));
   connect(heatFlowSensor.port_a, convection2.fluid) annotation(
-    Line(points = {{120, 44}, {120, 25}}, color = {191, 0, 0}, thickness = 3));
+    Line(points = {{120, 44}, {120, 25}}, color = {191, 0, 0}, thickness = 1));
   connect(heatFlowSensor.Q_flow, sum1.u) annotation(
     Line(points = {{127, 50}, {133, 50}}, color = {0, 0, 127}, thickness = 0.5));
   connect(pressure.p, realValue4.numberPort) annotation(
@@ -208,9 +208,9 @@ equation
   connect(temperature.T, realValue1.numberPort) annotation(
     Line(points = {{-83, -41}, {-83, -39}, {-92, -39}, {-92, -29}}, color = {0, 0, 127}));
   connect(temperature.port_b, pump.port_a) annotation(
-    Line(points = {{-76, -50}, {-64, -50}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{-76, -50}, {-64, -50}}, color = {0, 127, 255}, thickness = 1));
   connect(pump.port_b, temperature1.port_a) annotation(
-    Line(points = {{-36, -50}, {-24, -50}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{-36, -50}, {-24, -50}}, color = {0, 127, 255}, thickness = 1));
   connect(ramp_m_flow_reactorFluid.y, pump.m_flow_set) annotation(
     Line(points = {{-74, 22}, {-57, 22}, {-57, -39}}, color = {0, 0, 127}));
   connect(hConv_HX.y, product.u1) annotation(
@@ -224,25 +224,25 @@ equation
   connect(ramp_heat_generation.y, realValue81.numberPort) annotation(
     Line(points = {{233, -10}, {243, -10}}, color = {0, 0, 127}));
   connect(heatFlowSensor.port_b, thermalCollector.port_a) annotation(
-    Line(points = {{120, 56}, {120, 66}}, color = {191, 0, 0}, thickness = 3));
+    Line(points = {{120, 56}, {120, 66}}, color = {191, 0, 0}, thickness = 1));
   connect(sum1.y, realValue811.numberPort) annotation(
     Line(points = {{147, 50}, {154, 50}}, color = {0, 0, 127}));
   connect(massFlowSteam.port_b, temperature6.port_a) annotation(
-    Line(points = {{181, 133}, {221, 133}, {221, 110}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{181, 133}, {221, 133}, {221, 110}}, color = {0, 127, 255}, thickness = 1));
   connect(massFlowSteam.m_flow, realValue61.numberPort) annotation(
     Line(points = {{175, 139.6}, {165, 139.6}, {165, 117}, {164, 117}}, color = {0, 0, 127}));
   connect(temperature6.port_b, VaporValve.port_a) annotation(
-    Line(points = {{221, 96}, {252, 96}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{221, 96}, {252, 96}}, color = {0, 127, 255}, thickness = 1));
   connect(VaporValve.port_b, vaporExit.ports[1]) annotation(
-    Line(points = {{272, 96}, {312, 96}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{272, 96}, {312, 96}}, color = {0, 127, 255}, thickness = 1));
   connect(ramp_valveopen.y, VaporValve.opening) annotation(
     Line(points = {{253, 74}, {261, 74}, {261, 88}}, color = {0, 0, 127}));
   connect(temperature5.port_b, massFlowWaterSupply.port_a) annotation(
-    Line(points = {{-35, 118}, {-35, 105}, {19, 105}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{-35, 118}, {-35, 105}, {19, 105}}, color = {0, 127, 255}, thickness = 1));
   connect(massFlowSteam.port_a, SteamGen.port_b) annotation(
-    Line(points = {{169, 133}, {108, 133}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{169, 133}, {108, 133}}, color = {0, 127, 255}, thickness = 1));
   connect(thermalCollector.port_b, SteamGen.heatPort) annotation(
-    Line(points = {{120, 78}, {120, 88}, {92, 88}, {92, 119}}, color = {191, 0, 0}, thickness = 3));
+    Line(points = {{120, 78}, {120, 88}, {92, 88}, {92, 119}}, color = {191, 0, 0}, thickness = 1));
   connect(ctrl_pi.y, OverflowLineValve.opening) annotation(
     Line(points = {{118, 196}, {16, 196}}, color = {0, 0, 127}));
   connect(realValue6111.numberPort, ctrl_pi.y) annotation(
@@ -252,21 +252,21 @@ equation
   connect(feedback1.u2, massFlowSteam.m_flow) annotation(
     Line(points = {{164, 173}, {175, 173}, {175, 140}}, color = {0, 0, 127}));
   connect(massFlowWaterSupply.port_b, SteamGen.port_a) annotation(
-    Line(points = {{33, 105}, {108, 105}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{33, 105}, {108, 105}}, color = {0, 127, 255}, thickness = 1));
   connect(ctrl_pi.u, feedback1.y) annotation(
     Line(points = {{141, 196}, {158, 196}, {158, 179}}, color = {0, 0, 127}));
   connect(massFlowOverFlowLine.port_b, OverflowLineValve.port_a) annotation(
-    Line(points = {{8, 158}, {8, 186}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{8, 158}, {8, 186}}, color = {0, 127, 255}, thickness = 1));
   connect(realValue51.numberPort, massFlowOverFlowLine.m_flow) annotation(
     Line(points = {{0.8, 161}, {16, 161}, {16, 152}}, color = {0, 0, 127}));
   connect(OverflowLineSink.ports[1], OverflowLineValve.port_b) annotation(
-    Line(points = {{-80, 218}, {8, 218}, {8, 206}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{-80, 218}, {8, 218}, {8, 206}}, color = {0, 127, 255}, thickness = 1));
   connect(specificEnthalpy.h_out, boundary_tank_pReg.h_in) annotation(
-    Line(points = {{-49, -117}, {-114, -117}, {-114, -92}}, color = {0, 0, 127}, thickness = 3));
+    Line(points = {{-49, -117}, {-114, -117}, {-114, -92}}, color = {0, 0, 127}));
   connect(temperature3.T, realValue8.numberPort) annotation(
     Line(points = {{208, -102}, {217, -102}, {217, -100}}, color = {0, 0, 127}));
   connect(massFlowWaterSupply.port_a, massFlowOverFlowLine.port_a) annotation(
-    Line(points = {{19, 105}, {8, 105}, {8, 144}}, color = {0, 127, 255}, thickness = 3));
+    Line(points = {{19, 105}, {8, 105}, {8, 144}}, color = {0, 127, 255}, thickness = 1));
   connect(massFlowWaterSupply.m_flow, feedback1.u1) annotation(
     Line(points = {{26, 113}, {26, 168}, {158, 168}}, color = {0, 0, 127}));
   connect(massFlowWaterSupply.port_a, densityWaterSply.port) annotation(
