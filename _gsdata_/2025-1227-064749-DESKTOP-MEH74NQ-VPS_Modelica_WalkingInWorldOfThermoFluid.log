@@ -1,0 +1,49 @@
+2025-12-27 06:47:50: Server: SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.14
+2025-12-27 06:47:50: Server KEXes: sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-s,kex-strict-s-v00@openssh.com
+2025-12-27 06:47:50: Server Host Keys: rsa-sha2-512,rsa-sha2-256,ecdsa-sha2-nistp256,ssh-ed25519
+2025-12-27 06:47:50: Chosen Host Key: ssh-ed25519
+2025-12-27 06:47:50: Ciphers: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+2025-12-27 06:47:50: MACs: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+2025-12-27 06:47:50: Auth: start: publickey
+2025-12-27 06:47:50: Auth: publickey: no keys available
+2025-12-27 06:47:50: Auth: start: password
+2025-12-27 06:47:51: -- Analysis Started by On File Change, After Delay
+2025-12-27 06:47:51: Changes: 1, Conflicts: 0, CopyTime: 0, FixState: 0, Errors: 0, All: 2662
+2025-12-27 06:47:51: Left to Right: Copy File: 1 
+2025-12-27 06:47:51: == Sync Started by On File Change, After Delay
+2025-12-27 06:47:51: Start only 1 threads, limited by tasks to run
+2025-12-27 06:47:52: Copy Over 'C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/FETCH_HEAD' -> 'sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/.git/FETCH_HEAD' (122)
+2025-12-27 06:47:52: Save State File C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_file_state_v4._gs
+2025-12-27 06:47:52: Save State File sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_file_state_v4._gs
+2025-12-27 06:47:52: Deleted Recycled: C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/Normal/package.order
+2025-12-27 06:47:52: Deleted Recycled: C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/Normal/S6G_Nuke_SteamGen_Smpl_ex02.mo
+2025-12-27 06:47:52: Deleted Recycled: C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/Trivial/GasTurbineEngine_1sp_ByCtrldPump_ex01.mo
+2025-12-27 06:47:52: Deleted Recycled: C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/Trivial/package.order
+2025-12-27 06:47:52: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/Normal
+2025-12-27 06:47:52: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/Trivial
+2025-12-27 06:47:52: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/COMMIT_EDITMSG
+2025-12-27 06:47:53: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/index
+2025-12-27 06:47:53: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/logs/HEAD
+2025-12-27 06:47:53: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/logs/refs/heads/master
+2025-12-27 06:47:53: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/logs/refs/remotes/origin/master
+2025-12-27 06:47:53: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/objects/2e/a4f4060611fd6e18780d27ceba7804ee5edae8
+2025-12-27 06:47:53: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/objects/7d/11dbcd8ca7627754f5c6d95a760439129a341c
+2025-12-27 06:47:53: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/objects/b4/bc7b744d8038c5caf3a302d2cba6e89e81a066
+2025-12-27 06:47:53: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/objects/bd/1ec28fbec60a5f550f85e261b839c335bb2a5d
+2025-12-27 06:47:53: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/refs/heads/master
+2025-12-27 06:47:53: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/refs/remotes/origin/master
+2025-12-27 06:47:53: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/logs/refs/heads
+2025-12-27 06:47:54: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/logs/refs/remotes/origin
+2025-12-27 06:47:54: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/logs/refs/remotes
+2025-12-27 06:47:54: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/logs/refs
+2025-12-27 06:47:54: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/logs
+2025-12-27 06:47:54: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/objects/bd
+2025-12-27 06:47:55: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/objects/7d
+2025-12-27 06:47:55: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/objects/b4
+2025-12-27 06:47:55: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/objects/2e
+2025-12-27 06:47:55: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/objects
+2025-12-27 06:47:55: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/refs/heads
+2025-12-27 06:47:56: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/refs/remotes/origin
+2025-12-27 06:47:56: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/refs/remotes
+2025-12-27 06:47:56: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/refs
+2025-12-27 06:47:56: == Sync Complete. Time: 00:00:05, Speed: 0.00/s, OK: 1, Errors: 0
