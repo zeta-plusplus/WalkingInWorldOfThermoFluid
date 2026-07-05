@@ -14,5 +14,5 @@ package WalkingInWorldOfThermoFluid
 
 
   annotation(
-    uses(Modelica(version = "4.1.0")));
+    uses(Modelica(version = "4.0.0")));
 end WalkingInWorldOfThermoFluid;
