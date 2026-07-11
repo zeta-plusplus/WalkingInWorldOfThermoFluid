@@ -4,7 +4,7 @@ model RefrigCycleMachine_R134_ex04
   extends Modelica.Icons.Example;
   //-------------------------
   package fluid1 = Modelica.Media.R134a.R134a_ph;
-  package fluid2 = Modelica.Media.Air.DryAirNasa;
+  //package fluid2 = Modelica.Media.Air.DryAirNasa;
   //-------------------------
   parameter Integer sigDigits_T = 4;
   parameter Integer sigDigits_p = 5;
@@ -12,11 +12,10 @@ model RefrigCycleMachine_R134_ex04
   parameter Integer sigDigits_m_flow = 4;
   parameter Integer sigDigits_rho = 4;
   //-------------------------
-  /*
-                                                                                                                                                                                                                                                                        constant Integer nArrStates = 6;
-                                                                                                                                                                                                                                                                        Modelica.Units.SI.Temperature Arr_T[nArrStates];
-                                                                                                                                                                                                                                                                        Modelica.Units.SI.SpecificEntropy Arr_s[nArrStates];
-                                                                                                                                                                                                                                                                        */
+  constant Integer nArrStates = 6;
+  Modelica.Units.SI.Temperature Arr_T[nArrStates];
+  Modelica.Units.SI.SpecificEntropy Arr_s[nArrStates];
+  /**/
   //-------------------------
   inner Modelica.Fluid.System system(p_ambient = 1e5, T_ambient = 288.15, p_start = 1e5, T_start = 288.15) annotation(
     Placement(transformation(origin = {14, 12}, extent = {{-10, -10}, {10, 10}})));
@@ -52,25 +51,21 @@ model RefrigCycleMachine_R134_ex04
     Placement(transformation(origin = {84, 169}, extent = {{3, -3}, {-3, 3}}, rotation = 90)));
   Modelica.Fluid.Sensors.DensityTwoPort rho_Valve030_out(redeclare package Medium = fluid1) annotation(
     Placement(transformation(origin = {84, 182}, extent = {{-3, -3}, {3, 3}}, rotation = -90)));
-  Modelica.Fluid.Sources.Boundary_pT boundary(redeclare package Medium = fluid1, p = 1e5, T = 288.15, nPorts = 1, use_p_in = false) annotation(
-    Placement(transformation(origin = {312, 194}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
-  Modelica.Fluid.Sources.Boundary_pT boundary1(redeclare package Medium = fluid1, T = 323.15, p(displayUnit = "Pa"), nPorts = 1) annotation(
-    Placement(transformation(origin = {252, 126}, extent = {{10, -10}, {-10, 10}})));
   Modelica.Fluid.Vessels.ClosedVolume Vol030(redeclare package Medium = fluid1, use_portsData = false, V = 0.001, nPorts = 2) annotation(
     Placement(transformation(origin = {84, 278}, extent = {{-6, -6}, {6, 6}})));
   Modelica.Fluid.Vessels.ClosedVolume Vol031(redeclare package Medium = fluid1, V = 0.001, use_portsData = false, nPorts = 2) annotation(
     Placement(transformation(origin = {84, 138}, extent = {{-6, -6}, {6, 6}})));
-  Modelica.Fluid.Fittings.SimpleGenericOrifice dP031(redeclare package Medium = fluid1, diameter = 0.05, zeta = 1) annotation(
+  Modelica.Fluid.Fittings.SimpleGenericOrifice dP031(redeclare package Medium = fluid1, diameter = 0.2, zeta = 1) annotation(
     Placement(transformation(origin = {108, 126}, extent = {{-8, -8}, {8, 8}})));
   Modelica.Fluid.Sensors.MassFlowRate m_flow_Cmp010_out(redeclare package Medium = fluid1) annotation(
     Placement(transformation(origin = {258, 298}, extent = {{5, -5}, {-5, 5}})));
-  Modelica.Fluid.Fittings.SimpleGenericOrifice dP021(redeclare package Medium = fluid1, diameter = 0.05, zeta = 1) annotation(
+  Modelica.Fluid.Fittings.SimpleGenericOrifice dP021(redeclare package Medium = fluid1, diameter = 0.2, zeta = 1) annotation(
     Placement(transformation(origin = {100, 298}, extent = {{8, -8}, {-8, 8}})));
   Modelica.Blocks.Interaction.Show.RealValue realValue_m_flow_Cmp010_out(significantDigits = sigDigits_m_flow) annotation(
     Placement(transformation(origin = {277, 325}, extent = {{-11, -7}, {11, 7}})));
   Modelica.Thermal.HeatTransfer.Components.Convection conv_HX020 annotation(
     Placement(transformation(origin = {136, 344}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
-  Modelica.Blocks.Sources.Ramp ramp_HX030_hconv(duration = 1, height = 0, offset = 1*5000, startTime = 10) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_HX030_hconv(duration = 1, height = 0, offset = 1*10000, startTime = 10) annotation(
     Placement(transformation(origin = {136, 323}, extent = {{-4, -4}, {4, 4}}, rotation = 90)));
   Modelica.Thermal.HeatTransfer.Sources.FixedTemperature T_hot(T = 298.15) annotation(
     Placement(transformation(origin = {92, 344}, extent = {{-10, -10}, {10, 10}})));
@@ -82,11 +77,11 @@ model RefrigCycleMachine_R134_ex04
     Placement(transformation(origin = {144, 371}, extent = {{-11, -7}, {11, 7}})));
   Modelica.Fluid.Vessels.ClosedVolume HX020(redeclare package Medium = fluid1, V = 0.1, nPorts = 3, use_HeatTransfer = true, use_portsData = false) annotation(
     Placement(transformation(origin = {197, 310}, extent = {{-12, -12}, {12, 12}})));
-  Modelica.Thermal.HeatTransfer.Components.HeatCapacitor CpHX020(C = 100, T(start = 288.15)) annotation(
+  Modelica.Thermal.HeatTransfer.Components.HeatCapacitor CpHX020(C = 10, T(start = 288.15)) annotation(
     Placement(transformation(origin = {159, 351}, extent = {{-7, -7}, {7, 7}})));
-  Modelica.Thermal.HeatTransfer.Components.ThermalConductor cond_HX020(G = 100) annotation(
+  Modelica.Thermal.HeatTransfer.Components.ThermalConductor cond_HX020(G = 10000) annotation(
     Placement(transformation(origin = {173, 344}, extent = {{-5, 5}, {5, -5}}, rotation = 180)));
-  Modelica.Fluid.Fittings.SimpleGenericOrifice dP011(redeclare package Medium = fluid1, diameter = 0.05, zeta = 1) annotation(
+  Modelica.Fluid.Fittings.SimpleGenericOrifice dP011(redeclare package Medium = fluid1, diameter = 0.2, zeta = 1) annotation(
     Placement(transformation(origin = {232, 298}, extent = {{8, -8}, {-8, 8}})));
   Modelica.Fluid.Sensors.SpecificEntropyTwoPort s_HX020_out(redeclare package Medium = fluid1) annotation(
     Placement(transformation(origin = {162, 298}, extent = {{-3, -3}, {3, 3}}, rotation = 180)));
@@ -111,11 +106,11 @@ model RefrigCycleMachine_R134_ex04
   Modelica.Fluid.Sensors.TemperatureTwoPort T_HX040_out(redeclare package Medium = fluid1) annotation(
     Placement(transformation(origin = {178, 126}, extent = {{-3, 3}, {3, -3}})));
   Modelica.Blocks.Interaction.Show.RealValue realValue_T_HX020_out1(significantDigits = sigDigits_T) annotation(
-    Placement(transformation(origin = {203, 115}, extent = {{-11, -7}, {11, 7}}, rotation = -0)));
+    Placement(transformation(origin = {199, 101}, extent = {{-11, -7}, {11, 7}})));
   Modelica.Blocks.Sources.Constant const21(k = 273.15) annotation(
-    Placement(transformation(origin = {184, 107}, extent = {{-2, -2}, {2, 2}}, rotation = 90)));
+    Placement(transformation(origin = {180, 93}, extent = {{-2, -2}, {2, 2}}, rotation = 90)));
   Modelica.Blocks.Math.Feedback feedback21 annotation(
-    Placement(transformation(origin = {184, 115}, extent = {{2, 2}, {-2, -2}}, rotation = -180)));
+    Placement(transformation(origin = {180, 101}, extent = {{2, 2}, {-2, -2}}, rotation = -180)));
   Modelica.Fluid.Sensors.Pressure p_HX040_out(redeclare package Medium = fluid1) annotation(
     Placement(transformation(origin = {171, 147}, extent = {{3, -3}, {-3, 3}}, rotation = -0)));
   Modelica.Blocks.Math.Gain gain2(k = 1/1000) annotation(
@@ -128,7 +123,7 @@ model RefrigCycleMachine_R134_ex04
     Placement(transformation(origin = {189, 144}, extent = {{8, -5}, {-8, 5}}, rotation = -0)));
   Modelica.Thermal.HeatTransfer.Components.Convection conv_HX040 annotation(
     Placement(transformation(origin = {112, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
-  Modelica.Blocks.Sources.Ramp ramp_HX040_hconv(duration = 1, height = 0, offset = 1*5000, startTime = 10) annotation(
+  Modelica.Blocks.Sources.Ramp ramp_HX040_hconv(duration = 1, height = 0, offset = 1*10000, startTime = 10) annotation(
     Placement(transformation(origin = {112, 39}, extent = {{-4, -4}, {4, 4}}, rotation = 90)));
   Modelica.Thermal.HeatTransfer.Sources.FixedTemperature T_cold(T = 283.15) annotation(
     Placement(transformation(origin = {68, 60}, extent = {{-10, -10}, {10, 10}})));
@@ -138,38 +133,76 @@ model RefrigCycleMachine_R134_ex04
     Placement(transformation(origin = {107, 87}, extent = {{-3, -3}, {3, 3}})));
   Modelica.Blocks.Interaction.Show.RealValue realValue_Q_flow_HX040(significantDigits = sigDigits_Q_flow) annotation(
     Placement(transformation(origin = {128, 87}, extent = {{-11, -7}, {11, 7}})));
-  Modelica.Thermal.HeatTransfer.Components.HeatCapacitor CpHX040(C = 100, T(start = 288.15)) annotation(
+  Modelica.Thermal.HeatTransfer.Components.HeatCapacitor CpHX040(C = 10, T(start = 288.15)) annotation(
     Placement(transformation(origin = {135, 67}, extent = {{-7, -7}, {7, 7}})));
-  Modelica.Thermal.HeatTransfer.Components.ThermalConductor cond_HX040(G = 100) annotation(
+  Modelica.Thermal.HeatTransfer.Components.ThermalConductor cond_HX040(G = 10000) annotation(
     Placement(transformation(origin = {151, 60}, extent = {{5, 5}, {-5, -5}}, rotation = -180)));
-  Modelica.Blocks.Sources.Ramp ramp_Cmp010_PR(duration = 5, height = 5, offset = 1, startTime = 10) annotation(
-    Placement(transformation(origin = {353, 258}, extent = {{5, -5}, {-5, 5}})));
-  Modelica.Blocks.Math.Product product annotation(
-    Placement(transformation(origin = {337, 256}, extent = {{3, -3}, {-3, 3}})));
+  Modelica.Blocks.Sources.Ramp ramp_Cmp010_PR(duration = 2, height = 2, offset = 10, startTime = 50) annotation(
+    Placement(transformation(origin = {358, 248}, extent = {{5, -5}, {-5, 5}})));
   Modelica.Blocks.Sources.Ramp ramp_p1(duration = 1, height = 0, offset = 100*1000, startTime = 10) annotation(
-    Placement(transformation(origin = {341, 117}, extent = {{-4, -4}, {4, 4}}, rotation = 90)));
-  Modelica.Fluid.Vessels.ClosedVolume Vol011(redeclare package Medium = fluid1, V = 0.01, nPorts = 2, use_portsData = false) annotation(
-    Placement(transformation(origin = {312, 280}, extent = {{-6, -6}, {6, 6}})));
-  Modelica.Fluid.Machines.ControlledPump Cmp010(redeclare package Medium = fluid1, control_m_flow = false, redeclare function efficiencyCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal = 1), m_flow_nominal = 1, p_a_nominal = 1e5, p_b_nominal = 1e6, use_p_set = true, use_powerCharacteristic = false, p_a_start (displayUnit = "Pa"), p_b_start (displayUnit = "Pa"), T_start (displayUnit = "K")) annotation(
-    Placement(transformation(origin = {312, 251}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
-  Modelica.Fluid.Vessels.ClosedVolume Vol010(redeclare package Medium = fluid1, V = 0.01, nPorts = 2, use_portsData = false) annotation(
-    Placement(transformation(origin = {312, 222}, extent = {{-6, -6}, {6, 6}})));
+    Placement(transformation(origin = {331, 134}, extent = {{-4, 4}, {4, -4}}, rotation = -180)));
+  Modelica.Fluid.Vessels.ClosedVolume Vol_Cmp010_out(redeclare package Medium = fluid1, V = 0.01, nPorts = 2, use_portsData = false, use_HeatTransfer = true) annotation(
+    Placement(transformation(origin = {312, 264}, extent = {{-4, -4}, {4, 4}})));
+  Modelica.Fluid.Machines.ControlledPump Cmp010(redeclare package Medium = fluid1, control_m_flow = false, redeclare function efficiencyCharacteristic = Modelica.Fluid.Machines.BaseClasses.PumpCharacteristics.constantEfficiency(eta_nominal = 1), m_flow_nominal = 1, p_a_nominal = 1e5, p_b_nominal = 1e6, use_p_set = true, p_a_start(displayUnit = "Pa") = 1, p_b_start(displayUnit = "Pa") = 1, T_start(displayUnit = "degC") = 288.15, checkValve = true, N_nominal = 1000, allowFlowReversal = false, V = 0.1, energyDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial, massDynamics = Modelica.Fluid.Types.Dynamics.DynamicFreeInitial) annotation(
+    Placement(transformation(origin = {312, 243}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
+  Modelica.Fluid.Vessels.ClosedVolume Vol010(redeclare package Medium = fluid1, V = 0.5, nPorts = 2, use_portsData = false) annotation(
+    Placement(transformation(origin = {312, 180}, extent = {{-6, -6}, {6, 6}})));
+  Modelica.Fluid.Sensors.SpecificEntropyTwoPort s_Cmp010_in(redeclare package Medium = fluid1) annotation(
+    Placement(transformation(origin = {312, 226}, extent = {{3, 3}, {-3, -3}}, rotation = 270)));
+  Modelica.Blocks.Continuous.PID PID(k = 500, Ti = 0.5, Td = 0.1, initType = Modelica.Blocks.Types.Init.InitialOutput, y_start = 0) annotation(
+    Placement(transformation(origin = {286, 264}, extent = {{-5, -5}, {5, 5}})));
+  Modelica.Blocks.Math.Feedback feedback3 annotation(
+    Placement(transformation(origin = {272, 264}, extent = {{-4, 4}, {4, -4}})));
+  Modelica.Fluid.Sensors.SpecificEntropyTwoPort s_Vol_Cmp010_out(redeclare package Medium = fluid1) annotation(
+    Placement(transformation(origin = {312, 276}, extent = {{3, 3}, {-3, -3}}, rotation = -90)));
+  Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow Q_flow_Cmp010 annotation(
+    Placement(transformation(origin = {300, 264}, extent = {{-4, -4}, {4, 4}})));
+  Modelica.Fluid.Fittings.SimpleGenericOrifice dP041(redeclare package Medium = fluid1, diameter = 0.2, zeta = 1) annotation(
+    Placement(transformation(origin = {252, 126}, extent = {{-8, -8}, {8, 8}})));
+  Modelica.Blocks.Interaction.Show.RealValue realValue_T_Cmp010_in(significantDigits = sigDigits_T) annotation(
+    Placement(transformation(origin = {343, 213}, extent = {{-11, -7}, {11, 7}})));
+  Modelica.Blocks.Sources.Constant const3(k = 273.15) annotation(
+    Placement(transformation(origin = {323, 219}, extent = {{-2, -2}, {2, 2}}, rotation = -90)));
+  Modelica.Blocks.Math.Feedback feedback4 annotation(
+    Placement(transformation(origin = {323, 213}, extent = {{2, -2}, {-2, 2}}, rotation = -180)));
+  Modelica.Fluid.Sensors.TemperatureTwoPort T_Cmp010_in(redeclare package Medium = fluid1) annotation(
+    Placement(transformation(origin = {312, 213}, extent = {{-3, 3}, {3, -3}}, rotation = 90)));
+  Modelica.Blocks.Interaction.Show.RealValue realValue_rho_Valve030_out1(significantDigits = sigDigits_rho) annotation(
+    Placement(transformation(origin = {293, 202}, extent = {{8, -5}, {-8, 5}})));
+  Modelica.Fluid.Sensors.DensityTwoPort rho_Cmp010_in(redeclare package Medium = fluid1) annotation(
+    Placement(transformation(origin = {312, 202}, extent = {{3, 3}, {-3, -3}}, rotation = -90)));
+  Modelica.Fluid.Sources.Boundary_ph boundary(nPorts = 1, redeclare package Medium = fluid1, use_p_in = true, use_h_in = true) annotation(
+    Placement(transformation(origin = {312, 154}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
+  Modelica.Fluid.Sensors.SpecificEnthalpyTwoPort h_HX040_out(redeclare package Medium = fluid1) annotation(
+    Placement(transformation(origin = {230, 126}, extent = {{-3, 3}, {3, -3}}, rotation = -0)));
+  Modelica.Fluid.Sources.Boundary_ph boundary1(redeclare package Medium = fluid1, nPorts = 1, use_h_in = false, use_p_in = true) annotation(
+    Placement(transformation(origin = {286, 126}, extent = {{10, -10}, {-10, 10}})));
+  Modelica.Blocks.Math.Gain gain4(k = 100*1000) annotation(
+    Placement(transformation(origin = {337, 248}, extent = {{4, -4}, {-4, 4}})));
+  Modelica.Blocks.Interaction.Show.RealValue realValue_T_Vol_Cmp010_out(significantDigits = sigDigits_T) annotation(
+    Placement(transformation(origin = {343, 289}, extent = {{-11, -7}, {11, 7}})));
+  Modelica.Blocks.Sources.Constant const31(k = 273.15) annotation(
+    Placement(transformation(origin = {323, 295}, extent = {{-2, -2}, {2, 2}}, rotation = -90)));
+  Modelica.Blocks.Math.Feedback feedback41 annotation(
+    Placement(transformation(origin = {323, 289}, extent = {{2, -2}, {-2, 2}}, rotation = -180)));
+  Modelica.Fluid.Sensors.TemperatureTwoPort T_Vol_Cmp010_out(redeclare package Medium = fluid1) annotation(
+    Placement(transformation(origin = {312, 289}, extent = {{-3, 3}, {3, -3}}, rotation = 90)));
 equation
-/*
+  //
   Arr_s[1] = s_Cmp010_in.s;
-  Arr_s[2] = s_Cmp010_out.s;
+  Arr_s[2] = s_Vol_Cmp010_out.s;
   Arr_s[3] = s_Valve030_in.s;
   Arr_s[4] = s_Valve030_out.s;
   Arr_s[5] = s_HX040_out.s;
   Arr_s[6] = s_Cmp010_in.s;
-
+  //
   Arr_T[1] = T_Cmp010_in.T;
-  Arr_T[2] = T_Cmp010_out.T;
+  Arr_T[2] = T_Vol_Cmp010_out.T;
   Arr_T[3] = T_Valve030_in.T;
   Arr_T[4] = T_Valve030_out.T;
   Arr_T[5] = T_HX040_out.T;
   Arr_T[6] = T_Cmp010_in.T;
-  */
+/*  */
 //
   connect(ramp_Valve030_open.y, Valve030.opening) annotation(
     Line(points = {{62.5, 211}, {74, 211}}, color = {0, 0, 127}));
@@ -248,11 +281,11 @@ equation
   connect(realValue_p_HX020_out.numberPort, gain.y) annotation(
     Line(points = {{170, 273}, {175, 273}}, color = {0, 0, 127}));
   connect(const21.y, feedback21.u2) annotation(
-    Line(points = {{184, 109}, {184, 113}}, color = {0, 0, 127}));
+    Line(points = {{180, 95.2}, {180, 99.2}}, color = {0, 0, 127}));
   connect(realValue_T_HX020_out1.numberPort, feedback21.y) annotation(
-    Line(points = {{190.35, 115}, {186, 115}}, color = {0, 0, 127}));
+    Line(points = {{186.35, 101}, {182, 101}}, color = {0, 0, 127}));
   connect(feedback21.u1, T_HX040_out.T) annotation(
-    Line(points = {{182, 115}, {178, 115}, {178, 123}}, color = {0, 0, 127}));
+    Line(points = {{178, 101}, {178, 123}}, color = {0, 0, 127}));
   connect(dP031.port_b, HX040.ports[1]) annotation(
     Line(points = {{116, 126}, {153, 126}}, color = {0, 127, 255}));
   connect(HX040.ports[2], T_HX040_out.port_a) annotation(
@@ -283,30 +316,72 @@ equation
     Line(points = {{156, 60}, {165, 60}, {165, 114}}, color = {191, 0, 0}));
   connect(realValue_m_flow_Cmp010_out.numberPort, m_flow_Cmp010_out.m_flow) annotation(
     Line(points = {{264, 325}, {258, 325}, {258, 304}}, color = {0, 0, 127}));
-  connect(product.u1, ramp_Cmp010_PR.y) annotation(
-    Line(points = {{340.6, 257.8}, {347.1, 257.8}}, color = {0, 0, 127}));
-  connect(ramp_p1.y, product.u2) annotation(
-    Line(points = {{341, 121}, {341, 254}}, color = {0, 0, 127}));
-  connect(m_flow_Cmp010_out.port_a, Vol011.ports[1]) annotation(
-    Line(points = {{264, 298}, {312, 298}, {312, 274}}, color = {0, 127, 255}));
-  connect(Cmp010.p_set, product.y) annotation(
-    Line(points = {{320, 256}, {334, 256}}, color = {0, 0, 127}));
-  connect(Cmp010.port_b, Vol011.ports[2]) annotation(
-    Line(points = {{312, 262}, {312, 274}}, color = {0, 127, 255}));
-  connect(boundary.ports[1], Vol010.ports[1]) annotation(
-    Line(points = {{312, 204}, {312, 216}}, color = {0, 127, 255}));
-  connect(Vol010.ports[2], Cmp010.port_a) annotation(
-    Line(points = {{312, 216}, {312, 242}}, color = {0, 127, 255}));
+  connect(Cmp010.port_b, Vol_Cmp010_out.ports[1]) annotation(
+    Line(points = {{312, 253}, {312, 259}}, color = {0, 127, 255}));
   connect(T_HX040_out.port_b, rho_HX040_out.port_a) annotation(
     Line(points = {{182, 126}, {200, 126}}, color = {0, 127, 255}));
   connect(rho_HX040_out.port_b, s_HX040_out.port_a) annotation(
     Line(points = {{206, 126}, {214, 126}}, color = {0, 127, 255}));
-  connect(boundary1.ports[1], s_HX040_out.port_b) annotation(
-    Line(points = {{242, 126}, {220, 126}}, color = {0, 127, 255}));
+  connect(Cmp010.port_a, s_Cmp010_in.port_b) annotation(
+    Line(points = {{312, 233}, {312, 228}}, color = {0, 127, 255}));
+  connect(s_Vol_Cmp010_out.port_a, Vol_Cmp010_out.ports[2]) annotation(
+    Line(points = {{312, 273}, {312, 260}}, color = {0, 127, 255}));
+  connect(feedback3.y, PID.u) annotation(
+    Line(points = {{275.6, 264}, {279.6, 264}}, color = {0, 0, 127}));
+  connect(s_Cmp010_in.s, feedback3.u1) annotation(
+    Line(points = {{308.7, 226}, {269.7, 226}, {269.7, 264}}, color = {0, 0, 127}));
+  connect(PID.y, Q_flow_Cmp010.Q_flow) annotation(
+    Line(points = {{291.5, 264}, {296, 264}}, color = {0, 0, 127}));
+  connect(s_Vol_Cmp010_out.s, feedback3.u2) annotation(
+    Line(points = {{308.7, 276}, {271.7, 276}, {271.7, 267}}, color = {0, 0, 127}));
+  connect(Q_flow_Cmp010.port, Vol_Cmp010_out.heatPort) annotation(
+    Line(points = {{304, 264}, {308, 264}}, color = {191, 0, 0}));
+  connect(const3.y, feedback4.u2) annotation(
+    Line(points = {{323, 216.8}, {323, 215}}, color = {0, 0, 127}));
+  connect(realValue_T_Cmp010_in.numberPort, feedback4.y) annotation(
+    Line(points = {{330.35, 213}, {325.35, 213}}, color = {0, 0, 127}));
+  connect(T_Cmp010_in.T, feedback4.u1) annotation(
+    Line(points = {{315.3, 213}, {321, 213}}, color = {0, 0, 127}));
+  connect(T_Cmp010_in.port_b, s_Cmp010_in.port_a) annotation(
+    Line(points = {{312, 216}, {312, 224}}, color = {0, 127, 255}));
+  connect(rho_Cmp010_in.d, realValue_rho_Valve030_out1.numberPort) annotation(
+    Line(points = {{308.7, 202}, {301.7, 202}}, color = {0, 0, 127}));
+  connect(rho_Cmp010_in.port_b, T_Cmp010_in.port_a) annotation(
+    Line(points = {{312, 205}, {312, 210}}, color = {0, 127, 255}));
+  connect(Vol010.ports[1], rho_Cmp010_in.port_a) annotation(
+    Line(points = {{312, 174}, {312, 200}}, color = {0, 127, 255}));
+  connect(boundary.ports[1], Vol010.ports[2]) annotation(
+    Line(points = {{312, 164}, {312, 174}}, color = {0, 127, 255}));
+  connect(s_HX040_out.port_b, h_HX040_out.port_a) annotation(
+    Line(points = {{220, 126}, {228, 126}}, color = {0, 127, 255}));
+  connect(h_HX040_out.port_b, dP041.port_a) annotation(
+    Line(points = {{234, 126}, {244, 126}}, color = {0, 127, 255}));
+  connect(dP041.port_b, boundary1.ports[1]) annotation(
+    Line(points = {{260, 126}, {276, 126}}, color = {0, 127, 255}));
+  connect(boundary1.p_in, ramp_p1.y) annotation(
+    Line(points = {{298, 134}, {327, 134}}, color = {0, 0, 127}));
+  connect(ramp_p1.y, boundary.p_in) annotation(
+    Line(points = {{327, 134}, {303, 134}, {303, 142}, {304, 142}}, color = {0, 0, 127}));
+  connect(h_HX040_out.h_out, boundary.h_in) annotation(
+    Line(points = {{230, 122}, {230, 110}, {308, 110}, {308, 142}}, color = {0, 0, 127}));
+  connect(gain4.y, Cmp010.p_set) annotation(
+    Line(points = {{332.6, 248}, {320.6, 248}}, color = {0, 0, 127}));
+  connect(gain4.u, ramp_Cmp010_PR.y) annotation(
+    Line(points = {{341.8, 248}, {351.8, 248}}, color = {0, 0, 127}));
+  connect(const31.y, feedback41.u2) annotation(
+    Line(points = {{323, 292.8}, {323, 291}}, color = {0, 0, 127}));
+  connect(realValue_T_Vol_Cmp010_out.numberPort, feedback41.y) annotation(
+    Line(points = {{330.35, 289}, {325.35, 289}}, color = {0, 0, 127}));
+  connect(T_Vol_Cmp010_out.T, feedback41.u1) annotation(
+    Line(points = {{315.3, 289}, {321, 289}}, color = {0, 0, 127}));
+  connect(m_flow_Cmp010_out.port_a, T_Vol_Cmp010_out.port_b) annotation(
+    Line(points = {{264, 298}, {312, 298}, {312, 292}}, color = {0, 127, 255}));
+  connect(s_Vol_Cmp010_out.port_b, T_Vol_Cmp010_out.port_a) annotation(
+    Line(points = {{312, 280}, {312, 286}}, color = {0, 127, 255}));
   annotation(
     uses(Modelica(version = "4.1.0")),
-    Diagram(coordinateSystem(extent = {{0, 380}, {360, 0}}), graphics = {Text(origin = {61, 160}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {59, 243}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {108, 178}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left), Text(origin = {108, 233}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left), Text(origin = {287, 319}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/s]", horizontalAlignment = TextAlignment.Left), Text(origin = {152, 363}, extent = {{-4, 2}, {4, -2}}, textString = "[kW]", horizontalAlignment = TextAlignment.Left), Text(origin = {159, 281}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {171, 267}, extent = {{-5, 2}, {5, -2}}, textString = "[kPa]", horizontalAlignment = TextAlignment.Left), Text(origin = {213, 109}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {157, 141}, extent = {{-5, 2}, {5, -2}}, textString = "[kPa]", horizontalAlignment = TextAlignment.Left), Text(origin = {194, 140}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left), Text(origin = {136, 81}, extent = {{-4, 2}, {4, -2}}, textString = "[kW]", horizontalAlignment = TextAlignment.Left)}),
+    Diagram(coordinateSystem(extent = {{0, 380}, {380, 0}}), graphics = {Text(origin = {61, 164}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {59, 243}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {108, 178}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left), Text(origin = {108, 233}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left), Text(origin = {287, 319}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/s]", horizontalAlignment = TextAlignment.Left), Text(origin = {152, 363}, extent = {{-4, 2}, {4, -2}}, textString = "[kW]", horizontalAlignment = TextAlignment.Left), Text(origin = {159, 281}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {171, 267}, extent = {{-5, 2}, {5, -2}}, textString = "[kPa]", horizontalAlignment = TextAlignment.Left), Text(origin = {209, 95}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {157, 141}, extent = {{-5, 2}, {5, -2}}, textString = "[kPa]", horizontalAlignment = TextAlignment.Left), Text(origin = {194, 140}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left), Text(origin = {136, 81}, extent = {{-4, 2}, {4, -2}}, textString = "[kW]", horizontalAlignment = TextAlignment.Left), Text(origin = {298, 198}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left), Text(origin = {351, 208}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {351, 284}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left)}),
     version = "",
-    experiment(StartTime = 0, StopTime = 20, Tolerance = 1e-06, Interval = 0.1),
+    experiment(StartTime = 0, StopTime = 50, Tolerance = 1e-06, Interval = 0.1),
     __OpenModelica_simulationFlags(lv = "LOG_STDOUT,LOG_ASSERT,LOG_STATS", s = "dassl", variableFilter = ".*"));
 end RefrigCycleMachine_R134_ex04;
