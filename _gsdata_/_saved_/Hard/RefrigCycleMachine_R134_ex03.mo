@@ -32,7 +32,7 @@ model RefrigCycleMachine_R134_ex03
     Placement(transformation(origin = {149, 338}, extent = {{-5, -5}, {5, 5}})));
   Modelica.Thermal.HeatTransfer.Sources.FixedTemperature T_hot(T = 298.15) annotation(
     Placement(transformation(origin = {178, 382}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  Modelica.Fluid.Vessels.ClosedVolume HX040(redeclare package Medium = fluid1, V = 0.1, energyDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, massDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, nPorts = 2, use_HeatTransfer = true, use_portsData = false) annotation(
+  Modelica.Fluid.Vessels.ClosedVolume HX040(redeclare package Medium = fluid1, V = 0.1, nPorts = 2, use_HeatTransfer = true, use_portsData = false, energyDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, massDynamics = Modelica.Fluid.Types.Dynamics.SteadyState) annotation(
     Placement(transformation(origin = {114, 120}, extent = {{10, 10}, {-10, -10}})));
   Modelica.Thermal.HeatTransfer.Components.Convection conv_HX040 annotation(
     Placement(transformation(origin = {124, 86}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
@@ -69,11 +69,11 @@ model RefrigCycleMachine_R134_ex03
   Modelica.Blocks.Math.Feedback feedback3 annotation(
     Placement(transformation(origin = {134, 118}, extent = {{2, 2}, {-2, -2}}, rotation = -180)));
   Modelica.Blocks.Interaction.Show.RealValue realValue_T_Cmp010_in(significantDigits = sigDigits_T) annotation(
-    Placement(transformation(origin = {327, 197}, extent = {{-11, -7}, {11, 7}})));
+    Placement(transformation(origin = {327, 199}, extent = {{-11, -7}, {11, 7}})));
   Modelica.Blocks.Sources.Constant const4(k = 273.15) annotation(
-    Placement(transformation(origin = {300, 189}, extent = {{2, -2}, {-2, 2}}, rotation = -90)));
+    Placement(transformation(origin = {300, 191}, extent = {{2, -2}, {-2, 2}}, rotation = -90)));
   Modelica.Blocks.Math.Feedback feedback4 annotation(
-    Placement(transformation(origin = {300, 197}, extent = {{2, 2}, {-2, -2}}, rotation = -180)));
+    Placement(transformation(origin = {300, 199}, extent = {{2, 2}, {-2, -2}}, rotation = -180)));
   Modelica.Blocks.Interaction.Show.RealValue realValue_T_Cmp010_out(significantDigits = sigDigits_T) annotation(
     Placement(transformation(origin = {320, 293}, extent = {{-11, -7}, {11, 7}})));
   Modelica.Blocks.Sources.Constant const5(k = 273.15) annotation(
@@ -137,7 +137,7 @@ model RefrigCycleMachine_R134_ex03
   Modelica.Fluid.Sensors.TemperatureTwoPort T_HX040_out(redeclare package Medium = fluid1) annotation(
     Placement(transformation(origin = {129, 130}, extent = {{3, -3}, {-3, 3}}, rotation = 180)));
   Modelica.Fluid.Sensors.TemperatureTwoPort T_Cmp010_in(redeclare package Medium = fluid1) annotation(
-    Placement(transformation(origin = {288, 197}, extent = {{3, -3}, {-3, 3}}, rotation = -90)));
+    Placement(transformation(origin = {288, 199}, extent = {{3, -3}, {-3, 3}}, rotation = -90)));
   Modelica.Fluid.Sensors.DensityTwoPort rho_Cmp010_in(redeclare package Medium = fluid1) annotation(
     Placement(transformation(origin = {288, 210}, extent = {{-3, -3}, {3, 3}}, rotation = 90)));
   Modelica.Fluid.Sensors.DensityTwoPort rho_Cmp010_out(redeclare package Medium = fluid1) annotation(
@@ -148,12 +148,10 @@ model RefrigCycleMachine_R134_ex03
     Placement(transformation(origin = {288, 235}, extent = {{-5, -5}, {5, 5}}, rotation = -90)));
   Modelica.Fluid.Sources.Boundary_ph Cmp010_out(redeclare package Medium = fluid1, nPorts = 1, use_h_in = true, use_p_in = true) annotation(
     Placement(transformation(origin = {288, 255}, extent = {{5, -5}, {-5, 5}}, rotation = -90)));
-  Modelica.Blocks.Sources.RealExpression realExpression(y = s_Cmp010_in.Medium.isentropicEnthalpy(Cmp010_out.p_in, Cmp010_in.medium.state)) annotation(
-    Placement(transformation(origin = {243, 246}, extent = {{-15, -7}, {15, 7}})));
-  Modelica.Blocks.Continuous.FirstOrder firstOrder(T = 0.001, initType = Modelica.Blocks.Types.Init.SteadyState) annotation(
-    Placement(transformation(origin = {272, 246}, extent = {{-4, -4}, {4, 4}})));
-  Modelica.Fluid.Vessels.ClosedVolume Nd010(redeclare package Medium = fluid1, V = 0.1, energyDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, massDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, nPorts = 2, use_portsData = false) annotation(
-    Placement(transformation(origin = {288, 181}, extent = {{5, 5}, {-5, -5}}, rotation = 180)));
+  Modelica.Blocks.Sources.RealExpression realExpression(y = Nd010.Medium.isentropicEnthalpy(Cmp010_out.p_in, Nd010.Medium.setState_phX(Nd010.medium.p, Nd010.medium.h, Nd010.medium.Xi))) annotation(
+    Placement(transformation(origin = {269.4, 245.857}, extent = {{-7.71428, -5.06667}, {7.71428, 5.06667}})));
+  Modelica.Fluid.Vessels.ClosedVolume Nd010(redeclare package Medium = fluid1, V = 0.1, nPorts = 2, use_portsData = false, energyDynamics = Modelica.Fluid.Types.Dynamics.SteadyState, massDynamics = Modelica.Fluid.Types.Dynamics.SteadyState) annotation(
+    Placement(transformation(origin = {288, 185}, extent = {{5, 5}, {-5, -5}}, rotation = 180)));
 equation
 /**/
   Arr_s[1] = s_Cmp010_in.s;
@@ -170,7 +168,7 @@ equation
   Arr_T[5] = T_HX040_out.T;
   Arr_T[6] = T_Cmp010_in.T;
 //
-Cmp010_out.h_in=Nd010.Medium.isentropicEnthalpy(Cmp010_out.p_in, Nd010.medium.state);
+//Cmp010_out.h_in=Nd010.Medium.isentropicEnthalpy(Cmp010_out.p_in, Nd010.Medium.setState_phX(Nd010.medium.p, Nd010.medium.h, Nd010.medium.Xi));
   connect(ramp_Valve030_open.y, Valve030.opening) annotation(
     Line(points = {{66.5, 208}, {76, 208}}, color = {0, 0, 127}));
   connect(conv_HX020.solid, HX020.heatPort) annotation(
@@ -204,9 +202,9 @@ Cmp010_out.h_in=Nd010.Medium.isentropicEnthalpy(Cmp010_out.p_in, Nd010.medium.st
   connect(const3.y, feedback3.u2) annotation(
     Line(points = {{134, 114.2}, {134, 116.2}}, color = {0, 0, 127}));
   connect(realValue_T_Cmp010_in.numberPort, feedback4.y) annotation(
-    Line(points = {{314.35, 197}, {302, 197}}, color = {0, 0, 127}));
+    Line(points = {{314, 199}, {302, 199}}, color = {0, 0, 127}));
   connect(feedback4.u2, const4.y) annotation(
-    Line(points = {{300, 195}, {300, 191}}, color = {0, 0, 127}));
+    Line(points = {{300, 197}, {300, 193}}, color = {0, 0, 127}));
   connect(realValue_T_Cmp010_out.numberPort, feedback5.y) annotation(
     Line(points = {{307.35, 293}, {303, 293}}, color = {0, 0, 127}));
   connect(feedback5.u2, const5.y) annotation(
@@ -275,12 +273,10 @@ Cmp010_out.h_in=Nd010.Medium.isentropicEnthalpy(Cmp010_out.p_in, Nd010.medium.st
     Line(points = {{179, 130}, {250, 130}}, color = {0, 127, 255}, thickness = 2));
   connect(realValue_rho_HX040_out.numberPort, rho_HX040_out.d) annotation(
     Line(points = {{134, 144}, {140, 144}, {140, 134}}, color = {0, 0, 127}));
-  connect(h_HX040_out.h_out, boundary.h_in) annotation(
-    Line(points = {{176, 126}, {176, 110}, {284, 110}, {284, 146}}, color = {0, 0, 127}, thickness = 1));
   connect(T_Cmp010_in.T, feedback4.u1) annotation(
-    Line(points = {{291.3, 197}, {298.3, 197}}, color = {0, 0, 127}));
+    Line(points = {{291, 199}, {298, 199}}, color = {0, 0, 127}));
   connect(T_Cmp010_in.port_b, rho_Cmp010_in.port_a) annotation(
-    Line(points = {{288, 200}, {288, 207}}, color = {0, 127, 255}, thickness = 2));
+    Line(points = {{288, 202}, {288, 207}}, color = {0, 127, 255}, thickness = 2));
   connect(realValue_rho_Cmp010_in.numberPort, rho_Cmp010_in.d) annotation(
     Line(points = {{276.2, 210}, {284.2, 210}}, color = {0, 0, 127}));
   connect(realValue_rho_Cmp010_out.numberPort, rho_Cmp010_out.d) annotation(
@@ -301,18 +297,18 @@ Cmp010_out.h_in=Nd010.Medium.isentropicEnthalpy(Cmp010_out.p_in, Nd010.medium.st
     Line(points = {{311, 246}, {292, 246}, {292, 249}}, color = {0, 0, 127}));
   connect(HX020.ports[4], T_Cmp010_out.port_b) annotation(
     Line(points = {{188, 300}, {288, 300}, {288, 296}}, color = {0, 127, 255}, thickness = 2));
-  connect(realExpression.y, firstOrder.u) annotation(
-    Line(points = {{259.5, 246}, {268.2, 246}}, color = {0, 0, 127}));
-  connect(firstOrder.y, Cmp010_out.h_in) annotation(
-    Line(points = {{276, 246}, {290, 246}, {290, 249}}, color = {0, 0, 127}));
   connect(Nd010.ports[1], T_Cmp010_in.port_a) annotation(
-    Line(points = {{288, 176}, {288, 194}}, color = {0, 127, 255}));
+    Line(points = {{288, 180}, {288, 196}}, color = {0, 127, 255}, thickness = 2));
   connect(boundary.ports[1], Nd010.ports[2]) annotation(
-    Line(points = {{288, 168}, {288, 176}}, color = {0, 127, 255}));
+    Line(points = {{288, 168}, {288, 180}}, color = {0, 127, 255}, thickness = 2));
+  connect(realExpression.y, Cmp010_out.h_in) annotation(
+    Line(points = {{278, 246}, {290, 246}, {290, 250}}, color = {0, 0, 127}));
+  connect(h_HX040_out.h_out, boundary.h_in) annotation(
+    Line(points = {{176, 126}, {176, 116}, {284, 116}, {284, 146}}, color = {0, 0, 127}, thickness = 2));
   annotation(
     uses(Modelica(version = "4.1.0")),
-    Diagram(coordinateSystem(extent = {{0, 400}, {340, 0}}), graphics = {Text(origin = {61, 168}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {59, 233}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {147, 309}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {159, 113}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {334, 186}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {328, 288}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {165, 59}, extent = {{-4, 2}, {4, -2}}, textString = "[kW]", horizontalAlignment = TextAlignment.Left), Text(origin = {219, 311}, extent = {{-4, 2}, {4, -2}}, textString = "[kW]", horizontalAlignment = TextAlignment.Left), Text(origin = {130, 140}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left), Text(origin = {108, 186}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left), Text(origin = {108, 223}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left), Text(origin = {192, 286}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left), Text(origin = {268, 278}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left), Text(origin = {272, 206}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left)}),
+    Diagram(coordinateSystem(extent = {{0, 400}, {340, 0}}), graphics = {Text(origin = {61, 168}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {59, 233}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {147, 309}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {159, 113}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {334, 192}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {328, 288}, extent = {{-5, 2}, {5, -2}}, textString = "[degC]", horizontalAlignment = TextAlignment.Left), Text(origin = {165, 59}, extent = {{-4, 2}, {4, -2}}, textString = "[kW]", horizontalAlignment = TextAlignment.Left), Text(origin = {219, 311}, extent = {{-4, 2}, {4, -2}}, textString = "[kW]", horizontalAlignment = TextAlignment.Left), Text(origin = {130, 140}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left), Text(origin = {108, 186}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left), Text(origin = {108, 223}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left), Text(origin = {192, 286}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left), Text(origin = {268, 278}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left), Text(origin = {272, 206}, extent = {{-5, 2}, {5, -2}}, textString = "[kg/m3]", horizontalAlignment = TextAlignment.Left)}),
     version = "",
-    experiment(StartTime = 0, StopTime = 50, Tolerance = 1e-06, Interval = 0.1),
+    experiment(StartTime = 0, StopTime = 20, Tolerance = 1e-04, Interval = 0.1),
     __OpenModelica_simulationFlags(lv = "LOG_STDOUT,LOG_ASSERT,LOG_STATS", s = "dassl", variableFilter = ".*"));
 end RefrigCycleMachine_R134_ex03;
