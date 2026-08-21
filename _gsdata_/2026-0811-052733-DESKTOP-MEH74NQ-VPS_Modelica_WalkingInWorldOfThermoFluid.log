@@ -1,0 +1,59 @@
+2026-08-11 05:27:33: Server: SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.18
+2026-08-11 05:27:33: Server KEXes: sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-s,kex-strict-s-v00@openssh.com
+2026-08-11 05:27:33: Server Host Keys: rsa-sha2-512,rsa-sha2-256,ecdsa-sha2-nistp256,ssh-ed25519
+2026-08-11 05:27:33: Chosen Host Key: ssh-ed25519
+2026-08-11 05:27:33: Ciphers: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+2026-08-11 05:27:33: MACs: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+2026-08-11 05:27:33: Server ext-info: publickey-hostbound@openssh.com: 0
+2026-08-11 05:27:33: Server ext-info: server-sig-algs: ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256
+2026-08-11 05:27:33: Server ext-info: ping@openssh.com: 0
+2026-08-11 05:27:33: Auth: start: publickey
+2026-08-11 05:27:33: Auth: publickey: no keys available
+2026-08-11 05:27:33: Auth: start: password
+2026-08-11 05:27:34: -- Analysis Started by Periodic Timer
+2026-08-11 05:27:34: L: Reading State File C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_file_state_v4._gs
+2026-08-11 05:27:35: R: Reading State File sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_file_state_v4._gs
+2026-08-11 05:28:04: /.git/FETCH_HEAD: L:TimeSize<>; Conflict: File Modified on Both Sides
+2026-08-11 05:28:04: Analyze has finished with Conflicts. Resolve Conflicts by selecting the correct sync direction, then click Sync
+2026-08-11 05:28:04: Changes: 1, Conflicts: 1, CopyTime: 0, FixState: 0, Errors: 0, All: 4341
+2026-08-11 05:28:04: == Sync Started by Periodic Timer
+2026-08-11 05:28:04: Start only 1 threads, limited by tasks to run
+2026-08-11 05:28:04: /.git/FETCH_HEAD: unresolved conflict results in No Copy
+2026-08-11 05:28:04: Save State File C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_file_state_v4._gs
+2026-08-11 05:28:05: Save State File sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_file_state_v4._gs
+2026-08-11 05:28:05: Deleted Recycled: C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/Hard/package.mo
+2026-08-11 05:28:05: Deleted Recycled: C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/Hard/package.order
+2026-08-11 05:28:05: Deleted Recycled: C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/Hard/RefrigCycleMachine_R134_ex02.mo
+2026-08-11 05:28:05: Deleted Recycled: C:/Users/grabacr/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/Hard/RefrigCycleMachine_R134_ex03.mo
+2026-08-11 05:28:05: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/COMMIT_EDITMSG
+2026-08-11 05:28:05: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/index
+2026-08-11 05:28:05: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/logs/HEAD
+2026-08-11 05:28:05: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/logs/refs/heads/master
+2026-08-11 05:28:05: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/logs/refs/remotes/origin/master
+2026-08-11 05:28:05: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/objects/4a/bac24d176b8fbdc338af7fc41a7b303c6fc2df
+2026-08-11 05:28:05: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/objects/70/9a4902d5ec9830730ce950b96bfb681cb33ca8
+2026-08-11 05:28:05: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/objects/88/a0445384fc44e06c82682a6d36051786e86edf
+2026-08-11 05:28:05: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/objects/8a/94e0e8c75a8ea5a2ba7797ba7a9a69d075b240
+2026-08-11 05:28:05: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/objects/be/9e60569cc60e8de93ce43b9778c7aa13da2b62
+2026-08-11 05:28:05: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/objects/cf/769c2531b1252c32f90e695cfade7d027566de
+2026-08-11 05:28:05: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/refs/heads/master
+2026-08-11 05:28:05: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/.git/refs/remotes/origin/master
+2026-08-11 05:28:05: Deleted Recycled: sftp://os3-310-44666.vs.sakura.ne.jp/home/ubuntu/VPSsync/01-WorkspaceSync/modelica-shared/CustomLib/WalkingInWorldOfThermoFluid/_gsdata_/_saved_/Hard/RefrigCycleMachine_R134_ex04.mo
+2026-08-11 05:28:06: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/Hard
+2026-08-11 05:28:06: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/logs/refs/heads
+2026-08-11 05:28:06: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/logs/refs/remotes/origin
+2026-08-11 05:28:06: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/logs/refs/remotes
+2026-08-11 05:28:07: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/logs/refs
+2026-08-11 05:28:07: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/logs
+2026-08-11 05:28:07: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/objects/4a
+2026-08-11 05:28:07: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/objects/be
+2026-08-11 05:28:07: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/objects/88
+2026-08-11 05:28:08: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/objects/cf
+2026-08-11 05:28:08: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/objects/8a
+2026-08-11 05:28:08: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/objects/70
+2026-08-11 05:28:08: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/objects
+2026-08-11 05:28:08: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/refs/heads
+2026-08-11 05:28:09: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/refs/remotes/origin
+2026-08-11 05:28:09: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/refs/remotes
+2026-08-11 05:28:09: GsDeleteEmptyFoldersFS: /_gsdata_/_saved_/.git/refs
+2026-08-11 05:28:10: == Sync Complete. Time: 00:00:06, Speed: 0.00/s, OK: 0, Errors: 0, Conflicts: 1
